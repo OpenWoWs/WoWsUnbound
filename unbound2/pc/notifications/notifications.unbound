@@ -1018,8 +1018,11 @@
 		(var shipId:number = "battleData ? battleData.shipId : null")
 		(var damage:str = "'damage' in battleData ? formatSeparator(battleData.damage) : ''")
 		(var shipsKilled:str = "'shipsKilled' in battleData ? formatSeparator(battleData.shipsKilled) : ''")
+
 		(var achievements:array = "battleData ? battleData.achievements : []")
-		(var hasAchievements:bool = "achievements.length > 0")
+		(var masteryLevel:number = "'mastery_sign' in battleData && battleData.mastery_sign != null ? battleData.mastery_sign : SC.Mastery_badges.MASTERY_BADGES_SIGNS.No_Sign")
+		(var hasAchievements:bool = "achievements.length > 0 || masteryLevel > SC.Mastery_badges.MASTERY_BADGES_SIGNS.No_Sign")
+
 
 		(var battleStats:array = " battleData	?	[	{	measure: '',
 															measuredValue: damage,
@@ -1036,30 +1039,30 @@
 
 		(var isSpectator:bool = "'isSpectator' in battleData ? battleData.isSpectator : false")
 	)
-	(style (width = "100%") (hitTest = "false"))
+	(style (width = 100%) (hitTest = false))
 
 	(block
 		(bind visible "!isSpectator")
-		(style (width = "100%"))
+		(style (width = 100%))
 
 		(block
-			(style (width = "100%"))
+			(style (width = 100%))
 			(controller $Instance renderer='ShipLineItemNM'
 				(bind enabled "shipId")
 				(args
 					_shipId = "shipId"
-					_withFlag = "true"
+					_withFlag = true
 					_fontClass = "'$TextDefaultBoldNM'"
 				)
 			)
 		)
 
 		(block
-			(style (width = "100%"))
+			(style (width = 100%))
 			(controller $Instance renderer = 'TooltipSystemHorizontalDivider' (bind enabled "hasRewardsCurrency"))
 		)
 		(block
-			(style (width = "100%"))
+			(style (width = 100%))
 			(controller $Instance renderer='TooltipSystemSecondaryHeaderText'
 				(bind enabled "hasRewardsCurrency")
 				(args
@@ -1069,11 +1072,11 @@
 		)
 
 		(block
-			(style (width = "100%"))
+			(style (width = 100%))
 			(controller $Instance renderer = 'TooltipSystemHorizontalDivider' (bind enabled "hasRewardsCurrency"))
 		)
 		(block
-			(style (width = "100%"))
+			(style (width = 100%))
 			(controller $Instance renderer='TooltipSystemRewardsList'
 				(bind enabled "hasRewardsCurrency")
 				(args
@@ -1084,11 +1087,11 @@
 
 		
 		(block
-			(style (width = "100%"))
+			(style (width = 100%))
 			(controller $Instance renderer = 'TooltipSystemHorizontalDivider' (bind enabled "battleStats"))
 		)
 		(block
-			(style (width = "100%"))
+			(style (width = 100%))
 			(controller $Instance renderer='TooltipSystemSecondaryHeaderText'
 				(bind enabled "battleStats")
 				(args
@@ -1097,11 +1100,11 @@
 			)
 		)
 		(block
-			(style (width = "100%"))
+			(style (width = 100%))
 			(controller $Instance renderer = 'TooltipSystemHorizontalDivider' (bind enabled "battleStats"))
 		)
 		(block
-			(style (width = "100%"))
+			(style (width = 100%))
 			(controller $Instance renderer='TooltipSystemParamsModifiersList'
 				(bind enabled "battleStats")
 				(args
@@ -1113,11 +1116,11 @@
 
 		
 		(block
-			(style (width = "100%"))
+			(style (width = 100%))
 			(controller $Instance renderer = 'TooltipSystemHorizontalDivider' (bind enabled "hasAchievements"))
 		)
 		(block
-			(style (width = "100%"))
+			(style (width = 100%))
 			(controller $Instance renderer='TooltipSystemSecondaryHeaderText'
 				(bind enabled "hasAchievements")
 				(args
@@ -1126,15 +1129,16 @@
 			)
 		)
 		(block
-			(style (width = "100%"))
+			(style (width = 100%))
 			(controller $Instance renderer = 'TooltipSystemHorizontalDivider' (bind enabled "hasAchievements"))
 		)
 		(block
-			(style (width = "100%"))
-			(controller $Instance renderer='TooltipSystemAchievementsList'
+			(style (width = 100%))
+			(controller $Instance renderer='TooltipSystemMasteryAndAchievementsList'
 				(bind enabled "hasAchievements")
 				(args
 					_achievementsIds = "achievements"
+					_masteryLevel = "masteryLevel"
 				)
 			)
 		)

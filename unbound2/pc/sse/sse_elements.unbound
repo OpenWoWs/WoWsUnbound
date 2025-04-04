@@ -134,7 +134,7 @@
 	)
 
 	(hblock
-		(style (gap = "S"))
+		(style (gap = "S") (width = 100%) (flow = "tile_horizontal"))
 
 		(controller $Repeat renderer='BattleTypeIcon'
 			(bind count "battleTypes.length")

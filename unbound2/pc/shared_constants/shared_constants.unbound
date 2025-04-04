@@ -307,6 +307,7 @@
 			CONVOY_AIRSHIP: 27,
 			TWO_TEAMS_BATTLE_ROYALE: 28,
 			PINATA_EVENT: 29,
+			RESPAWNS: 30,
 
 			VALUE_TO_NAME: {
 				'-1': 'INVALID', 
@@ -335,10 +336,11 @@
 				'26': 'CONVOY_EVENT', 
 				'27': 'CONVOY_AIRSHIP', 
 				'28': 'TWO_TEAMS_BATTLE_ROYALE', 
-				'29': 'PINATA_EVENT'
+				'29': 'PINATA_EVENT', 
+				'30': 'RESPAWNS'
 			},
 
-			ALL: [-1, 0, 1, 2, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], 
+			ALL: [-1, 0, 1, 2, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30], 
 			BATTLE_TIMER_HIDDEN: [24, 25, 23, 26]
 		}, 
 		BATTLE_RESULT: {
@@ -2060,7 +2062,8 @@
 			BATTLE_TYPES_WITH_HARD_FILTER: ['PVEBattle', 'EventBattle', 'RankedBattle', 'ClanBattle', 'BrawlBattle'], 
 			CHAT_AVAILABLE: ['RandomBattle', 'CooperativeBattle', 'PVEBattle'], 
 			DYNAMIC_DIVISION_AVAILABLE: ['CooperativeBattle', 'RandomBattle', 'EventBattle', 'BrawlBattle'], 
-			BATTLE_TYPES_WITH_BATTLECARD: ['PVEBattle', 'EventBattle']
+			BATTLE_TYPES_WITH_BATTLECARD: ['PVEBattle', 'EventBattle'], 
+			WITH_MASTERIES: ['RandomBattle']
 		}, 
 		NATION: {
 			RUSSIA: 'Russia',
@@ -3593,7 +3596,7 @@
 
 			ALL: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65], 
 			REPEAT: [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33], 
-			COMMON_CHAINS: [34, 35, 36, 37, 38, 39, 40, 41, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65]
+			COMMON_CHAINS: [34, 35, 36, 37, 38, 39, 40, 41, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64]
 		}, 
 		TIP_TYPE: {
 			NONE: 0,
@@ -4104,13 +4107,23 @@
 	}, 
 	Mastery_badges: {
 		MASTERY_BADGES_SIGNS: {
+			No_Sign: -1,
 			Sign_M: 0,
 			Sign_1: 1,
 			Sign_2: 2,
 			Sign_3: 3,
 
+			VALUE_TO_NAME: {
+				'-1': 'No_Sign', 
+				'0': 'Sign_M', 
+				'1': 'Sign_1', 
+				'2': 'Sign_2', 
+				'3': 'Sign_3'
+			},
 
-			ALL: [0, 1, 2, 3]
+			ALL: [-1, 0, 1, 2, 3], 
+			BADGES_TO_DISPLAY: [0, 1, 2, 3], 
+			SORT_ORDER: [-1, 3, 2, 1, 0]
 		}
 	}, 
 	Pre_battle: {

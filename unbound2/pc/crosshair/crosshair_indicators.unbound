@@ -168,7 +168,7 @@
 		
 
 		(var rageModesCollection:gfx = "$datahub.getCollection(CC.rageMode)")
-		(var vehicleID:number = "selfVehicleEntity ? selfVehicleEntity.vehicle.id : 0")
+		(var vehicleID:number = "selfVehicleEntity ? selfVehicleEntity.vehicle.id : 0" (event "selfVehicleEntity.evAdded"))
 		(var rageModeEntity:gfx = "selfVehicleEntity ? $datahub.getPrimaryEntity(CC.rageMode, vehicleID) : null"
 										(event "rageModesCollection.evAdded")
 										(event "rageModesCollection.evRemoved")

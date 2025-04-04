@@ -39,7 +39,6 @@
 	(scope
 		(var selfAvatarEntity:gfx = "$datahub.getSingleEntity(CC.playerAvatar)")
 		(var selfAvatarId:gfx = "selfAvatarEntity ? selfAvatarEntity.avatar.id : INVALID_PLAYER_AVATAR_ID")
-		(var timeToRespawn:number = "selfAvatarEntity ? selfAvatarEntity.playerAvatar.timeToRespawn : null" (event "selfAvatarEntity.playerAvatar.evTimeToRespawnChanged"))
 		
 		(var killerEntity:gfx = "_killerId != 0 ? $datahub.getPrimaryEntity(CC.avatar, _killerId) : null")
 		(var killerRelation:number = "killerEntity ? killerEntity.relation.value : 0")
@@ -54,6 +53,10 @@
 																							:	'enemy'")
 		(var dogTagViewComponent:gfx = "killerEntity ? killerEntity.dogTagView : null")
 		(var dogTagIdList:array = "dogTagViewComponent ? dogTagViewComponent.components : []" (event "dogTagViewComponent.evComponentsChanged"))
+		
+		
+		(var timeToRespawn:number = "selfAvatarEntity ? selfAvatarEntity.playerAvatar.timeToRespawn : 0" (event "selfAvatarEntity.playerAvatar.evTimeToRespawnChanged"))
+		(var showHotkeys:bool = "!timeToRespawn")
 	)
 
 	(style (height = "DOG_TAG_SIZE.MEDIUM") (flow = "horizontal") (align = "middle"))
@@ -88,6 +91,7 @@
 
 		(block
 			(controller $Repeat renderer='HotKeysDogTag'
+				(bind enabled "showHotkeys")
 				(bind count "DOGTAG_BIND_LIST.length")
 				(args "DOGTAG_BIND_LIST[$index]")
 			)
@@ -96,6 +100,12 @@
 )
 
 (def element KillerEventInfo () 
+	(scope
+		
+		(var avatar:gfx = "$datahub.getSingleEntity(CC.playerAvatar)")
+		(var timeToRespawn:number = "avatar ? avatar.playerAvatar.timeToRespawn : 0" (event "avatar.playerAvatar.evTimeToRespawnChanged"))
+		(var showHotkeys:bool = "!timeToRespawn")
+	)
 	(style (height = "190px") (align = "middle"))
 	(block
 		(style (marginBottom = "SXS") (width = "190px") (align = "center"))
@@ -107,6 +117,7 @@
 	)
 	(block
 		(controller $Repeat renderer='HotKeysDogTag'
+			(bind enabled "showHotkeys")
 			(bind count "DOGTAG_BIND_LIST.length")
 			(args "DOGTAG_BIND_LIST[$index]")
 		)

@@ -480,9 +480,9 @@
 (def element OwnHealthBarRegen (entity:gfx, shortName:str, maxHealth:number) layout=true
 	(scope
 		(var regenComponent:gfx = "entity.regeneration" (event "entity.evAdded"))
-		(var regenMaxValue:number = "regenComponent.maxValue" (event "regenComponent.evChanged"))
-		(var regenValue:number = "regenComponent.value" (event "regenComponent.evChanged"))
-		(var regenPercent:number = "regenMaxValue / maxHealth" (event "regenComponent.evChanged"))
+		(var regenMaxValue:number = "regenComponent ? regenComponent.maxValue : 0" (event "regenComponent.evChanged"))
+		(var regenValue:number = "regenComponent ? regenComponent.value : 0" (event "regenComponent.evChanged"))
+		(var regenPercent:number = "regenComponent ? regenMaxValue / maxHealth : 0" (event "regenComponent.evChanged"))
 
 		(var resultWidth:number = "100% * regenPercent")
 		(var currentWidth:number = "resultWidth" watch=false)

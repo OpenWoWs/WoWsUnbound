@@ -26,6 +26,9 @@
 		(var taskWithTimer:gfx = "tasksCollection ? tasksCollection.getChildByPath('byShowOnHud.' + 1) : null" (event "tasksCollection.evChildAdded") (event "tasksCollection.evChildRemoved"))
 		(var timerInHudItem:gfx = "taskWithTimer ? taskWithTimer.items[0] : null" (event "taskWithTimer.evAdded") (event "taskWithTimer.evUpdated") (event "taskWithTimer.evRemoved")) 
 		(var isTaskTimerBigVisible:bool = "timerInHudItem ? true : false")
+		
+		(var avatar:gfx = "$datahub.getSingleEntity(CC.playerAvatar)")
+		(var timeToRespawn:number = "avatar.playerAvatar.timeToRespawn" (event "avatar.playerAvatar.evTimeToRespawnChanged"))
 	)
 
 	(element HeaderShipList
@@ -99,6 +102,58 @@
 	
 
 	
+	(block
+		(style (marginTop = "104")) 
+		(controller $Instance renderer='RespawnTimer'
+			(bind enabled "timeToRespawn")
+			(args
+				_avatarEntity = "avatar"
+			)
+		)
+	)
+
+	
+)
+
+(def element RespawnTimer (_avatarEntity:gfx) layout=true
+	(scope
+		(var timerEntity:gfx = "$datahub.getSingleEntity(CC.battleTimer)")
+		(var willBeAliveAt:number = "_avatarEntity.playerAvatar.timeToRespawn + timerEntity.battleTimer.battleTime" (event "_avatarEntity.playerAvatar.evTimeToRespawnChanged"))
+		(var timeToRespawn:number = "_avatarEntity.playerAvatar.timeToRespawn" (event "_avatarEntity.playerAvatar.evTimeToRespawnChanged") (event "timerEntity.battleTimer.evBattleTimeChanged"))
+		(var timeLeft:number = "timeToRespawn ? max(willBeAliveAt - timerEntity.battleTimer.battleTime, 0) : 0" (event "timerEntity.battleTimer.evBattleTimeChanged"))
+		
+		(event eventAdded)
+		(event eventRemoved)
+	)
+
+	(dispatch eventAdded delay="0.5" on='addedToStage')
+	(dispatch eventRemoved delay="timeToRespawn - 1" on='addedToStage')
+
+	(controller $Animation
+		(bindcall play duration=0.7 from={visualOffsetY:10} to={visualOffsetY:0} delay=0 action="combine" (event "eventAdded"))
+		(bindcall play duration=0.5 from={alpha:0} to={alpha:1} delay=0 action="combine" (event "eventAdded"))
+		(bindcall play duration=0.4 to={visualOffsetY:-10} delay=0 action="combine" (event "eventRemoved"))
+		(bindcall play duration=0.3 to={alpha:0} delay=0 action="combine" (event "eventRemoved"))
+	)
+	(style
+		(alpha = 0) 
+		(width = 100%)
+		(align = "center")
+	)
+	(tf
+		(class $EventCountdownTextDefault)
+		(style
+			(multiline = false)
+		)
+		(text = 'IDS_TIME_TILL_RESPAWN')
+	)
+	(tf
+		(style 
+			(marginTop = "S")
+		)
+		(class $TextDefaultBold50NM)
+		(bind text "countdownFormat(timeLeft, 0, true, true)")
+	)
 )
 
 

@@ -27,7 +27,7 @@
 		(var attackState:number = "ownSquadron ? ownSquadron.attackState : SC.Battle.SQUADRON_ATTACK_STATE.DEFAULT" (event "ownSquadron.evAttackStateChanged"))
 
 		(var avatar:gfx =  "$datahub.getSingleEntity(CC.playerAvatar)")
-		(var timeToLive:number = "avatar.playerAvatar.timeToLive" (event "avatar.playerAvatar.evWillDieSoon"))
+		(var timeToLive:number = "avatar.playerAvatar.timeToLive" (event "avatar.playerAvatar.evTimeToLiveChanged"))
 		(var isAlive:bool = "avatar.health.isAlive" (event "avatar.health.evIsAliveChanged"))
 
 		(var isOnSquadron:bool = "activeSquadron != ActiveSquadron.NONE && squadronCameraMode == SquadronCameraModes.DEFAULT")

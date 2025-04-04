@@ -163,7 +163,8 @@
 		(var selfAvatarEntity:gfx = "$datahub.getSingleEntity(CC.playerAvatar)")
 
 		(var shipSpotType:str = "battleIndication.alertIndication.spotType" (event "battleIndication.alertIndication.evSpottedChanged"))
-		(var shipSpotFlags:number = "selfAvatarEntity.hasComponent(CC.vehicle) ? selfAvatarEntity.vehicle.visibilityFlags : 0" (event "selfAvatarEntity.vehicle.evVisibilityFlagsChanged"))
+		(var selfVehicle:gfx = "selfAvatarEntity.hasComponent(CC.vehicle) ? selfAvatarEntity.vehicle : null" (event "selfAvatarEntity.evAdded") (event "selfAvatarEntity.evRemoved"))
+		(var shipSpotFlags:number = "selfVehicle ? selfVehicle.visibilityFlags : 0" (event "selfVehicle.evVisibilityFlagsChanged"))
 		(var shipFocusedEnemies:number = "battleIndication.alertIndication.focusedEnemies" (event "battleIndication.alertIndication.evFocusedEnemiesChanged"))
 		(var squadronSpotType:str = "battleIndication.alertIndication.squadronSpotType" (event "battleIndication.alertIndication.evSquadronSpottedChanged"))
 		(var squadronSpotFlags:number = "battleIndication.alertIndication.squadronSpotFlags" (event "battleIndication.alertIndication.evSquadronSpottedChanged"))

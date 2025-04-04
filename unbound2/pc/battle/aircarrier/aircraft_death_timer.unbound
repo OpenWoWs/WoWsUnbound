@@ -4,8 +4,8 @@
 (def element AircraftDeathTimer() layout=true
 	(scope
 		(var avatar:gfx = "$datahub.getSingleEntity(CC.playerAvatar)")
-		(var willBeDeadAt:number =  "avatar.playerAvatar.willBeDeadAt" (event "avatar.playerAvatar.evWillDieSoon"))
-		(var timeToLive:number = "avatar.playerAvatar.timeToLive" (event "avatar.playerAvatar.evWillDieSoon"))
+		(var willBeDeadAt:number =  "avatar.playerAvatar.willBeDeadAt" (event "avatar.playerAvatar.evTimeToLiveChanged"))
+		(var timeToLive:number = "avatar.playerAvatar.timeToLive" (event "avatar.playerAvatar.evTimeToLiveChanged"))
 
 		(var stageComponent:gfx = "$datahub.getSingleEntity(CC.stage).stage")
 		(var stageWidth:number = "stageComponent.width" (event "stageComponent.evStageSizeChanged"))

@@ -773,7 +773,7 @@
 		(height = 36px)
 	)
 
-	(bindcall externalCall "'inputMapping.onRequest'" "['openEventWikiPage', {}]" init=false watch=false on='click')
+	(bindcall externalCall "'inputMapping.onRequest'" "['openEventWikiPage', {'topicName': 'flagships'}]" init=false watch=false on='click')
 
 	
 	(block
@@ -822,6 +822,71 @@
 		(args
 			_operationEntity = "operationEntity"
 		)
+		(macro DEFAULT_TOOLTIP_BEHAVIOUR "0")
+	)
+)
+
+(def element RespawnEventBanner (_operationEntityId:number)
+	(scope
+		(macro SIMPLE_MOUSE_OVER_DOWN_SELECTED_COLORTRANSFORM_SCOPE)
+		(macro MOUSE_HANDLER_SCOPE)
+		(var operationEntity:gfx="$datahub.getEntity(_operationEntityId)")
+		(var bannerPath:str = "'url:../events/respawns_event/port_banner/banner_respawns.png'")
+	)
+
+	(class $Fullsize)
+	(style
+		(align = "bottom")
+		(width = 240px)
+		(height = 36px)
+	)
+
+	(bindcall externalCall "'inputMapping.onRequest'" "['openEventWikiPage', {'topicName': 'respawns'}]" init=false watch=false on='click')
+
+	
+	(block
+		(bind visible "rollOver")
+
+		(class $FullsizeAbsolute)
+		(style (backgroundColor = "0x10FFFFFF"))
+	)
+
+	(block
+		(class $FullsizeAbsolute)
+		(style
+			(backgroundSize = "cover")
+			(backgroundImage = "bannerPath")
+		)
+	)
+
+	(block
+		(style
+			(width = 100%)
+			(position = "absolute")
+			(left = 12px)
+			(bottom = 12px)
+		)
+		(controller $Instance renderer='BannerItemTitle'
+			(bind enabled "true")
+			(args
+				_title = "toUpper(tr('IDS_RESPAWNS_BANNER_TITLE'))"
+			)
+		)
+	)
+
+	(block
+		(bind visible "rollOver")
+
+		(class $FullsizeAbsolute)
+		(style (backgroundColor = "0x10FFFFFF"))
+	)
+
+	(macro MOUSE_HANDLER
+		_soundSet = "'button_banner'"
+	)
+	
+	(controller $Tooltip
+		(bind renderer "'RespawnsBannerTooltip'")
 		(macro DEFAULT_TOOLTIP_BEHAVIOUR "0")
 	)
 )

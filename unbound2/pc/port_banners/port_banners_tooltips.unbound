@@ -1674,3 +1674,29 @@
 		)
 	)
 )
+
+(def element RespawnsBannerTooltip (_isShowUB2Tooltip:bool) layout=true dispatch_size_change=true
+	(style (width = "BANNER_TOOLTIP_WIDTH") (hitTest = false))
+	(name = "'RespawnsBannerTooltip'")
+
+	(macro TOOLTIP_SYSTEM_DEFAULT_BACKGROUND)
+
+	(element TOOLTIP_SYSTEM_DEFAULT_CONTAINER
+
+		(element TooltipSystemHeaderSubheaderText
+			_headerText = "tr('IDS_RESPAWNS_HEADER')"
+		)
+		(element TooltipSystemHorizontalDivider)
+
+		(element TooltipSystemStatusLine
+			_text = 'IDS_RESPAWNS_TOOLTIP_DESCRIPTION'
+		)
+
+		(element TooltipSystemHorizontalDivider)
+
+		(element TooltipSystemStatusLine
+			_text = 'IDS_GO_TO_RESPAWNS_MODAL_TOOLTIP'
+			_unifiedStatus = "SC.Ui_styles.UNIFIED_STATUS.MOUSE_LEFT"
+		)
+	)
+)

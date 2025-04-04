@@ -1526,11 +1526,31 @@
 	(style (width = 100%) (marginBottom = "SXS"))
 )
 
-(def element TooltipSystemAchievementsList (_achievementsIds:array) layout=true
-	(style (width = "100%"))
+(def element TooltipSystemMasteryAndAchievementsList (_achievementsIds:array, _masteryLevel:number="SC.Mastery_badges.MASTERY_BADGES_SIGNS.No_Sign") layout=true
+	(style (width = 100%))
 	(macro TOOLTIP_SYSTEM_INNER_PANEL_BACKGROUND)
 	(block
-		(style (flow = "tile_horizontal") (width = "100%") (padding = "-S"))
+		(style (flow = "tile_horizontal") (width = 100%) (padding = "-S"))
+		(controller $Instance renderer = 'TooltipSystemMasteryItem'
+			(bind enabled "_masteryLevel > SC.Mastery_badges.MASTERY_BADGES_SIGNS.No_Sign")
+			(args
+				_masteryLevel = "_masteryLevel"
+			)
+		)
+		(controller $Repeat renderer = 'TooltipSystemAchievementItem'
+			(bind count "_achievementsIds.length")
+			(args
+				_achievementData = "_achievementsIds[$index]"
+			)
+		)
+	)
+)
+
+(def element TooltipSystemAchievementsList (_achievementsIds:array) layout=true
+	(style (width = 100%))
+	(macro TOOLTIP_SYSTEM_INNER_PANEL_BACKGROUND)
+	(block
+		(style (flow = "tile_horizontal") (width = 100%) (padding = "-S"))
 		(controller $Repeat renderer = 'TooltipSystemAchievementItem'
 			(bind count "_achievementsIds.length")
 			(args
@@ -1545,12 +1565,18 @@
 		(var achievementEntity:gfx = "$datahub.getPrimaryEntity(CC.achievement, _achievementData[0])")
 	)
 	(style (margin = "S"))
-	(controller $Instance renderer='AchievementIcon'
-		(args
+	(element AchievementIcon
 			_id = "achievementEntity.id"
 			_amount = "_achievementData[1]"
-			_size = '44px'
-		)
+			_size = 44px
+	)
+)
+
+(def element TooltipSystemMasteryItem (_masteryLevel:number) layout=true
+	(style (margin = "S"))
+	(element MasteryIconSimple
+			_masteryLevel = "_masteryLevel"
+			_size = 44px
 	)
 )
 

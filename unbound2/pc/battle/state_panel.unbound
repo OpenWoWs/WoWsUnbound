@@ -68,7 +68,7 @@
 
 		(var isInfinite:bool = "!countDownComponent || countDownComponent.duration == -1")
 		(var isProgressBarVisible:bool = "!isInfinite && (remainTime > 0 && remainTime < 3600) && !isRemoving")
-		(var progress:number = 	"isProgressBarVisible ? min(remainTime / countDownComponent.duration, 1) : 0")
+		(var progress:number = 	"isProgressBarVisible && countDownComponent.duration != 0 ? min(remainTime / countDownComponent.duration, 1) : 0")
 
 		(var isNegative:bool = "stateEntity.shipModifier ? stateEntity.shipModifier.isNegative : false")
 

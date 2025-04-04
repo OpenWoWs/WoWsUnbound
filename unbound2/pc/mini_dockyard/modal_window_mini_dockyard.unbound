@@ -1748,7 +1748,7 @@
 	)
 
 
-	(style (hitTest = "false") (width = "320px"))
+	(style (hitTest = "false") (width = "380px"))
 
 	(macro TOOLTIP_SYSTEM_DEFAULT_BACKGROUND)
 

@@ -268,7 +268,7 @@
 
 		
 		(var gfName:str = "SC.Gameface.DATA_PROVIDER_NAME.SHIP_DESTRUCTION + _sid")
-		(var gfPath:str = "'gui/gameface/static/ship_destruction/index.html'")
+		(var gfPath:str = "'gui/gameface/build/ship_destruction/index.html'")
 
 		
 		(var amount:number = "_isReward	? _amount : exteriorsInStorage")
