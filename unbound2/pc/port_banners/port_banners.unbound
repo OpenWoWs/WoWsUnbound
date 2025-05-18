@@ -230,10 +230,6 @@
 			(block
 				(macro DEFAULT_CONTROL_MARKER_ANIMATION "isNew")
 
-				(style
-					(bind alpha "isNew ? 1 : 0" watch=false)
-				)
-
 				(element MarkerNew)
 			)
 		)
@@ -327,11 +323,6 @@
 
 			(block
 				(macro DEFAULT_CONTROL_MARKER_ANIMATION "isNew")
-
-				(style
-					(bind alpha "isNew ? 1 : 0" watch=false)
-				)
-
 				(element MarkerNew)
 			)
 		)
@@ -424,10 +415,6 @@
 
 			(block
 				(macro DEFAULT_CONTROL_MARKER_ANIMATION "isNew")
-
-				(style
-					(bind alpha "isNew ? 1 : 0" watch=false)
-				)
 
 				(element MarkerNew)
 			)
@@ -750,6 +737,7 @@
 
 	(tf
 		(class $TextDefaultBold17NM)
+		(class $DropShadowDisabler)
 		(style
 			(textColor = "_textColor ? _textColor : SC.Ui_styles.SERVICE_COLORS.WHITE")
 			(alpha = "_textColor ? 1 : TA")
@@ -870,6 +858,7 @@
 			(bind enabled "true")
 			(args
 				_title = "toUpper(tr('IDS_RESPAWNS_BANNER_TITLE'))"
+				_textColor = "SC.Ui_styles.SERVICE_COLORS.PAPER"
 			)
 		)
 	)
@@ -887,6 +876,76 @@
 	
 	(controller $Tooltip
 		(bind renderer "'RespawnsBannerTooltip'")
+		(macro DEFAULT_TOOLTIP_BEHAVIOUR "0")
+	)
+)
+
+(def element EventWikiPageBannerForEvent (_eventName:str)
+	(scope
+		(macro SIMPLE_MOUSE_OVER_DOWN_SELECTED_COLORTRANSFORM_SCOPE)
+		(macro MOUSE_HANDLER_SCOPE)
+		
+		(var bannerPath:str = "'url:../events/' + _eventName + '/port_banner/banner_' + _eventName + '.png'")
+		(var bannerTitleText:str = "'IDS_' + _eventName + '_BANNER_TITLE'")
+	)
+
+	(class $Fullsize)
+	(style
+		(align = "bottom")
+		(width = 240px)
+		(height = 36px)
+	)
+
+	(bindcall externalCall "'inputMapping.onRequest'" "['openEventWikiPage', {'topicName': _eventName}]" init=false watch=false on='click')
+
+	
+	(block
+		(bind visible "rollOver")
+
+		(class $FullsizeAbsolute)
+		(style (backgroundColor = "0x10FFFFFF"))
+	)
+
+	(block
+		(class $FullsizeAbsolute)
+		(style
+			(backgroundSize = "cover")
+			(bind backgroundImage "bannerPath")
+		)
+	)
+
+	(block
+		(style
+			(width = 100%)
+			(position = "absolute")
+			(left = 12px)
+			(bottom = 12px)
+		)
+		(controller $Instance renderer='BannerItemTitle'
+			(bind enabled "true")
+			(args
+				_title = "toUpper(tr(bannerTitleText))"
+				_textColor = "SC.Ui_styles.SERVICE_COLORS.PAPER"
+			)
+		)
+	)
+
+	(block
+		(bind visible "rollOver")
+
+		(class $FullsizeAbsolute)
+		(style (backgroundColor = "0x10FFFFFF"))
+	)
+
+	(macro MOUSE_HANDLER
+		_soundSet = "'button_banner'"
+	)
+	
+	(controller $Tooltip
+		(bind renderer "'EventBannerTooltip'")
+		(args
+			_eventName = "_eventName"
+		)
 		(macro DEFAULT_TOOLTIP_BEHAVIOUR "0")
 	)
 )

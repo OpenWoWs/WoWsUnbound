@@ -115,6 +115,8 @@
 		(var useLevelIcon:bool = "shipInfo.levelIcon.length > 0")
 		(var shipLevelText:str = "useLevelIcon ? '' : shipInfo.levelRome + ' '")
 
+        (var shipName:str = "shipInfo ? shipLevelText + toUpper(tr(shipInfo.nameIDS + '_FULL')) : ''" (event "shipInfo.evUpdate"))
+
 		(var shipClass:str = "tr('IDS_' + toUpper(shipSubType) + (isSupership ? '_LEGENDARY' : ''))")
 
 		(var secondLineText:str = "isSupership	? shipClass	: subst('IDS_SHIP_LEVEL', [], {_shipClass: shipClass, _shipLevel: shipInfo.levelRome})")
@@ -178,7 +180,7 @@
 				(style (paddingTop = 1px))
 				(element InvertableTextLine
 					(scope
-						(bind _text "shipInfo ? shipLevelText + toUpper(tr(shipInfo.nameIDS + '_FULL')) : ''")
+						(bind _text "shipName")
 						(bind _invert "_fromCrew ? !isOwned : false")
 						(bind _normalClass "(isFarming || isSpecial) && !_isNotMyShip ? '$TextShipHeaderNameGolden21' : '$TextShipHeaderNameNormal21'")
 						(bind _invertedClass "'$TextShipHeaderNameBlack21'")
@@ -373,7 +375,7 @@
 		(var iconColorTransform:dict = "textColor == SC.Ui_styles.SERVICE_COLORS.YELLOW	? COLOR_TRANSFORM_WHITE_TO_YELLOW
 																						: {}")
 		(var showName:bool = "!_hideName")
-		(var nameIDS:str = "shipInfo && showName ? toUpper(tr(shipInfo.nameIDS)) : ''")
+		(var nameIDS:str = "shipInfo && showName ? toUpper(tr(shipInfo.nameIDS)) : ''" (event "shipEntity.ship.evUpdate"))
 
 		(var shipType:str = "shipInfo ? shipInfo.subtype : ''" (event "shipInfo.evUpdate"))
 		(var isSpecial:bool = "shipInfo ? shipInfo.uiSpecial : false" (event "shipInfo.evUpdate"))

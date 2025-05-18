@@ -129,7 +129,7 @@
 (def element ConvoyShipsItem(_collection:gfx) layout=true dispatch_size_change=true
 	(scope
 		(var keyObjectEntity:gfx = "_collection.items[$index]" (event "_collection.evAdded") (event "_collection.evRemoved") (event "_collection.evUpdated"))
-		(var maxHealth:number = "keyObjectEntity.keyObject ? ceil(keyObjectEntity.keyObject.maxValue) : 0" (event "keyObjectEntity.keyObject.evValueChanged"))
+		(var maxHealth:number = "keyObjectEntity.keyObject ? ceil(keyObjectEntity.keyObject.maxValue) : 0" (event "keyObjectEntity.keyObject.evMaxValueChanged"))
 		(var isVisible:bool = "keyObjectEntity.visibility ? keyObjectEntity.visibility.visible : false" (event "keyObjectEntity.visibility.evChanged"))
 		(var isAlive:bool = "keyObjectEntity.health ? keyObjectEntity.health.isAlive : false" (event "keyObjectEntity.health.evIsAliveChanged"))
 		(var avatarId:number = "keyObjectEntity.avatar ? keyObjectEntity.avatar.id : 0")
@@ -256,7 +256,7 @@
 	(scope
 		(var keyObjectEntity:gfx = "_collection.items[$index]" (event "_collection.evAdded") (event "_collection.evRemoved") (event "_collection.evUpdated"))
 		(var isBuilding:bool = "keyObjectEntity.hasComponent(CC.building)")
-		(var maxHealth:number = "keyObjectEntity.keyObject ? ceil(keyObjectEntity.keyObject.maxValue) : 0" (event "keyObjectEntity.keyObject.evValueChanged"))
+		(var maxHealth:number = "keyObjectEntity.keyObject ? ceil(keyObjectEntity.keyObject.maxValue) : 0" (event "keyObjectEntity.keyObject.evMaxValueChanged"))
 		(var isAlive:bool = "keyObjectEntity.health ? keyObjectEntity.health.isAlive : false" (event "keyObjectEntity.health.evIsAliveChanged"))
 		(var healthValue:number = "keyObjectEntity.keyObject && isAlive ? ceil(keyObjectEntity.keyObject.value) : 0" (event "keyObjectEntity.keyObject.evValueChanged"))
 		(var relation:number = "keyObjectEntity.relation ? keyObjectEntity.relation.value : 0")

@@ -598,6 +598,7 @@
 				_altFireMode = "altFireMode"
 				_rageModeData = "rageFireMode"
 				_hasSquadrons = "hasSquadrons"
+				_isPlayer = "isPlayer"
 				(bind visible "armaments.length != 0")
 			)
 
@@ -609,6 +610,7 @@
 				_items = "mainConsumables"
 				_extraItems = "altConsumables"
 				_iconSize = "iconSize"
+				_isPlayer = "isPlayer"
 				(bind visible "mainConsumables.length != 0 || altConsumables.length != 0")
 			)
 		)
@@ -684,7 +686,7 @@
 	(element ShipInlineStereotypeSimple _shipId = "_cloneId")
 )
 
-(def element ShipInfoArmaments (_items:array, _shipTTX:gfx, _hasSquadrons:bool, _title:str='', _altFireMode:gfx=null, _rageModeData:gfx=null, _firstSelection:number = -1, _iconSize:number=60)
+(def element ShipInfoArmaments (_items:array, _shipTTX:gfx, _hasSquadrons:bool, _title:str='', _altFireMode:gfx=null, _rageModeData:gfx=null, _firstSelection:number = -1, _iconSize:number=60, _isPlayer:bool="false")
 	(scope
 		(event evSquadronItemClicked)
 		(event evSelectionChanged)
@@ -744,6 +746,7 @@
 			_selectedSlot = "selectedArmament"
 			_shipTTX = "_shipTTX"
 			_iconSize = "_iconSize"
+			_isPlayer = "_isPlayer"
 		)
 	)
 )
@@ -783,7 +786,7 @@
 	)
 )
 
-(def element ShipInfoSelectedSquadronItems (_items:array, _shipTTX:gfx, _selectedSlot:number=-1, _iconSize:number=60, _planeArmament:array=null)
+(def element ShipInfoSelectedSquadronItems (_items:array, _shipTTX:gfx, _selectedSlot:number=-1, _iconSize:number=60, _planeArmament:array=null, _isPlayer:bool=false)
 	(style (width = 100%))
 
 	(element TooltipSystemHorizontalDivider)
@@ -807,6 +810,7 @@
 				_slotItem = "_items[$index]"
 				_iconSize = "_iconSize"
 				_isPlane = true
+				_isPlayer = "_isPlayer"
 			)
 		)
 	)
@@ -821,7 +825,7 @@
 		(class = $ShipInfoIconWrapper)
 		(style (marginTop = "S"))
 	
-		(controller $Repeat renderer = 'ShipInfoItemIcon'
+		(controller $Repeat renderer = 'ShipInfoConsumableIconSimple'
 			(bind count "_items.length")
 			(args
 				_slotItem = "_items[$index]"
@@ -833,7 +837,7 @@
 	(element TooltipSystemHorizontalDivider)
 )
 
-(def element ShipInfoConsumables (_title:str, _items:array, _extraItems:array=null, _iconSize:number=60, _isSimple:bool=false)
+(def element ShipInfoConsumables (_title:str, _items:array, _extraItems:array=null, _iconSize:number=60, _isSimple:bool=false, _isPlayer:bool=false)
 	(style (width = 100%))
 
 	(element TooltipSystemStatusLine _text = "_title")
@@ -843,11 +847,12 @@
 		(style (marginTop = "S"))
 
 		(controller $Repeat 
-			(bind renderer "_isSimple ? 'ShipInfoItemIcon' : 'ShipInfoConsumableIcon'")
+			(bind renderer "_isSimple ? 'ShipInfoConsumableIconSimple' : 'ShipInfoConsumableIcon'")
 			(bind count "_items.length")
 			(args
 				_slotItem = "_items[$index]"
 				_iconSize = "_iconSize"
+				_isPlayer = "_isPlayer"
 			)
 		)
 		(controller $Repeat renderer = 'ShipInfoConsumableIconWithAlternatives'
@@ -866,7 +871,7 @@
 	(style (flow = "tile_vertical"))
 
 	(controller $Repeat
-		(bind renderer "_isSimple ? 'ShipInfoItemIcon' : 'ShipInfoConsumableIcon'")
+		(bind renderer "_isSimple ? 'ShipInfoConsumableIconSimple' : 'ShipInfoConsumableIcon'")
 		(bind count "_items.length")
 		(args
 			_slotItem = "_items[$index]"
@@ -881,7 +886,10 @@
 	)
 )
 
-(def element ShipInfoConsumableIcon (_slotItem:gfx, _iconSize:number=60, _optional:bool=false, _isPlane:bool=false)
+(def element ShipInfoConsumableIcon (_slotItem:gfx, _iconSize:number=60, _optional:bool=false, _isPlane:bool=false, _isPlayer:bool=false)
+	(scope
+		(var isTimeBased:bool = "_slotItem.lifecycleType == SC.Battle.CONSUMABLE_LIFECYCLE_TYPE.TIME_BASED")
+	)
 	(element ShipInfoItemIcon
 		_slotItem = "_slotItem"
 		_iconSize = "_iconSize"
@@ -890,11 +898,40 @@
 		(controller $Tooltip (renderer = 'BattleConsumableTooltip')
 			(args
 				_viewData = "_slotItem"
+				_isOwn = "_isPlayer"
+				_isPlaneConsumable = "_isPlane"
 			)
 			(macro DEFAULT_TOOLTIP_BEHAVIOUR "0")
 			(offset = {	x: 20, y: 0 })
 
 			(macro STATS_LOG_TOOLTIP_DURATION "!_isPlane ? SC.Common.SHIPINFO_STATISTICS.CONSUMABLE_OPEN : SC.Common.SHIPINFO_STATISTICS.SQUADRON_CONSUMABLE")
+		)
+	)
+	(block
+		(bind visible "isTimeBased")
+		(class $FullsizeAbsolute)
+		(style
+			(hitTest = false)
+			(backgroundImage = "'url:../consumables/features/time_based.png'")
+		)
+	)
+)
+
+(def element ShipInfoConsumableIconSimple (_slotItem:gfx, _iconSize:number=60, _optional:bool=false)
+	(scope
+		(var isTimeBased:bool = "_slotItem.lifecycleType == SC.Battle.CONSUMABLE_LIFECYCLE_TYPE.TIME_BASED")
+	)
+	(element ShipInfoItemIcon
+		_slotItem = "_slotItem"
+		_iconSize = "_iconSize"
+		_optional = "_optional"
+	)
+	(block
+		(bind visible "isTimeBased")
+		(class $FullsizeAbsolute)
+		(style
+			(hitTest = false)
+			(backgroundImage = "'url:../consumables/features/time_based.png'")
 		)
 	)
 )

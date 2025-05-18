@@ -579,7 +579,6 @@
 
 	(macro MOUSE_LMB_EXTERNAL_CALL 'direct.action' "['moduleST.select', [moduleComponent.id]]" "true")
 	(bindcall externalCall 'direct.action' "['moduleST.clearPreview', [_itemData]]" (event "evHideInfotip"))
-	(bindcall externalCall 'direct.action' "['setModuleSeen', [moduleComponent.id]]" init=false watch=false on='rollOver')
 
 	(dispatch evPreviewChanged args="{selection: $index, value: inPreview}" init=false dir="EventDirection.UP"(bind enabled "!isPurchased") (bind trigger "inPreview"))
 	(dispatch evPreviewChanged args="{selection: $index, value: false}" init=false dir="EventDirection.UP"(bind enabled "isPurchased") (bind trigger "isPurchased"))

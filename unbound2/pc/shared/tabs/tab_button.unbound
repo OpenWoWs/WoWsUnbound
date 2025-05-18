@@ -4,21 +4,22 @@
 	(controller $Animation
 		(bindcall play
 			duration = 0.12
-			from	 = { alpha: 0, y: 8 }
-			to		 = { alpha: 1, y: 0 }
+			from	 = { alpha: 0, visualOffsetY: 8 }
+			to		 = { alpha: 1, visualOffsetY: 0 }
 			action="kill"
 			easing = "Easing.quad_in"
 			(bind enabled "_isVisible")
 		)
 		(bindcall play
 			duration = 0.12
-			from	 = { alpha: 1, y: 0 }
-			to		 = { alpha: 0, y: -8 }
+			from	 = { alpha: 1, visualOffsetY: 0 }
+			to		 = { alpha: 0, visualOffsetY: -8 }
 			action="kill"
 			easing = "Easing.quad_out"
 			(bind enabled "!_isVisible")
 		)
 	)
+	(bind alpha "_isVisible ? 1 : 0" watch=false)
 )
 
 (def macro DEFAULT_CONTROL_STATE_ANIMATION_ALPHA (_trigger:expression, _alpha:expression)
@@ -50,7 +51,7 @@
 })
 
 (def element TabButton (_label:str='', _isSelected:bool=false, _isDisabled:bool=false, _width:str='',
-						_isNewMarker:bool=false, _isAttentionMarker:bool=false, _newContentCounter:number=0, _image:str='',
+						_isNewMarker:bool=false, _isAttentionMarker:bool=false, _isLevelUpMarker:bool=false, _newContentCounter:number=0, _image:str='',
 						_dispatchedEv:str='', _dispatchParams:gfx={}, _methods:array=[], _tooltipElement:str='SimpleStatusTooltip', _tooltipData:dict={}, _name:str='')
 	(scope
 		(macro MOUSE_HANDLER_SCOPE)
@@ -58,6 +59,7 @@
 		(var showMarkerNew:bool = "_isNewMarker")
 		(var showMarkerAttention:bool = "_isAttentionMarker && !_isNewMarker")
 		(var showMarkerCounter:bool = "_newContentCounter > 0 && !showMarkerNew && !showMarkerAttention")
+		(var showMarkerLevelUp:bool = "_isLevelUpMarker && !showMarkerCounter && !showMarkerNew && !showMarkerAttention")
 
 		(var state:number = "	_isDisabled	? SC.Ui_styles.BUTTON_STATE.DISABLED :
 								_isSelected	? SC.Ui_styles.BUTTON_STATE.SELECTED :
@@ -139,9 +141,6 @@
 
 			(block
 				(macro DEFAULT_CONTROL_MARKER_ANIMATION "showMarkerNew")
-				(style
-					(bind alpha "showMarkerNew ? 1 : 0" watch=false)
-				)
 
 				(element MarkerNew)
 			)
@@ -152,11 +151,18 @@
 			(style (position = "absolute") (right = "-MS") (top = 2px))
 			(block
 				(macro DEFAULT_CONTROL_MARKER_ANIMATION "showMarkerAttention")
-				(style
-					(bind alpha "showMarkerAttention ? 1 : 0" watch=false)
-				)
 
 				(element MarkerAttention)
+			)
+		)
+
+		
+		(block
+			(style (position = "absolute") (right = -20px) (top = "-S"))
+			(block
+				(macro DEFAULT_CONTROL_MARKER_ANIMATION "showMarkerLevelUp")
+
+				(element MarkerLevelUp)
 			)
 		)
 
@@ -168,7 +174,6 @@
 				(macro DEFAULT_CONTROL_MARKER_ANIMATION "showMarkerCounter")
 				(style
 					(position = "absolute")
-					(bind alpha "showMarkerCounter ? 1 : 0" watch=false)
 				)
 				(element MarkerNewCounter
 					_newContentCounter = "_newContentCounter"

@@ -8,9 +8,9 @@
 		(var title:str = "fireModeSlot.title")
 		(var description:str = "fireModeSlot.description")
 
-		(var attributesNegative:array = "_fireModeEntity ? _fireModeEntity.attributes.negative : fireModeSlot.attributes.negative")
-		(var attributesPositive:array = "_fireModeEntity ? _fireModeEntity.attributes.positive : fireModeSlot.attributes.positive")
-		(var attributesNeutral:array = "_fireModeEntity ? _fireModeEntity.attributes.neutral : fireModeSlot.attributes.neutral")
+		(var attributesNegative:array = "_fireModeEntity ? _fireModeEntity.attributes.negative : fireModeSlot.usageAttributes.negative")
+		(var attributesPositive:array = "_fireModeEntity ? _fireModeEntity.attributes.positive : fireModeSlot.usageAttributes.positive")
+		(var attributesNeutral:array = "_fireModeEntity ? _fireModeEntity.attributes.neutral : fireModeSlot.usageAttributes.neutral")
 
 		(var isAttributes:bool = "(attributesNegative.length + attributesPositive.length + attributesNeutral.length) > 0")
 

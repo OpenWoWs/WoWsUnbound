@@ -167,10 +167,6 @@
 					(block
 						(macro DEFAULT_CONTROL_MARKER_ANIMATION "showMarkerNew")
 
-						(style
-							(bind alpha "showMarkerNew ? 1 : 0" watch=false)
-						)
-
 						(element MarkerNew)
 					)
 				)
@@ -182,7 +178,6 @@
 						(macro DEFAULT_CONTROL_MARKER_ANIMATION "showMarkerCounter")
 						(style
 							(position = "absolute")
-							(bind alpha "showMarkerCounter ? 1 : 0" watch=false)
 						)
 						(element MarkerNewCounter
 							_newContentCounter = "_newContentCounter"

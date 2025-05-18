@@ -96,7 +96,6 @@
 		(controller $Instance renderer='TooltipSystemPriceDeficitLine'
 			(bind enabled "canBePurchased && priceDeficit != -1")
 			(args
-				_title = ''
 				_priceInfo	= "{currency: SC.Common.CURRENCIES.EVENTUM_6, basePrice: price, finalPrice: price, discountPercent: 0}"
 				_deficit = "priceDeficit"
 			)

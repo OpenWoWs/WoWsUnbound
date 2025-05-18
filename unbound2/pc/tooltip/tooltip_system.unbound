@@ -749,11 +749,11 @@
 )
 
 (def element TooltipSystemPriceTagLine (_title:str, _priceInfo:dict) layout=true
-	(style (flow = "horizontal") (width = "100%"))
+	(style (flow = "horizontal") (width = 100%))
 
 	(tf
-		(style (alpha = "TA") (leading = "-2") (marginRight = "S") (width = "100%"))
 		(class $TextDefaultNM)
+		(style (alpha = "TA") (leading = -2) (marginRight = "S") (width = 100%))
 		(bind text "_title")
 	)
 
@@ -766,23 +766,25 @@
 	)
 )
 
-(def element TooltipSystemPriceDeficitLine (_title:str, _priceInfo:dict, _deficit:number, _size:number = "SIZE.SMALL") layout=true
-	(style (flow = "horizontal") (width = "100%"))
+(def element TooltipSystemPriceDeficitLine (_priceInfo:dict, _deficit:number) layout=true
+	(style (flow = "horizontal") (width = 100%))
 
 	(tf
-		(style (alpha = "TA") (leading = "-2") (marginRight = "S") (width = "100%"))
 		(class $TextDefaultNM)
-		(bind text "_title")
+		(style
+			(width = 100%)
+			(leading = -2)
+			(marginRight = "S")
+			(textColor = "SC.Ui_styles.SERVICE_COLORS.RED")
+		)
+
+		(text = 'IDS_NOT_ENOUGH')
 	)
 
-	(controller $Instance renderer='PriceDeficit'
-		(bind enabled "_priceInfo")
-		(args
-			_priceInfo =	"_priceInfo"
-			_deficit =		"_deficit"
-			_hideIcon = 	true
-			_size =			"_size"
-		)
+	(element PriceTag
+		_priceInfo			= "{ currency: _priceInfo.currency, finalPrice: _deficit }"
+		_isDeficit			= true
+		_showDiscountTag 	= false
 	)
 )
 
@@ -825,11 +827,11 @@
 	)
 )
 
-(def element TooltipSystemCounterLine  (_title:str, _count:number, _measurement:str = '') layout=true
-	(style (flow = "horizontal") (width = "100%"))
+(def element TooltipSystemCounterLine (_title:str, _count:number, _measurement:str = '') layout=true
+	(style (flow = "horizontal") (width = 100%))
 
 	(tf
-		(style (width = "100%") (alpha = "TA") (leading = "-2") (marginRight = "S")) 
+		(style (width = 100%) (alpha = "TA") (leading = -2) (marginRight = "S")) 
 		(class $TextDefaultNM)
 		(bind text "_title")
 	)
@@ -841,11 +843,11 @@
 	)
 )
 
-(def element TooltipSystemCounterLineAdjoined  (_title:str, _count:number, _measurement:str = '') layout=true
-	(style (flow = "horizontal") (width = "100%"))
+(def element TooltipSystemCounterLineAdjoined (_title:str, _count:number, _measurement:str = '') layout=true
+	(style (flow = "horizontal") (width = 100%))
 
 	(tf
-		(style (alpha = "TA") (leading = "-2") (marginRight = "S"))
+		(style (alpha = "TA") (leading = -2) (marginRight = "S"))
 		(class $TextDefaultNM)
 		(bind text "_title")
 	)

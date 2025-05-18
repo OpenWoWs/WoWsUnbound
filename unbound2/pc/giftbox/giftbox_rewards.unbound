@@ -241,7 +241,7 @@
 
 (def element RewardContainerTooltipItem (_reward:dict, _disableWarning:bool = false, _isBattlePassSmallShipView:bool = false) layout=true dispatch_size_change=true
 	(scope
-		(var rewardItem:dict = "_reward	?	{   id:			_reward.id,
+		(var rewardItem:dict = "_reward	?	{	id:			_reward.id,
 												amount:		_reward.amount,
 												name:		_reward.name,
 												type:		_reward.type,
@@ -442,7 +442,7 @@
 	(element BattleCardComponentTooltipHeader
 		_iconPath = "iconPath"
 		_displayName = "displayName"
-		_level = "level"
+		_levelToDisplay = "level"
 		_type = "cardType"
 	)
 )
@@ -1793,8 +1793,6 @@
 	)
 	(style (hitTest = "false") (width = "340px"))
 	(macro TOOLTIP_SYSTEM_DEFAULT_BACKGROUND)
-
-	(trace "_rewards")
 
 	(element TOOLTIP_SYSTEM_DEFAULT_CONTAINER
 		(element TooltipSystemHeaderSubheaderText

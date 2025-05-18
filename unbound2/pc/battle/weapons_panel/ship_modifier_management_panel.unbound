@@ -57,7 +57,12 @@
 	(macro MOUSE_LMB_EXTERNAL_CALL 'direct.action' "['battle.useConsumable', [{consumableIndex: consumableIndex, squadronId: -1}]]")
 
 	(controller $Tooltip (renderer = 'BattleConsumableTooltip')
-		(args _battleConsumable="battleConsumable" _viewData="battleConsumable.viewData" _parameterOwnerId="consumableEntity.id")
+		(args
+			_battleConsumable = "battleConsumable"
+			_viewData = "battleConsumable.viewData"
+			_parameterOwnerId = "consumableEntity.id"
+			_isOwn = "true"
+		)
 		(align="bottom|center")
 		(position="border")
 		(offset=[0, 20])

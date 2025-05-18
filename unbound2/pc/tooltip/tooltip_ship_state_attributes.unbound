@@ -1,7 +1,8 @@
 (def element ShipStateAttributesTooltip (_stateEntity:gfx) layout=true
 	(scope
 		(var battleConsumable:gfx = "_stateEntity.battleConsumable")
-		(var attributes:gfx = "battleConsumable ? battleConsumable.viewData.attributes : _stateEntity.attributes")
+		(var attributes:gfx = "battleConsumable ? battleConsumable.viewData.usageAttributes : _stateEntity.attributes")
+		(var activeAttributes:gfx = "battleConsumable ? battleConsumable.viewData.activeAttributes : null")
 		(var state:gfx = "_stateEntity.state")
 		(var dataComponent:gfx = "_stateEntity.dataComponent")
 
@@ -23,7 +24,7 @@
 
 		(var attributesNegative:array = "attributes ? attributes.negative : []" (event "attributes.evChanged"))
 		(var attributesPositive:array = "attributes ? attributes.positive : []" (event "attributes.evChanged"))
-		(var attributesNeutral:array = "attributes ? attributes.neutral : []" (event "attributes.evChanged") (event "battleConsumable.evConsumeNumChanged") (event "battleConsumable.evReloadTimeCoeffChanged") (event "battleConsumable.evWorkTimeCoeffChanged"))
+		(var attributesNeutral:array = "attributes ? attributes.neutral : []" (event "attributes.evChanged") (event "battleConsumable.evMaxChargeChanged") (event "battleConsumable.evReloadTimeCoeffChanged") (event "battleConsumable.evWorkTimeCoeffChanged"))
 		(var attributesVisible:bool = "attributesNegative.length > 0 || attributesPositive.length > 0 || attributesNeutral.length > 0")
 
 		(var iconPath:str = "	state.type == SC.Battle.ENTITY_STATES.SHIP_PARAMS_CHANGE_BY_WEATHER				? 'url:../battle_hud/indicators/weather/' + data['weatherGpName'] + '.png' :
@@ -162,15 +163,31 @@
 		)
 		
 		(block
-			(bind visible "attributesVisible")
-			(style (width = 100%))
-			(controller $Instance renderer='TooltipSystemParamsModifiersList'
-				(bind enabled "attributesVisible")
-				(args
-					_attributesNegative="attributesNegative"
-					_attributesPositive="attributesPositive"
-					_attributesNeutral="attributesNeutral"
-					_ownerId="ownerId"
+			(class $ParametersPanel)
+			(element TOOLTIP_SYSTEM_PARAMS_WRAPPER
+				(element TOOLTIP_SYSTEM_PARAMS_BLOCK
+					(bind visible "attributesVisible")
+					(style (width = 100%))
+					(controller $Instance renderer='TooltipSystemParamsModifiersListTTX'
+						(bind enabled "activeAttributes != null")
+						(args
+							_attributesNegative="activeAttributes.negative"
+							_attributesPositive="activeAttributes.positive"
+							_attributesNeutral="activeAttributes.neutral"
+							_ownerId="ownerId"
+						)
+
+					)
+
+					(controller $Instance renderer='TooltipSystemParamsModifiersListTTX'
+						(bind enabled "attributesVisible")
+						(args
+							_attributesNegative="attributesNegative"
+							_attributesPositive="attributesPositive"
+							_attributesNeutral="attributesNeutral"
+							_ownerId="ownerId"
+						)
+					)
 				)
 			)
 		)

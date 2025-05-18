@@ -129,6 +129,7 @@
 	)
 
 	(block
+		(name = 'ModalWindowCloseButton')
 		(style (marginLeft = "XXS") (marginTop = "XS"))
 		(element CloseButton
 			_isDisabled = true

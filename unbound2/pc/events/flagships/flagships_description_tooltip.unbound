@@ -16,18 +16,6 @@
 		(element TooltipSystemHorizontalDivider)
 		(element TooltipSystemDescriptionText _descriptionText = "'IDS_FLAGSHIPS_BATTLESTAT_DESC_' + toUpper(_name)")
 
-		(element TooltipSystemHorizontalDivider)
-		(element TooltipSystemSecondaryHeaderText _headerText = 'IDS_FLAGSHIPS_BUFFS_HEADER')
-		
-		(element TooltipSystemHorizontalDivider)
-		(element TOOLTIP_SYSTEM_PARAMS_WRAPPER
-			(element TOOLTIP_SYSTEM_PARAMS_BLOCK
-				(block
-					(style (width = 100%) (marginTop = "S") (marginBottom = "S"))
-					(element TooltipSystemDescriptionText _descriptionText = "'IDS_FLAGSHIPS_BATTLESTAT_' + toUpper(_name) + '_BUFF'")
-				)
-			)
-		)
 
 		(element TooltipSystemHorizontalDivider)
 		(element TooltipSystemSecondaryHeaderText _headerText = 'IDS_FLAGSHIPS_NERFS_HEADER')
@@ -38,6 +26,18 @@
 				(block
 					(style (width = 100%) (marginTop = "S") (marginBottom = "S"))
 					(element TooltipSystemDescriptionText _descriptionText = "'IDS_FLAGSHIPS_BATTLESTAT_' + toUpper(_name) + '_NERF'")
+				)
+			)
+		)
+		(element TooltipSystemHorizontalDivider)
+		(element TooltipSystemSecondaryHeaderText _headerText = 'IDS_FLAGSHIPS_CLASS_FEATURE_HEADER')
+		
+		(element TooltipSystemHorizontalDivider)
+		(element TOOLTIP_SYSTEM_PARAMS_WRAPPER
+			(element TOOLTIP_SYSTEM_PARAMS_BLOCK
+				(block
+					(style (width = 100%) (marginTop = "S") (marginBottom = "S"))
+					(element TooltipSystemDescriptionText _descriptionText = "'IDS_FLAGSHIPS_BATTLESTAT_' + toUpper(_name) + '_CLASS_FEATURE'")
 				)
 			)
 		)

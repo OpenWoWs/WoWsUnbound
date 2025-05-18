@@ -413,10 +413,10 @@
 						)
 						(block
 							(style 
-								(width = "27")
-								(height = "27")
+								(width = 27)
+								(height = 27)
 								(marginTop = "-S")
-								(marginBottom = "-6px")
+								(marginBottom = -6px)
 								(marginRight = "XS")
 								(bind backgroundImage "shipIconPath")
 							)
@@ -579,9 +579,12 @@
 				(hgap = "MS")
 				(align = "center|middle")
 			)
-			(controller $Repeat renderer='BattleCardItemSlot'
+			(controller $Repeat renderer='BattleCardItemSlotBattle'
 				(bind count "isAvailable ? selectorMaxCount : selectedCardsCollectionLength")
-				(args _cardCollection="selectedCardsCollection" _isAvailable="isAvailable")
+				(args
+					_cardCollection="selectedCardsCollection"
+					_isAvailable="isAvailable"
+				)
 			)
 		)
 		(block
@@ -600,7 +603,7 @@
 			(style (width = 100%) (padding = "MS"))
 
 			(block
-				(style (width = 100%) (height = "60px") (align = "center|middle"))
+				(style (width = 100%) (height = 60px) (align = "center|middle"))
 				(tf
 					(class $TextDefaultBold19NM)
 					(alpha = "TS")
@@ -669,7 +672,7 @@
 			(style (width = 100%) (padding = "MS"))
 
 			(block
-				(style (width = 100%) (height = "60px") (align = "center|middle"))
+				(style (width = 100%) (height = 60px) (align = "center|middle"))
 				(tf
 					(class $TextDefaultBold19NM)
 					(alpha = "TS")

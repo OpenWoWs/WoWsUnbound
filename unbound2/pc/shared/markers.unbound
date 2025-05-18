@@ -59,3 +59,12 @@
 		(bind backgroundImage "'url:../animations/spine/sparks/sparks.skel'")
 	)
 )
+
+(def element MarkerLevelUp () layout=true
+	(style
+		(hitTest = false)
+		(width = 22px)
+		(height = 22px)
+		(backgroundImage = 'url:../service_kit/markers/marker_levelup.png')
+	)
+)

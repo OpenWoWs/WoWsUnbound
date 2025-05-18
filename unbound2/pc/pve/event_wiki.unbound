@@ -141,7 +141,7 @@
 	)
 )
 
-(def element WikiContent (_content:gfx) layout=true
+(def element WikiContent (_content:gfx, _topicName:str) layout=true
 	(scope
 		(event evCategoryChanged)
 		(event evTabChanged)
@@ -245,7 +245,7 @@
 			(bind width "!withPicture ? 0 : isSmall ? 300 : 400")
 			(marginLeft = "20px")
 			(bind height "isSmall ? 300 : 400")
-			(bind backgroundImage "'url:../event_wiki/' + toLower(categoryName) + '/' + toLower(selectedElementName) + '.png'")
+			(bind backgroundImage "'url:../event_wiki/' + toUpper(_topicName) + '/' + toLower(categoryName) + '/' + toLower(selectedElementName) + '.png'")
 		)
 	)
 )
@@ -293,7 +293,7 @@
 		(style
 			(align = "center")
 		)
-		(element WikiContent _content="topicContent[selectedTab]"
+		(element WikiContent _content="topicContent[selectedTab]" _topicName="_topicName"
 			(dispatch evTabChanged args="{'index': $event.index}" dir=2 (event "evTabSelected"))
 		)
 	)

@@ -134,11 +134,6 @@
 
 		(block
 			(macro DEFAULT_CONTROL_MARKER_ANIMATION "isNew")
-
-			(style
-				(bind alpha "isNew ? 1 : 0" watch=false)
-			)
-
 			(element MarkerNew)
 		)
 	)

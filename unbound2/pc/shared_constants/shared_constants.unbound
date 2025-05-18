@@ -1289,6 +1289,13 @@
 
 			ALL: [0, 1, 2, 3, 4, 5, 6, 7]
 		}, 
+		CONSUMABLE_LIFECYCLE_TYPE: {
+			COUNT_BASED: 0,
+			TIME_BASED: 1,
+
+
+			ALL: [0, 1]
+		}, 
 		CONSUMABLE_STATES: {
 			READY: 0,
 			SELECTED: 1,
@@ -1296,11 +1303,12 @@
 			RELOAD: 3,
 			NO_AMMO: 4,
 			PREPARATION: 5,
+			REGENERATION: 6,
 
 
-			ALL: [0, 1, 2, 3, 4, 5], 
-			WITH_TIME_STATES: [2, 3, 5], 
-			RELOADING_STATES: [3, 5]
+			ALL: [0, 1, 2, 3, 4, 5, 6], 
+			WITH_TIME_STATES: [2, 3, 5, 6], 
+			RELOADING_STATES: [3, 5, 6]
 		}, 
 		CUSTOM_BATTLE_ELEMENTS: {
 			MULTYTEAMS: 1,
@@ -2063,7 +2071,8 @@
 			CHAT_AVAILABLE: ['RandomBattle', 'CooperativeBattle', 'PVEBattle'], 
 			DYNAMIC_DIVISION_AVAILABLE: ['CooperativeBattle', 'RandomBattle', 'EventBattle', 'BrawlBattle'], 
 			BATTLE_TYPES_WITH_BATTLECARD: ['PVEBattle', 'EventBattle'], 
-			WITH_MASTERIES: ['RandomBattle']
+			WITH_MASTERIES: ['RandomBattle'], 
+			WITH_CLASSIFIED_DOCUMENTS: ['PVEBattle']
 		}, 
 		NATION: {
 			RUSSIA: 'Russia',
@@ -2744,9 +2753,20 @@
 			INFO: 2,
 			GROUP: 3,
 			UNLOCK_BATTLE: 4,
+			CARD_LEVELING: 5,
 
+			VALUE_TO_NAME: {
+				'0': 'RESEARCH', 
+				'1': 'BUY', 
+				'2': 'INFO', 
+				'3': 'GROUP', 
+				'4': 'UNLOCK_BATTLE', 
+				'5': 'CARD_LEVELING'
+			},
 
-			ALL: [0, 1, 2, 3, 4]
+			ALL: [0, 1, 2, 3, 4, 5], 
+			WITH_GAME_PARAMS: [1, 0, 2, 4], 
+			WITH_GAME_PARAMS_AND_LEVEL: [5]
 		}, 
 		SPECTATOR_STATE: {
 			PRE_SPECTATOR: 1,
@@ -2791,11 +2811,10 @@
 			COLLECTION: 'Collection',
 			TOKEN: 'Token',
 			EXTERIOR: 'Exterior',
-			RANDOM_REWARD: 'RandomReward',
 			UNIVERSAL_COLLECTION_CARD: 'UniversalCollectionCard',
 
 
-			ALL: ['Lootbox', 'Resource', 'ResourceCoeff', 'Collection', 'Token', 'Exterior', 'RandomReward', 'UniversalCollectionCard']
+			ALL: ['Lootbox', 'Resource', 'ResourceCoeff', 'Collection', 'Token', 'Exterior', 'UniversalCollectionCard']
 		}, 
 		REWARD_SUBTYPE: {
 			LOOTBOX_LUCKY: 'PCL004_Lucky',
@@ -3523,6 +3542,17 @@
 
 
 			ALL: ['isAutoShow']
+		}, 
+		BATTLE_CARD_STATISTICS: {
+			NO_AUTO_SHOW_OPENED: 'ub2:battle_card_selector_no_auto_show_opened',
+			NO_AUTO_SHOW_CLOSED: 'ub2:battle_card_selector_no_auto_show_closed',
+			BATTLE_AUTO_SHOW_TURN_OFF: 'ub2:battle_card_selector_auto_show_off',
+			BATTLE_AUTO_SHOW_TURN_ON: 'ub2:battle_card_selector_auto_show_on',
+			DOCK_AUTO_SHOW_TURN_OFF: 'ub2:dock_card_selector_auto_show_off',
+			DOCK_AUTO_SHOW_TURN_ON: 'ub2:dock_card_selector_auto_show_on',
+
+
+			ALL: ['ub2:battle_card_selector_no_auto_show_opened', 'ub2:battle_card_selector_no_auto_show_closed', 'ub2:battle_card_selector_auto_show_off', 'ub2:battle_card_selector_auto_show_on', 'ub2:dock_card_selector_auto_show_off', 'ub2:dock_card_selector_auto_show_on']
 		}
 	}, 
 	Context_guiding_tip: {
@@ -3592,11 +3622,12 @@
 			CHRISTMAS_TREE: 63,
 			DETONATION_REMOVAL_FLAG: 64,
 			TEMP_BRANCHES: 65,
+			ADECK: 66,
 
 
-			ALL: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65], 
+			ALL: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66], 
 			REPEAT: [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33], 
-			COMMON_CHAINS: [34, 35, 36, 37, 38, 39, 40, 41, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64]
+			COMMON_CHAINS: [34, 35, 36, 37, 38, 39, 40, 41, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 66]
 		}, 
 		TIP_TYPE: {
 			NONE: 0,
@@ -3771,9 +3802,10 @@
 			TEMP_BRANCH_FILTER_PANEL_TIP: 295,
 			CHRISTMAS_TREE_DECORATION_INSTALL: 297,
 			DETONATION_REMOVAL_TIP: 299,
+			ADECK_INTRO: 300,
 
 
-			ALL: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 64, 65, 66, 70, 71, 72, 73, 74, 75, 76, 77, 79, 80, 81, 82, 83, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 144, 145, 146, 250, 251, 252, 253, 254, 255, 256, 258, 259, 260, 262, 263, 264, 265, 266, 268, 269, 270, 271, 272, 273, 274, 275, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 291, 292, 293, 294, 295, 297, 299]
+			ALL: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 64, 65, 66, 70, 71, 72, 73, 74, 75, 76, 77, 79, 80, 81, 82, 83, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 144, 145, 146, 250, 251, 252, 253, 254, 255, 256, 258, 259, 260, 262, 263, 264, 265, 266, 268, 269, 270, 271, 272, 273, 274, 275, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 291, 292, 293, 294, 295, 297, 299, 300]
 		}
 	}, 
 	Dogtags_classifications: {
@@ -4040,9 +4072,10 @@
 		DATA_PROVIDER_NAME: {
 			SHIP_DESTRUCTION: 'gf_ub2_ship_destruction',
 			ADVENT_CALENDAR: 'gf_ub2_port_advent',
+			ADMIRALS_DECK: 'gf_ub2_port_adeck',
 
 
-			ALL: ['gf_ub2_ship_destruction', 'gf_ub2_port_advent']
+			ALL: ['gf_ub2_ship_destruction', 'gf_ub2_port_advent', 'gf_ub2_port_adeck']
 		}
 	}, 
 	Http_status: {
@@ -5005,9 +5038,11 @@
 			CLANSTARS: 'clanstars',
 			CLANPATROLS: 'clanpatrols',
 			ADVENT: 'advent',
+			ADECK: 'adeck',
+			MERCATOR: 'mercator',
 
 
-			ALL: ['game_server', 'metashop', 'shipyard', 'clans', 'auctions', 'warehouse', 'referral', 'seabattle', 'premiumshop', 'wgnc', 'clanstars', 'clanpatrols', 'advent']
+			ALL: ['game_server', 'metashop', 'shipyard', 'clans', 'auctions', 'warehouse', 'referral', 'seabattle', 'premiumshop', 'wgnc', 'clanstars', 'clanpatrols', 'advent', 'adeck', 'mercator']
 		}, 
 		SYS_MESSAGE_BEHAVIOUR: {
 			NONE: 0,
@@ -5358,6 +5393,12 @@
 
 
 			ALL: [0, 1, 2, 3]
+		}, 
+		EVENTS_TO_DRAW_BANNER: {
+			PCVE039: 'PCVE039',
+
+
+			ALL: ['PCVE039']
 		}
 	}, 
 	Ui_prefs: {
@@ -5488,6 +5529,7 @@
 			NO_ICON: 'no_icon',
 			PVE_MODIFIER: 'pve_modifier',
 			NOTIFICATION: 'notification',
+			TIME_BASED: 'time_based',
 			TEMP_BRANCH: 'temp_branch',
 			TEMP_BRANCH_ATTENTION: 'temp_branch_attention',
 			AUTOPICK: 'autopick',
@@ -5496,7 +5538,7 @@
 			DEFEAT: 'defeat',
 
 
-			ALL: ['default', 'check', 'date', 'date_attention', 'attention', 'negative', 'warning', 'lock', 'mouse_left_click', 'mouse_left_double_click', 'mouse_right_click', 'mouse_scroll', 'hidden', 'reward_available', 'reward_default', 'campaign_reward', 'container_reward', 'brotherhood_reward', 'sale', 'info', 'linked', 'repainted', 'update', 'epic_skill', 'unique_crew', 'advanced_crew', 'in_battle', 'recommended', 'retraining', 'early_access', 'out_battle', 'to_armory', 'infinite', 'permoboost_active', 'abuse', 'abuse_normal', 'abuse_suspect', 'abuse_confirmed', 'key_target', 'battlepass', 'calendar', 'calendar_attention', 'burst_fire', 'no_icon', 'pve_modifier', 'notification', 'temp_branch', 'temp_branch_attention', 'autopick', 'autousage', 'victory', 'defeat']
+			ALL: ['default', 'check', 'date', 'date_attention', 'attention', 'negative', 'warning', 'lock', 'mouse_left_click', 'mouse_left_double_click', 'mouse_right_click', 'mouse_scroll', 'hidden', 'reward_available', 'reward_default', 'campaign_reward', 'container_reward', 'brotherhood_reward', 'sale', 'info', 'linked', 'repainted', 'update', 'epic_skill', 'unique_crew', 'advanced_crew', 'in_battle', 'recommended', 'retraining', 'early_access', 'out_battle', 'to_armory', 'infinite', 'permoboost_active', 'abuse', 'abuse_normal', 'abuse_suspect', 'abuse_confirmed', 'key_target', 'battlepass', 'calendar', 'calendar_attention', 'burst_fire', 'no_icon', 'pve_modifier', 'notification', 'time_based', 'temp_branch', 'temp_branch_attention', 'autopick', 'autousage', 'victory', 'defeat']
 		}, 
 		BUTTON_TYPE: {
 			DEFAULT: 'default',
@@ -5699,6 +5741,7 @@
 			CONTROLS_SPECTATOR: 'controls_spectator',
 			PORTAL: 'portal',
 			TRANSPARENT_WINDOW: 'transparent_window',
+			ADECK: 'adeck',
 			SSE: 'sse',
 			SSE_ALL: 'sse_all',
 			SSE_SHIP_ACES: 'sse_ship_aces',
@@ -5770,6 +5813,7 @@
 				'controls_spectator': 'CONTROLS_SPECTATOR', 
 				'portal': 'PORTAL', 
 				'transparent_window': 'TRANSPARENT_WINDOW', 
+				'adeck': 'ADECK', 
 				'sse': 'SSE', 
 				'sse_all': 'SSE_ALL', 
 				'sse_ship_aces': 'SSE_SHIP_ACES', 
@@ -5785,7 +5829,7 @@
 				'ny_ship_preview': 'NY_SHIP_PREVIEW'
 			},
 
-			ALL: ['port', 'barge', 'shipyard', 'balancer', 'ship_preview', 'default_ship_preview', 'newbie_gifts', 'collection_preview', 'main', 'management', 'exterior', 'research', 'profile', 'clans', 'event_hub', 'event_hub_equipment', 'event_hub_progress', 'event_hub_collection', 'permoflage', 'camouflage', 'ship_destruction', 'signals', 'ensign', 'naval_flag', 'leveling', 'achievements', 'ranks', 'ranks_carousel', 'ranks_rewards', 'collections', 'summary', 'mini_dockyard', 'battle_type_chooser_show', 'battle_type_chooser_hide', 'constructor', 'patch', 'emblem', 'symbol', 'bgShape', 'bgColor', 'bgBorderColor', 'bgMaterial', 'monitor', 'graphics', 'sound', 'battle', 'camera', 'mouse', 'controls', 'other', 'controls_ships', 'controls_aviation', 'controls_chat', 'controls_spectator', 'portal', 'transparent_window', 'sse', 'sse_all', 'sse_ship_aces', 'sse_open_ended', 'sse_newbie_quests', 'campaigns', 'campaigns_choose_campaign', 'campaigns_choose_mission', 'campaigns_choose_task', 'strategic_actions', 'ny_christmas_tree', 'ny_ship_token', 'ny_ship_preview'], 
+			ALL: ['port', 'barge', 'shipyard', 'balancer', 'ship_preview', 'default_ship_preview', 'newbie_gifts', 'collection_preview', 'main', 'management', 'exterior', 'research', 'profile', 'clans', 'event_hub', 'event_hub_equipment', 'event_hub_progress', 'event_hub_collection', 'permoflage', 'camouflage', 'ship_destruction', 'signals', 'ensign', 'naval_flag', 'leveling', 'achievements', 'ranks', 'ranks_carousel', 'ranks_rewards', 'collections', 'summary', 'mini_dockyard', 'battle_type_chooser_show', 'battle_type_chooser_hide', 'constructor', 'patch', 'emblem', 'symbol', 'bgShape', 'bgColor', 'bgBorderColor', 'bgMaterial', 'monitor', 'graphics', 'sound', 'battle', 'camera', 'mouse', 'controls', 'other', 'controls_ships', 'controls_aviation', 'controls_chat', 'controls_spectator', 'portal', 'transparent_window', 'adeck', 'sse', 'sse_all', 'sse_ship_aces', 'sse_open_ended', 'sse_newbie_quests', 'campaigns', 'campaigns_choose_campaign', 'campaigns_choose_mission', 'campaigns_choose_task', 'strategic_actions', 'ny_christmas_tree', 'ny_ship_token', 'ny_ship_preview'], 
 			CAROUSEL_VISIBLE: ['main', 'management', 'exterior', 'ny_ship_preview'], 
 			TTX_VISIBLE: ['main', 'management', 'exterior', 'research', 'ny_ship_preview'], 
 			NOT_AVAILABLE_FROM_WEB: ['balancer', 'patch', 'emblem', 'symbol', 'constructor', 'bgShape', 'bgColor', 'bgBorderColor', 'bgMaterial', 'monitor', 'graphics', 'sound', 'controls', 'battle', 'camera', 'mouse', 'other', 'portal', 'controls_ships', 'controls_aviation', 'controls_chat', 'controls_spectator'], 
@@ -5807,6 +5851,7 @@
 			BUY_GOLD: 'buyGold',
 			BUY_PREM: 'buyPrem',
 			KONGZHONG: 'kongzhong',
+			DWH_EXPORTER_HOST: 'dwhExporterHost',
 			CLAN_INVITES: 'clanInvites',
 			CLANS_IN_GAME: 'clansInGame',
 			CLAN_WARS_IN_GAME: 'clanWarsInGame',
@@ -5839,13 +5884,15 @@
 			UNLOCK_PINATA_ABILS: 'unlockPinataAbils',
 			MERCATOR_HOST: 'mercatorHost',
 			VORTEX_HOST: 'vortexHost',
+			ADECK_HOST: 'adeckHost',
+			MARKER_HOST: 'markerHost',
 			ACCOUNT_TRANSFER_START_TRANSFER_MICROSOFT: 'account_transfer_StartTransfer_Miscrosoft',
 			ACCOUNT_TRANSFER_START_TRANSFER_STEAM: 'account_transfer_StartTransfer_Steam',
 			ACCOUNT_TRANSFER_START_TRANSFER_EGS: 'account_transfer_StartTransfer_EGS',
 			ACCOUNT_TRANSFER_START_TRANSFER: 'account_transfer_StartTransfer',
 
 
-			ALL: ['reportError', 'forum', 'personal', 'register', 'passwordRecovery', 'wargamingNet', 'wowsWebsite', 'eula', 'support', 'accountConflict', 'buyGold', 'buyPrem', 'kongzhong', 'clanInvites', 'clansInGame', 'clanWarsInGame', 'patrolsInGame', 'rulesAboutClanSeasonInGame', 'extraLicences', 'guidesInGame', 'warehouseInGame', 'shopInGame', 'metaShop', 'buyGoldInGame', 'newsInGame', 'newsAllInGame', 'newsVersionInGame', 'buyTotalPremiumInGame', 'playTogetherInGame', 'buyGoldAndPremiumInGame', 'catalogueInGame', 'premshopInMetashopInGame', 'buyGoldInMetashopInGame', 'buyGoldAndPremiumEgsInGame', 'buyTotalPremiumEgsInGame', 'metaShopRvr', 'shipyardInGame', 'shipyardServiceURL', 'playerStats', 'lootboxContents', 'battlePassShopInGame', 'metaShopCollections', 'unlockPinataAbils', 'mercatorHost', 'vortexHost', 'account_transfer_StartTransfer_Miscrosoft', 'account_transfer_StartTransfer_Steam', 'account_transfer_StartTransfer_EGS', 'account_transfer_StartTransfer'], 
+			ALL: ['reportError', 'forum', 'personal', 'register', 'passwordRecovery', 'wargamingNet', 'wowsWebsite', 'eula', 'support', 'accountConflict', 'buyGold', 'buyPrem', 'kongzhong', 'dwhExporterHost', 'clanInvites', 'clansInGame', 'clanWarsInGame', 'patrolsInGame', 'rulesAboutClanSeasonInGame', 'extraLicences', 'guidesInGame', 'warehouseInGame', 'shopInGame', 'metaShop', 'buyGoldInGame', 'newsInGame', 'newsAllInGame', 'newsVersionInGame', 'buyTotalPremiumInGame', 'playTogetherInGame', 'buyGoldAndPremiumInGame', 'catalogueInGame', 'premshopInMetashopInGame', 'buyGoldInMetashopInGame', 'buyGoldAndPremiumEgsInGame', 'buyTotalPremiumEgsInGame', 'metaShopRvr', 'shipyardInGame', 'shipyardServiceURL', 'playerStats', 'lootboxContents', 'battlePassShopInGame', 'metaShopCollections', 'unlockPinataAbils', 'mercatorHost', 'vortexHost', 'adeckHost', 'markerHost', 'account_transfer_StartTransfer_Miscrosoft', 'account_transfer_StartTransfer_Steam', 'account_transfer_StartTransfer_EGS', 'account_transfer_StartTransfer'], 
 			CLANS_PROJECTS: ['clanInvites', 'clansInGame', 'clanWarsInGame', 'rulesAboutClanSeasonInGame']
 		}, 
 		WINDOW_STATE: {

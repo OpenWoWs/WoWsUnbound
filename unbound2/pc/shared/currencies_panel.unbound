@@ -158,7 +158,7 @@
 			)
 			(macro DEFAULT_TOOLTIP_BEHAVIOUR "0")
 		)
-	)	
+	)
 )
 
 (def element CurrenciesPanelPrices (_priceInfo:dict, _isExpanded:bool=false)
@@ -190,7 +190,9 @@
 																				: 0" 	(event	"accountResourceComponent.accountResource.evChangedGold")
 																						(event	"accountResourceComponent.accountResource.evChangedCredit")
 																						(event	"accountResourceComponent.accountResource.evChangedFreeXP")
-																						(event	"accountResourceComponent.accountResource.evChangedEliteXP"))
+																						(event	"accountResourceComponent.accountResource.evChangedEliteXP")
+																						(event	"accountResourceComponent.accountResource.evChangedBattlecardum")
+																						)
 		(var accountResource:dict = "{currency: _currency, finalPrice: accountResourcePrice}")
 
 		(var priceSum:number = "max(accountResourcePrice + _finalPrice, 0)")
@@ -451,5 +453,62 @@
 			_expPreviousShip = "expPreviousShip"
 			_isExpanded = "_isExpanded"
 		)
+	)
+)
+
+(def element CurrenciesPanelSimple (_priceInfo:dict, _width:number=30) dispatch_size_change=true
+	(scope
+		(event evRollOver)
+		(event evRollOut)
+		(event evMouseDown)
+		(event evMouseUp)
+
+		(var rollOver:bool = "$event.isOver" init=false watch=false (event "evRollOver") (event "evRollOut"))
+		(var mouseDown:bool = "$event.isDown" init=false watch=false (event "evMouseDown") (event "evMouseUp"))
+	)
+
+	(dispatch evRollOver		on='rollOver'		args="{isOver: true}")
+	(dispatch evRollOut			on='rollOut'		args="{isOver: false}")
+
+	(style
+		(flow = "horizontal")
+		(bind minWidth "_width")
+		(backgroundColor = 0x01000000)
+	)
+
+	(block
+		(class $FullsizeAbsolute)
+		(style
+			(alpha = 0.17)
+			(scale9grid = 2)
+			(hitTest = false)
+			(backgroundImage = 'url:../service_kit/frames/one_pixel_frame.png')
+		)
+	)
+
+	(hblock
+		(style
+			(hitTest = false)
+			(width = 100%)
+			(align = "center")
+			(padding = "SXS")
+		)
+		(controller $Instance renderer='PriceTag'
+			(args
+				_priceInfo = "_priceInfo"
+				_size = "SIZE.MEDIUM"
+				_isColumnAlign = true
+			)
+		)
+	)
+
+	(controller $Tooltip
+		(bind renderer "'CurrencyWidgetTooltip'")
+		(args
+			_currency = "_priceInfo.currency"
+			_amount = "_priceInfo.finalPrice"
+			_noMouseInstruction = true
+		)
+		(macro DEFAULT_TOOLTIP_BEHAVIOUR "0")
 	)
 )

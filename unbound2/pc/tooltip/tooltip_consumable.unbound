@@ -11,16 +11,27 @@
 		(var abilityEntity:gfx = "$datahub.getEntity(_abilityEntityId)")
 		(var abilityComponent:gfx = "abilityEntity ? abilityEntity.ability : null")
 
+		(var isTimeBased:bool = "abilityComponent ? abilityComponent.lifecycleType == SC.Battle.CONSUMABLE_LIFECYCLE_TYPE.TIME_BASED : false" (event "abilityComponent.evLifecycleTypeChanged"))
+
 		(var isInstalled:bool = "abilityComponent ? abilityComponent.isInstalled : false" (event "abilityComponent.evIsInstalledChanged"))
 
-		(var attributesComponent:gfx = "abilityEntity ? abilityComponent.viewData.attributes : null" (event "abilityComponent.evChanged"))
-		(var attributesNegative:array = "attributesComponent ? attributesComponent.negative : []"	(event "abilityComponent.evChanged"))
-		(var attributesNeutral:array = "attributesComponent ? attributesComponent.neutral : []"		(event "abilityComponent.evChanged"))
-		(var attributesPositive:array = "attributesComponent ? attributesComponent.positive : []"	(event "abilityComponent.evChanged"))
+		(var usageAttributes:gfx = "abilityEntity ? abilityComponent.viewData.usageAttributes : null" (event "abilityComponent.evChanged"))
+		(var usageNegative:array = "usageAttributes ? usageAttributes.negative : []"	(event "abilityComponent.evChanged"))
+		(var usageNeutral:array = "usageAttributes ? usageAttributes.neutral : []"		(event "abilityComponent.evChanged"))
+		(var usagePositive:array = "usageAttributes ? usageAttributes.positive : []"	(event "abilityComponent.evChanged"))
+
+		(var activeAttributes:gfx = "abilityEntity ? abilityComponent.viewData.activeAttributes : null" (event "abilityComponent.evChanged"))
+		(var activeNegative:array = "activeAttributes ? activeAttributes.negative : []"	(event "abilityComponent.evChanged"))
+		(var activeNeutral:array = "activeAttributes ? activeAttributes.neutral : []"		(event "abilityComponent.evChanged"))
+		(var activePositive:array = "activeAttributes ? activeAttributes.positive : []"	(event "abilityComponent.evChanged"))
+
+		(var hasActiveAttributes:bool = "activeNegative.length + activeNeutral.length + activePositive.length != 0")
 
 		(var slotId:str = "abilityComponent ? abilityComponent.slotId : 0")
 		(var isSquadronAbility:bool = "abilityComponent ? abilityComponent.isSquadronAbility : false")
 		(var toggle:bool = "abilityComponent ? abilityComponent.toggle : false")
+
+		(var commandName:str = "abilityComponent ? abilityComponent.commandName : ''" (event "abilityComponent.evCommandNameChanged"))
 
 		(var abilitiesBySlotCollection:gfx = "$datahub.getCollection(CC.ability).getChildByPath('shipAbilsBySlotId.' + slotId)")
 		(var hasAlternatives:bool = "abilitiesBySlotCollection && abilitiesBySlotCollection.items.length > 1 && !isShipLocked && !isInFormation")
@@ -123,10 +134,30 @@
 
 		(element TooltipSystemHorizontalDivider)
 
+		(block
+			(bind visible "hasActiveAttributes")
+			(style (width = "100%"))
+			(element TooltipSystemParamsModifiersList
+				_attributesPositive =	"activePositive"
+				_attributesNeutral =	"activeNeutral"
+				_attributesNegative =	"activeNegative"
+			)
+
+			(element TooltipSystemHorizontalDivider)
+		)
+
+		(element TooltipSystemStatusLine
+			_unifiedStatus = "isTimeBased ? SC.Ui_styles.UNIFIED_STATUS.TIME_BASED : SC.Ui_styles.UNIFIED_STATUS.DEFAULT"
+			_text = "_isAircarrierConsumable	? isTimeBased ? 'IDS_CONSUMABLE_TIME_USAGE_SHORT' : 'IDS_CONSUMABLE_COUNT_USAGE_SHORT'
+												: subst(tr(isTimeBased ? 'IDS_CONSUMABLE_TIME_USAGE' : 'IDS_CONSUMABLE_COUNT_USAGE'), [], {_cmd: '[' + commandName + ']'})"
+		)
+
+		(element TooltipSystemHorizontalDivider)
+
 		(element TooltipSystemParamsModifiersList
-			_attributesPositive =	"attributesPositive"
-			_attributesNeutral =	"attributesNeutral"
-			_attributesNegative =	"attributesNegative"
+			_attributesPositive =	"usagePositive"
+			_attributesNeutral =	"usageNeutral"
+			_attributesNegative =	"usageNegative"
 		)
 
 		(block

@@ -399,8 +399,8 @@
 			(controller $Instance renderer='TooltipSystemCounterLine'
 				(bind enabled "isAmountVisible")
 				(args
-					_title = "!_isReward ? 'IDS_IN_WAREHOUSE' : 'IDS_COUNT'"
-					_tex_countt = "amount"
+					_title = "_isReward ? 'IDS_COUNT' : 'IDS_IN_WAREHOUSE'"
+					_count = "amount"
 				)
 			)
 		)
@@ -415,7 +415,7 @@
 				(bind enabled "isPriceVisible")
 				(args
 					_title = 'IDS_COST_COLON'
-					_tex_countt = "multiBoostPrice"
+					_priceInfo = "multiBoostPrice"
 				)
 			)
 		)
@@ -426,7 +426,7 @@
 		)
 		(block
 			(style (width = 100%))
-			(controller $Instance renderer='TooltipSystemPriceTagLine'
+			(controller $Instance renderer='TooltipSystemStatusLine'
 				(bind enabled "isUnlinkedInfoVisible")
 				(args
 					_unifiedStatus = "SC.Ui_styles.UNIFIED_STATUS.LINKED"

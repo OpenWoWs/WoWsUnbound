@@ -6,19 +6,23 @@
 		(var battleConsumable:gfx = "consumableEntity.battleConsumable")
 		(var consumableName:str = "battleConsumable.ident")
 		(var consumableCmd:str = "battleConsumable.cmd")
-		(var consumableNum:number = "battleConsumable.consumeNum" (event "battleConsumable.evConsumeNumChanged"))
+		(var maxCharge:number = "battleConsumable.maxCharge" (event "battleConsumable.evMaxChargeChanged"))
 		(var consumableState:number = "battleConsumable.state" (event "battleConsumable.evStateChanged"))
 		(var ownerSquadronId:number = "battleConsumable.ownerSquadronId" (event "battleConsumable.evStateChanged"))
 		(var consumableIndex:number = "battleConsumable.index"  (event "battleConsumable.evStateChanged"))
 		(var isLocked:bool = "battleConsumable.isLocked" (event "battleConsumable.evIsLockedChanged"))
 		(var isSpecial:bool = "battleConsumable.isSpecial")
 
+		(var isTimeBased:bool = "battleConsumable.viewData.lifecycleType == SC.Battle.CONSUMABLE_LIFECYCLE_TYPE.TIME_BASED")
+
+		(var workTimeText:str = "countdownFormat(maxCharge, maxCharge > 10 ? 0 : 1, maxCharge >= 60, false)")
+
 		(var isSelected:bool = "consumableState == SC.Battle.CONSUMABLE_STATES.SELECTED")
 		(var atWork:bool = "consumableState == SC.Battle.CONSUMABLE_STATES.AT_WORK")
 		(var isReloading:bool = "isIn(consumableState, SC.Battle.CONSUMABLE_STATES.RELOADING_STATES)")
 		(var isEmpty:bool = "consumableState == SC.Battle.CONSUMABLE_STATES.NO_AMMO")
 
-		(var consumePostfix:str = "consumableNum == 0 && !(atWork) ? '_empty' : ''")
+		(var consumePostfix:str = "maxCharge == 0 && !(atWork) && isEmpty ? '_empty' : ''")
 		(var itemImageUrl:str = "'url:../consumables/' + consumableName + consumePostfix + '.png'")
 		
 		(var timerEntity:gfx = "$datahub.getSingleEntity(CC.timer)")
@@ -29,8 +33,6 @@
 		(var cmdEntity:gfx =  "$datahub.getPrimaryEntity(CC.commandMappingCommandName, consumableCmd)")
 		(var isRegularAircarrierAbil:bool = "isAircarrier && !isSpecial")
 		(var commandId:number = "isRegularAircarrierAbil ? 0 : cmdEntity.commandMappingCommand.id" (event  "cmdEntity.commandMappingCommand.evChanged"))
-
-		(var avatarEntity:gfx = "$datahub.getSingleEntity(CC.playerAvatar)")
 
 		(var _width:number = "SLOT_SIZE")
 		(var _height:number = "SLOT_SIZE")
@@ -75,10 +77,23 @@
 		(block
 			(class $FullsizeAbsolute)
 			(tf
-				(bind visible "(consumableNum > 0 && !isLocked)")
+				(bind visible "maxCharge > 0 && !isLocked && !isTimeBased")
 				(style (position = "absolute") (top = "XS") (right = "XS"))
 				(class $TextDefaultBoldNM)
-				(bind text "consumableNum")
+				(bind text "maxCharge")
+			)
+			(block
+				(bind visible "isTimeBased")
+				(class $FullsizeAbsolute)
+				(style
+					(backgroundImage = 'url:../consumables/features/time_based.png')
+				)
+				(tf
+					(bind visible "maxCharge > 0 && !isLocked && !atWork")
+					(style (position = "absolute") (textAlign = "left") (top = "XS") (left = 23))
+					(class $TextDefaultBoldNM)
+					(bind text "workTimeText")
+				)
 			)
 		)
 
@@ -99,6 +114,13 @@
 			(controller $FxInstance lifetime=0.5
 				(bind renderer "'SlotReloadStartedFX'")
 				(bindcall create (event "consumableEntity.battleConsumable.evReloadStarted"))
+			)
+			(controller $FxInstance lifetime=0.5
+				(bind renderer 'SlotWorkStartedFX')
+				(args
+					accented="true"
+				)
+				(bindcall create (event "consumableEntity.battleConsumable.evMinWorkTimeFinished"))
 			)
 		)
 
@@ -134,7 +156,13 @@
 		(macro MOUSE_LMB_EXTERNAL_CALL 'direct.action' "['battle.useConsumable', [{consumableIndex: consumableIndex, squadronId: ownerSquadronId}]]" "!isRegularAircarrierAbil")
 		
 		(controller $Tooltip (renderer = 'BattleConsumableTooltip')
-			(args _battleConsumable="battleConsumable" _viewData="battleConsumable.viewData" _parameterOwnerId="consumableEntity.id")
+			(args
+				_battleConsumable = "battleConsumable"
+				_viewData = "battleConsumable.viewData"
+				_parameterOwnerId = "consumableEntity.id"
+				_isOwn = "true"
+				_isPlaneConsumable = "ownerSquadronId != -1"
+			)
 			(align="bottom|center")
 			(position="border")
 			(offset=[0, 20])
