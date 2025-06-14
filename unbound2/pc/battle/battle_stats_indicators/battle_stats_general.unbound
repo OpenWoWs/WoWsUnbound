@@ -105,7 +105,7 @@
 	(block
 		(style (marginTop = "104")) 
 		(controller $Instance renderer='RespawnTimer'
-			(bind enabled "timeToRespawn")
+			(bind enabled "timeToRespawn && isNotBattleIdling")
 			(args
 				_avatarEntity = "avatar"
 			)

@@ -442,15 +442,17 @@
 		(var gunState:number = "gunComponent.state" (event "gunComponent.evStateChanged"))
 
 		(var isWorking:bool = "gunState == SC.Weapons.GUN_STATE.WORK")
+		(var isReloadStopped:bool = "gunState == SC.Weapons.GUN_STATE.RELOAD_STOPPED")
 		(var isCrit:bool = "gunHealthState == SC.Battle.MODULES_STATES.CRIT")
 		(var isNotSwitchingCritical:bool = "gunState != SC.Weapons.GUN_STATE.SWITCHING_CRITICAL")
 
 		(var progressComponent:gfx = "gunEntity && gunEntity.hasComponent(CC.progress) ? gunEntity.progress : null" (event "gunEntity.evAdded") (event "gunEntity.evRemoved"))		
 		(var progressTime:number = "progressComponent ? progressComponent.value : 0" (event "progressComponent.evChanged"))
 
-		(var remainTime:number = "(progressComponent && !isWorking)	? isCrit && isNotSwitchingCritical	? progressComponent.value
-													 													: progressComponent.max - progressComponent.value
-																	: 0" (event "progressComponent.evChanged"))
+		(var remainTime:number = "(progressComponent && !isWorking && !isReloadStopped)
+									? isCrit && isNotSwitchingCritical	? progressComponent.value
+									: progressComponent.max - progressComponent.value
+									: 0" (event "progressComponent.evChanged"))
 		(macro HUMAN_READABLE_COUNTDOWN_SCOPE "remainTime")
 	)
 

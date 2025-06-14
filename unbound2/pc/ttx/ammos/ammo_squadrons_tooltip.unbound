@@ -525,7 +525,7 @@
 		(var squadronTTX:gfx = "_shipTTX.squadrons.diveBomber")
 		(var bombTTX:gfx = "	squadronTTX.bombAP	? squadronTTX.bombAP :
 								squadronTTX.bombHE	? squadronTTX.bombHE :
-								squadronTTX.bombDW	? squadronTTX.bombDW :
+								squadronTTX.bombDC	? squadronTTX.bombDC :
 														null")
 	)
 	(class $ParametersPanel)
@@ -570,7 +570,7 @@
 		(var squadronTTX:gfx = "_shipTTX.squadrons.diveBomberAlt")
 		(var bombTTX:gfx = "	squadronTTX.bombAP	? squadronTTX.bombAP :
 								squadronTTX.bombHE	? squadronTTX.bombHE :
-								squadronTTX.bombDW	? squadronTTX.bombDW :
+								squadronTTX.bombDC	? squadronTTX.bombDC :
 														null")
 	)
 	(class $ParametersPanel)
@@ -870,7 +870,7 @@
 		(var squadronTTX:gfx = "_shipTTX.squadrons.diveBomber")
 		(var bombTTX:gfx = "	squadronTTX.bombAP	? squadronTTX.bombAP :
 								squadronTTX.bombHE	? squadronTTX.bombHE :
-								squadronTTX.bombDW	? squadronTTX.bombDW :
+								squadronTTX.bombDC	? squadronTTX.bombDC :
 														null")
 	)
 	(class $ParametersPanel)
@@ -913,7 +913,7 @@
 		(var squadronTTX:gfx = "_shipTTX.squadrons.diveBomberAlt")
 		(var bombTTX:gfx = "	squadronTTX.bombAP	? squadronTTX.bombAP :
 								squadronTTX.bombHE	? squadronTTX.bombHE :
-								squadronTTX.bombDW	? squadronTTX.bombDW :
+								squadronTTX.bombDC	? squadronTTX.bombDC :
 														null")
 	)
 	(class $ParametersPanel)

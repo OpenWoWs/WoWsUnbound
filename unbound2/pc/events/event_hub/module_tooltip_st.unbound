@@ -356,7 +356,7 @@
 	(scope
 		(var bombTTX:gfx = "bomberTTX.bombHE ? bomberTTX.bombHE :
 							bomberTTX.bombAP ? bomberTTX.bombAP :
-							bomberTTX.bombDW ? bomberTTX.bombDW :
+							bomberTTX.bombDC ? bomberTTX.bombDC :
 							null")
 	)
 	(class $ParametersPanel)

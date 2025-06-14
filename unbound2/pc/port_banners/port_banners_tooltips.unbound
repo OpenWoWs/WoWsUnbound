@@ -1630,13 +1630,6 @@
 )
 
 (def element FlagshipBannerTooltip (_isShowUB2Tooltip:bool, _operationEntity:gfx) layout=true dispatch_size_change=true
-	(scope
-		(macro SERVER_TIME_SCOPE)
-		(macro TIME_OF_BATTLE_EVENT "_operationEntity")
-		(macro COUNTDOWN_SCOPE "'formattedSeasonTimeStamp'" "finishTime" "'HIGHESTDAYS'" "''" "true")
-		(var timeSeasonLeft:str = "subst('IDS_SUBST_SPECS_TIME_ENDS_IN', [], {_timeLeft: formattedSeasonTimeStamp })")
-	)
-
 	(style (width = "BANNER_TOOLTIP_WIDTH") (hitTest = false))
 	(name = "'FlagshipBannerTooltiop'")
 
@@ -1646,18 +1639,6 @@
 
 		(element TooltipSystemHeaderSubheaderText
 			_headerText = "tr('IDS_PVE_FLAGSHIP_HEADER')"
-		)
-
-		(element TooltipSystemHorizontalDivider)
-
-		(block
-			(style (width = 100%))
-			(controller $Instance renderer='TooltipSystemStatusLine'
-				(args
-					_text = "timeSeasonLeft"
-					_unifiedStatus = "SC.Ui_styles.UNIFIED_STATUS.CALENDAR"
-				)
-			)
 		)
 
 		(element TooltipSystemHorizontalDivider)

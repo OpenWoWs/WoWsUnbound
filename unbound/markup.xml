@@ -8106,6 +8106,7 @@
 		<bind name="soundOn" value="'startHide'; 'close_muted'; 'window'"/>
 	</block>
 	<block className="GuideBrowserWindow">
+		<bind name="watch" value="'windowName'; loadFailed || !firstRequestedPageLoaded ? 'IDS_BROWSER_LOADING_TITLE' : 'IDS_DOCK_BANNER_VIDEO_TUTORIALS'"/>
 		<bind name="primaryEntityDH" value="'routeEntityisInClanBase'; CC.route; SC.Ui_windows.ROUTE.CLANS"/>
 		<bind name="watchDH" value="'isInClanBase'; ['routeEntityisInClanBase.route.evIsActiveChanged']; routeEntityisInClanBase.route.isActive"/>
 		<bind name="lag" value="'lagAfterAddedToStage'; null; true; 0.4; 'addedToStage'; 3; SC.Common.UBSCOPE_EVENT_DIRECTIONS.DOWN"/>
@@ -8169,7 +8170,7 @@
 			</style>
 			<bind name="instance" value="'ModalWindowHeaderFullSize'; _showHeader &amp;&amp; !isInClanBase	?	{	_hideBackButton: true,
 																							_hideCloseButton: false,
-																							_windowName: 'IDS_BROWSER_LOADING_TITLE',
+																							_windowName: windowName,
 																							_paddingTop: 0 }
 																					: null"/>
 		</block>
@@ -50081,7 +50082,6 @@
 			<style>
 				<marginTop value="24px"/>
 				<marginBottom value="16px"/>
-				<alpha value="0"/>
 			</style>
 			<styleClass value="$MiddleAligned"/>
 			<bind name="appear" value="'addedToStage'; 0.15; windowAppearLag + 1 * 0.075; {alpha: 0, top: 10}; {alpha: 1, top: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
@@ -50138,7 +50138,6 @@
 			<style>
 				<marginTop value="720:20,1080:80ah"/>
 				<width value="100%"/>
-				<alpha value="0"/>
 				<align value="center"/>
 			</style>
 			<bind name="appear" value="'addedToStage'; 0.15; windowAppearLag + 0.5 + 1 * 0.075; {alpha: 0, top: 10}; {alpha: 1, top: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
@@ -95846,7 +95845,7 @@
 		<bind name="watchDH" value="'taskTime'; ['taskEntity.timeout.evTimeChanged']; hasTimer ? taskEntity.timeout.time : null"/>
 		<bind name="firstEntityDH" value="'battleDataEntity'; CC.battleTimer"/>
 		<bind name="watchDH" value="'battleTime'; ['battleDataEntity.battleTimer.evBattleTimeChanged']; battleDataEntity.battleTimer.battleTime"/>
-		<bind name="watch" value="'timerValue'; taskTime ? taskTime - battleTime : 0"/>
+		<bind name="watch" value="'timerValue'; taskTime ? math.max(taskTime - battleTime, 0) : 0"/>
 		<bind name="timeFormat" value="timerValue; 'mm:ss'; 'countdownText'"/>
 		<bind name="watch" value="'timeText'; hasTimer ? ' ' + countdownText : ''"/>
 		<bind name="dataRefDH" value="'progress'; 'taskEntity.progress'"/>
@@ -97725,6 +97724,44 @@
 			</block>
 		</block>
 	</block>
+	<block className="CardInfoBlock">
+		<style>
+			<width value="100%"/>
+		</style>
+		<block type="text">
+			<styleClass value="$ManagementBlockHeader"/>
+			<bind name="text" value="'IDS_SHIP_MANAGEMENT_CARDS_BLOCK_HEADER'"/>
+		</block>
+		<block className="HorizontalDividerTwoPx">
+			<style>
+				<width value="100%"/>
+				<height value="2px"/>
+				<backgroundSize value="fill"/>
+				<backgroundImage value="url:../service_kit/dividers/divider_h.png"/>
+			</style>
+		</block>
+		<block>
+			<styleClass value="$ManagementBlock"/>
+			<block className="ArmamentCardInfoblock" type="ublock">
+				<bind name="build!" value="$ubPlayerProxy; {}"/>
+			</block>
+		</block>
+		<block>
+			<style>
+				<width value="100%"/>
+				<marginTop value="-1px"/>
+			</style>
+			<styleClass value="$ManagementBlockBottomMargin"/>
+			<block className="HorizontalDividerTwoPx">
+				<style>
+					<width value="100%"/>
+					<height value="2px"/>
+					<backgroundSize value="fill"/>
+					<backgroundImage value="url:../service_kit/dividers/divider_h.png"/>
+				</style>
+			</block>
+		</block>
+	</block>
 	<block className="CommonMiscLayout">
 		<bind name="firstEntityDH" value="'dockEntity'; CC.dockDataMarker"/>
 		<bind name="watchDH" value="'shipId'; ['dockEntity.shipSelection.evShipUpdate']; dockEntity.shipSelection.currentShipId"/>
@@ -97770,12 +97807,14 @@
 		<bind name="catch" value="'stopDragging';	{isStartDragConsumableSlotItem: false}"/>
 		<bind name="collectionDH" value="CC.ability; 'specialAbilities' ; 'special'"/>
 		<bind name="firstEntityDH" value="'dockCardSelectorEntity'; CC.dockCardSelector"/>
-		<bind name="watchDH" value="'isCardSelectorEnabled';		['dockCardSelectorEntity.dockCardSelector.evIsEnabledChanged'];		dockCardSelectorEntity.dockCardSelector.isEnabled"/>
+		<bind name="watchDH" value="'isCardSelectorEnabled';		['dockCardSelectorEntity.dockCardSelector.evIsSelectorEnabledChanged'];		dockCardSelectorEntity.dockCardSelector.isSelectorEnabled"/>
+		<bind name="watchDH" value="'isCardInfoblockEnabled';	['dockCardSelectorEntity.dockCardSelector.evIsInfoblockEnabledChanged'];	dockCardSelectorEntity.dockCardSelector.isInfoblockEnabled"/>
 		<block>
 			<style>
 				<width value="100%"/>
 			</style>
 			<bind name="instance" value="'CardManagementBlock'; isCardSelectorEnabled &amp;&amp; isFitForBattleType ? {} : null"/>
+			<bind name="instance" value="'CardInfoBlock'; isCardInfoblockEnabled &amp;&amp; isFitForBattleType ? {} : null"/>
 		</block>
 		<block type="text">
 			<styleClass value="$ManagementBlockHeader"/>
@@ -100616,7 +100655,6 @@
 					<bind name="dispatch" value="'rollOut'; 'evSelectShip'; { selectedShipId: 0 }; SC.Common.UBSCOPE_EVENT_DIRECTIONS.UP"/>
 					<bind name="dispatch" value="'left_click'; 'evShipClicked'; {}; SC.Common.UBSCOPE_EVENT_DIRECTIONS.UP"/>
 					<bind name="dispatch" value="'right_click'; 'evShipClicked'; {}; SC.Common.UBSCOPE_EVENT_DIRECTIONS.UP"/>
-					<bind name="action" value="'left_click'; _isNotShipTree ? null : 'makeSeen'; { entityId: shipEntity.id }"/>
 					<bind name="action" value="'left_click'; isEnableForWatchModules &amp;&amp; isSelected ? 'selectShipForManagement' : null; { shipId: shipId }"/>
 					<bind name="menu" value="'ShipTreeMenu'; !_isNotShipTree &amp;&amp; shipInfo.isManagementAvailable &amp;&amp; (feature_17 != 'locked')	? {shipId: shipId, _needScrollOnSelectShipForManagement: true}
 																														: null; null"/>
@@ -101495,8 +101533,8 @@
 				</style>
 				<block>
 					<bind name="watchDH" value="'isEventBattle'; ['']; selectedBattleTypes[0].battleType.type == SC.Common.BATTLE_TYPES.EVENT_BATTLE"/>
-					<bind name="watchDH" value="'eventBattleName'; ['']; isEventBattle ? selectedBattleTypes[0].eventBattleState.name : null"/>
-					<bind name="watch" value="'isSelectedEventShouldHaveBanner'; isEventBattle &amp;&amp; isIn(eventBattleName, SC.Ui_common.EVENTS_TO_DRAW_BANNER)"/>
+					<bind name="watchDH" value="'gameEventName'; ['']; isEventBattle ? selectedBattleTypes[0].eventBattleState.name : null"/>
+					<bind name="watch" value="'isSelectedEventShouldHaveBanner'; isEventBattle &amp;&amp; isIn(gameEventName, SC.Ui_common.EVENTS_TO_DRAW_BANNER)"/>
 					<bind name="visible" value="isSelectedEventShouldHaveBanner"/>
 					<bind name="appear" value="'addedToStage'; 0.15; 0.15 + 0*0.075; {alpha: 0, top: 10}; {alpha: 1, top: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
 					<style>
@@ -101504,10 +101542,10 @@
 						<height value="36px"/>
 						<marginBottom value="4px"/>
 					</style>
-					<bind name="instance" value="'EventWikiBanner'; isSelectedEventShouldHaveBanner ? { _eventName: eventBattleName } : null"/>
+					<bind name="instance" value="'EventWikiBanner'; isSelectedEventShouldHaveBanner ? { _eventName: gameEventName } : null"/>
 				</block>
 				<block>
-					<bind name="watch" value="'isRespawnBattleSelected'; isEventBattle &amp;&amp; eventBattleName == 'PCVE038'"/>
+					<bind name="watch" value="'isRespawnBattleSelected'; isEventBattle &amp;&amp; gameEventName == 'PCVE038'"/>
 					<bind name="visible" value="isRespawnBattleSelected"/>
 					<bind name="appear" value="'addedToStage'; 0.15; 0.15 + 0*0.075; {alpha: 0, top: 10}; {alpha: 1, top: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
 					<style>
@@ -101612,11 +101650,11 @@
 					<bind name="watch" value="'isEventAccessibleByLevel'; curAccountLevel &gt; 11"/>
 					<bind name="firstEntityDH" value="'eventBattleStateEntity'; CC.eventBattleState"/>
 					<bind name="watchDH" value="'isEventBannerShow'; ['eventBattleStateEntity.eventBattleState.evChanged']; eventBattleStateEntity.eventBattleState.useBanner &amp;&amp; isEventAccessibleByLevel"/>
-					<bind name="watchDH" value="'eventBattleName'; ['eventBattleStateEntity.eventBattleState.evChanged']; eventBattleStateEntity.eventBattleState.name"/>
+					<bind name="watchDH" value="'sseEventName'; ['eventBattleStateEntity.eventBattleState.evChanged']; eventBattleStateEntity.eventBattleState.name"/>
 					<bind name="style" value="'marginBottom'; isEventBannerShow ? '4px' : 0"/>
 					<bind name="style" value="'marginRight';  isEventBannerShow ? '4px' : 0"/>
 					<bind name="instance" value="'BigSimpleBanner';	isEventBannerShow	? {	_hideHeader: true,
-																			_imageUrl: 'url:../events/' + toLowerCase(eventBattleName) + '/banner/banner_default.png',
+																			_imageUrl: 'url:../events/' + toLowerCase(sseEventName) + '/banner/banner_default.png',
 																			_name: 'EventBanner',
 																			_action: 'showEventBattleDetails',
 																			_actionParams: { 'eventStateEntityId' : eventBattleStateEntity.id },

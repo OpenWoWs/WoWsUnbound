@@ -206,11 +206,11 @@
 					(align = "left")
 					(height = 100%)
 					(width = "{1280: 326, 1920: 400}")
-					(backgroundSize = "cover") 
-					(backgroundImage = "shipInfoBgPath") 
+					(backgroundSize = "cover")
+					(backgroundImage = "shipInfoBgPath")
 				)
 			)
-			
+
 			(block
 				(style
 					(width = 100%)
@@ -1030,9 +1030,6 @@
 
 		(macro PULL_MINI_DOCKYARD_BRANCH_DATA "_branchEntityId") 
 
-		
-		(var imageUrl:str = "'url:../mini_dockyard/main/branch_selector/icons/'+ ($index + 1) +'.png'")
-
 		(macro PULL_MINI_DOCKYARD_WINDOW_DATA) 
 
 		(var unexploredShipsCollection:gfx = "miniDockyardBranchId	?	$datahub.getCollection(CC.miniDockyardShip).getChildByPath('byBranchId.' + miniDockyardBranchId + '.unexplored')
@@ -1042,6 +1039,9 @@
 		
 		(var isBranchUnlocked:bool = "unexploredShipsArray.length == 0")
 		(var isSelected:bool = "_branchEntityId == selectedBranchEntityId")
+
+		
+		(var imageUrl:str = "'url:../mini_dockyard/main/branch_selector/icons/'+ ($index + 1) + (isSelected ? '_selected' : '') + (isBranchUnlocked ? '_recieved' : '') +'.png'")
 	)
 
 	(style

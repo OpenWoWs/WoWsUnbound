@@ -131,7 +131,7 @@
 		(class $TextDefault17NM)
 		(style
 			(width = 100%)
-			(marginTop = "S")
+			(marginTop = "SXS")
 			(marginBottom = "L")
 			(wordWrap = true)
 			(alpha = "TA")

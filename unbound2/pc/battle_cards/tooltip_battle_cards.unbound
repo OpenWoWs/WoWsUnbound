@@ -303,8 +303,8 @@
 					(element TOOLTIP_SYSTEM_PARAMS_BLOCK
 						(element TooltipSystemParamsModifiersListTTX
 							_attributesNegative="attackAttributesNegative"
-							_attributesPositive="attackAttributesNeutral"
-							_attributesNeutral="attackAttributesPositive"
+							_attributesPositive="attackAttributesPositive"
+							_attributesNeutral="attackAttributesNeutral"
 							_ownerId="ownerEntity.id"
 						)
 					)
@@ -318,6 +318,9 @@
 		(controller $Instance renderer='TooltipSystemHorizontalDivider'
 			(bind enabled "hasDefenceAttributes && hasAttackAttributes")
 		)
+	)
+	(block
+		(style (width = 100%))
 		(controller $Instance renderer='TooltipSystemSecondaryHeaderText'
 			(bind enabled "hasDefenceAttributes")
 			(args _headerText='IDS_BATTLE_CARD_MODIFIERS_DEFENSE')
@@ -336,8 +339,8 @@
 					(element TOOLTIP_SYSTEM_PARAMS_BLOCK
 						(element TooltipSystemParamsModifiersListTTX
 							_attributesNegative="defenceAttributesNegative"
-							_attributesPositive="defenceAttributesNeutral"
-							_attributesNeutral="defenceAttributesPositive"
+							_attributesPositive="defenceAttributesPositive"
+							_attributesNeutral="defenceAttributesNeutral"
 							_ownerId="ownerEntity.id"
 						)
 					)

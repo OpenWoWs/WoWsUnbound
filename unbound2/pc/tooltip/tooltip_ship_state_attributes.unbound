@@ -162,31 +162,26 @@
 			)
 		)
 		
-		(block
-			(class $ParametersPanel)
-			(element TOOLTIP_SYSTEM_PARAMS_WRAPPER
-				(element TOOLTIP_SYSTEM_PARAMS_BLOCK
-					(bind visible "attributesVisible")
-					(style (width = 100%))
-					(controller $Instance renderer='TooltipSystemParamsModifiersListTTX'
-						(bind enabled "activeAttributes != null")
-						(args
-							_attributesNegative="activeAttributes.negative"
-							_attributesPositive="activeAttributes.positive"
-							_attributesNeutral="activeAttributes.neutral"
-							_ownerId="ownerId"
-						)
-
+		(element TOOLTIP_SYSTEM_PARAMS_WRAPPER 
+			(bind visible "attributesVisible")
+			(element TOOLTIP_SYSTEM_PARAMS_BLOCK
+				(controller $Instance renderer='TooltipSystemParamsModifiersListTTX'
+					(bind enabled "activeAttributes != null")
+					(args
+						_attributesNegative="activeAttributes.negative"
+						_attributesPositive="activeAttributes.positive"
+						_attributesNeutral="activeAttributes.neutral"
+						_ownerId="ownerId"
 					)
+				)
 
-					(controller $Instance renderer='TooltipSystemParamsModifiersListTTX'
-						(bind enabled "attributesVisible")
-						(args
-							_attributesNegative="attributesNegative"
-							_attributesPositive="attributesPositive"
-							_attributesNeutral="attributesNeutral"
-							_ownerId="ownerId"
-						)
+				(controller $Instance renderer='TooltipSystemParamsModifiersListTTX'
+					(bind enabled "attributesVisible")
+					(args
+						_attributesNegative="attributesNegative"
+						_attributesPositive="attributesPositive"
+						_attributesNeutral="attributesNeutral"
+						_ownerId="ownerId"
 					)
 				)
 			)

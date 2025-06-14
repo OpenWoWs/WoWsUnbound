@@ -17,7 +17,10 @@
 		(var currentTime:number = "timerEntity.battleTimer.battleTime" (event "timerEntity.battleTimer.evBattleTimeChanged"))
 		(var timeLeft:number = "timeoutIsRunning ? ceil(timeoutTime - currentTime) : 0")
 
-		(var isActive:bool = "timeoutIsRunning && timeLeft > 0 && totalTime > 0")
+		(var battleStateEntity:gfx = "$datahub.getSingleEntity(CC.battleState)")
+		(var battleStateValue:number = "battleStateEntity.battleState.battleState" (event "battleStateEntity.battleState.evBattleStateChanged"))
+
+		(var isActive:bool = "timeoutIsRunning && timeLeft > 0 && totalTime > 0 && battleStateValue == SC.Common.CLIENT_BATTLE_STATE.STARTED")
 		(var arcRad:number = "floor(INTERACTIVE_ZONE_ICON_SIZE/2 - 1)")
 		(var arcProgress:number = "isActive > 0 ? 360 * ((totalTime - timeLeft) / totalTime) : 0")
 		(var distanceItemVisibility:bool = "false")

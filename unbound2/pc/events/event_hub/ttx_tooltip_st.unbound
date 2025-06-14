@@ -197,7 +197,7 @@
 		(var bomberTTX:gfx = "shipTTX && shipTTX.squadrons && shipTTX.squadrons.diveBomber ? shipTTX.squadrons.diveBomber : null")
 		(var bombTTX:gfx = "bomberTTX.bombHE ? bomberTTX.bombHE :
 							bomberTTX.bombAP ? bomberTTX.bombAP :
-							bomberTTX.bombDW ? bomberTTX.bombDW :
+							bomberTTX.bombDC ? bomberTTX.bombDC :
 							null")
 	)
 	
