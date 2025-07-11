@@ -938,3 +938,13 @@
 	(var isEnough:bool = "	(_prices[0]		? firstCurrencyAmount - _prices[0].finalPrice >= 0	: false)
 							&& (_prices[1]	? secondCurrencyAmount - _prices[1].finalPrice >= 0	: true)")
 )
+
+(def macro PULL_RARITY(_entity:expression, _rarityNameField:expression)
+	(var rarityCategoryName:str = "_entity && _entity.rarityCategoryComponent ? _entity.rarityCategoryComponent.name : null")
+	(var name="_rarityNameField" type=str value="rarityCategoryName")
+)
+
+(def macro IS_RARITY_SHOWN(_rarity:expression, _isRarityShownField:expression)
+	(var __rarity:str = "_rarity ? _rarity : SC.Common.RARITY_CATEGORY_NAMES.COMMON")
+	(var name="_isRarityShownField" type=bool value="__rarity != null && __rarity != SC.Common.RARITY_CATEGORY_NAMES.COMMON")
+)

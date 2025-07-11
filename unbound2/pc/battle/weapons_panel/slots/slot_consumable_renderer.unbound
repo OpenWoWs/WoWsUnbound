@@ -6,7 +6,7 @@
 		(var battleConsumable:gfx = "consumableEntity.battleConsumable")
 		(var consumableName:str = "battleConsumable.ident")
 		(var consumableCmd:str = "battleConsumable.cmd")
-		(var maxCharge:number = "battleConsumable.maxCharge" (event "battleConsumable.evMaxChargeChanged"))
+		(var currentCharge:number = "battleConsumable.currentCharge" (event "battleConsumable.evCurrentChargeChanged"))
 		(var consumableState:number = "battleConsumable.state" (event "battleConsumable.evStateChanged"))
 		(var ownerSquadronId:number = "battleConsumable.ownerSquadronId" (event "battleConsumable.evStateChanged"))
 		(var consumableIndex:number = "battleConsumable.index"  (event "battleConsumable.evStateChanged"))
@@ -15,14 +15,14 @@
 
 		(var isTimeBased:bool = "battleConsumable.viewData.lifecycleType == SC.Battle.CONSUMABLE_LIFECYCLE_TYPE.TIME_BASED")
 
-		(var workTimeText:str = "countdownFormat(maxCharge, maxCharge > 10 ? 0 : 1, maxCharge >= 60, false)")
+		(var workTimeText:str = "countdownFormat(currentCharge, currentCharge > 10 ? 0 : 1, currentCharge >= 60, false)")
 
 		(var isSelected:bool = "consumableState == SC.Battle.CONSUMABLE_STATES.SELECTED")
 		(var atWork:bool = "consumableState == SC.Battle.CONSUMABLE_STATES.AT_WORK")
 		(var isReloading:bool = "isIn(consumableState, SC.Battle.CONSUMABLE_STATES.RELOADING_STATES)")
 		(var isEmpty:bool = "consumableState == SC.Battle.CONSUMABLE_STATES.NO_AMMO")
 
-		(var consumePostfix:str = "maxCharge == 0 && !(atWork) && isEmpty ? '_empty' : ''")
+		(var consumePostfix:str = "currentCharge == 0 && !(atWork) && isEmpty ? '_empty' : ''")
 		(var itemImageUrl:str = "'url:../consumables/' + consumableName + consumePostfix + '.png'")
 		
 		(var timerEntity:gfx = "$datahub.getSingleEntity(CC.timer)")
@@ -77,10 +77,10 @@
 		(block
 			(class $FullsizeAbsolute)
 			(tf
-				(bind visible "maxCharge > 0 && !isLocked && !isTimeBased")
+				(bind visible "currentCharge > 0 && !isLocked && !isTimeBased")
 				(style (position = "absolute") (top = "XS") (right = "XS"))
 				(class $TextDefaultBoldNM)
-				(bind text "maxCharge")
+				(bind text "currentCharge")
 			)
 			(block
 				(bind visible "isTimeBased")
@@ -89,8 +89,8 @@
 					(backgroundImage = 'url:../consumables/features/time_based.png')
 				)
 				(tf
-					(bind visible "maxCharge > 0 && !isLocked && !atWork")
-					(style (position = "absolute") (textAlign = "left") (top = "XS") (left = 23))
+					(bind visible "currentCharge > 0 && !isLocked && !atWork")
+					(style (position = "absolute") (textAlign = "left") (top = "XS") (left = 21))
 					(class $TextDefaultBoldNM)
 					(bind text "workTimeText")
 				)
@@ -120,7 +120,7 @@
 				(args
 					accented="true"
 				)
-				(bindcall create (event "consumableEntity.battleConsumable.evMinWorkTimeFinished"))
+				(bindcall create (event "consumableEntity.timeBasedFeedback.evMinWorkTimeFinished"))
 			)
 		)
 

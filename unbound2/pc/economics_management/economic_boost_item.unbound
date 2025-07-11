@@ -119,7 +119,7 @@
 
 		(var headerText:str = "'IDS_' + toUpper(name)")
 		(var subheaderText:str = "tr('IDS_ECONOMIC_BOOST_TYPE_EXPENDABLE_' + rarity)")
-		
+
 		(var canBeBought:bool = "ecoBoostEntity ? ecoBoostEntity.ecoBoost.canBuy : false" (event "ecoBoostEntity.ecoBoost.evUpdated"))
 		(var ecoBoostsInStorage:number = "ecoBoostEntity ? ecoBoostEntity.countComponent.value : 0" (event "ecoBoostEntity.countComponent.evUpdate"))
 	

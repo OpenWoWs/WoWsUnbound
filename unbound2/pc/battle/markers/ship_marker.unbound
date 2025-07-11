@@ -408,7 +408,7 @@
 			(macro EFFECT_HIGHLIGHT_MARKER_ON_MOUSE_OVER)
 			(macro BIND_SCALE "distanceType == DistanceType.FARTHEST ? 0.7 : 1")
 		)
-		(element TargetLockItem "_markerEntity"
+		(element TargetLockItem "_markerEntity" "selectedWeapon"
 			(style
 				(position = "absolute")
 				(left = 50%) (top = 50%)

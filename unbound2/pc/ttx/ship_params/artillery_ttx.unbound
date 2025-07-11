@@ -173,10 +173,6 @@
 			(element ShipParameter_Number	_title = 'IDS_SHIP_PARAM_ARTILLERY_MAX_DAMAGE'
 											_value = "ammoTTX.damage"
 			)
-			(element ShipParameter_Number	_title = 'IDS_SHIP_PARAM_SHIELD_DAMAGE'
-											_value = "ammoTTX.damageToShield"
-											_zeroValueHidden = true
-			)
 			(element ShipParameter_Percent	_title = 'IDS_SHIP_PARAM_ARTILLERY_BURN_PROB'
 											_value = "ammoTTX.burnChance"
 											_valueConfig = "VALUE_CONFIG.PERCENT_FLOAT"
@@ -219,24 +215,46 @@
 	)
 )
 
+
+
 (def element ATBAGunTooltipTTX (shipTTX:gfx, atbaGunTTX:gfx) layout=true
+	(scope
+		(var controlledTTX:gfx = "atbaGunTTX.isControllable.value ? shipTTX.artillery.controlledATBA : null")
+		(var isSplitMaxDist:bool = "controlledTTX != null && shipTTX.artillery.atbaMaxDist.value != controlledTTX.sgMaxDist.value")
+	)
 	(macro TTX_TOOLTIP_STYLE)
 	(element TOOLTIP_SYSTEM_DEFAULT_CONTAINER
-		(macro TTX_HEADER_ROW "'IDS_SHIP_PARAM_ATBA_GUN'" "'IDS_TOOLTIP_ATBA_GUN'")
+		(macro TTX_HEADER_ROW "'IDS_SHIP_PARAM_ATBA_GUN'" "controlledTTX ? 'IDS_TOOLTIP_MANUAL_ATBA_GUN' : 'IDS_TOOLTIP_ATBA_GUN'")
 		(element TooltipSystemHorizontalDivider)
 		(element TOOLTIP_SYSTEM_PARAMS_WRAPPER
 			(element TOOLTIP_SYSTEM_PARAMS_BLOCK
 				(element ShipParameter_Number	_title = 'IDS_SHIP_PARAM_SHOT_DELAY'
+												
 												_value = "atbaGunTTX.reloadTime"
 												_valueConfig = "VALUE_CONFIG.SECONDS_NEGATIVE"
 				)
-				(element ShipParameter_Number	_title = 'IDS_SHIP_PARAM_MAX_DIST'
-												_value = "shipTTX.artillery.atbaMaxDist"
-												_valueConfig = "VALUE_CONFIG.KILOMETER"
+				(element ShipParameter_Number	_title = 'IDS_SHIP_PARAM_DISPERSION'
+								
+								_value = "atbaGunTTX.sgDispersion"
+								_valueConfig = "VALUE_CONFIG.METER_NEGATIVE"
+				)
+				(element ShipParameter_Number	_title = "isSplitMaxDist ? 'IDS_SHIP_PARAM_ATBA_MANUAL_MAX_DIST' : 'IDS_SHIP_PARAM_MAX_DIST'"
+								_value = "isSplitMaxDist ? controlledTTX.sgMaxDist : shipTTX.artillery.atbaMaxDist"
+								_valueConfig = "VALUE_CONFIG.KILOMETER"
+				)
+				(controller $Instance
+					(bind enabled "isSplitMaxDist")
+					(bind renderer "'ShipParameter_Number'")
+					(args
+						_title = "'IDS_SHIP_PARAM_ATBA_AUTO_MAX_DIST'"
+						_value = "shipTTX.artillery.atbaMaxDist"
+						_valueConfig = "VALUE_CONFIG.KILOMETER"
+					)
 				)
 			)
 		)
-		(controller $Repeat renderer='ArtilleryAmmoTTX' count="atbaGunTTX.ammoList.length"
+		(controller $Repeat renderer='ArtilleryAmmoTTX' count="controlledTTX ? controlledTTX.ammoList.length : atbaGunTTX.ammoList.length"
+			
 			(args "shipTTX" "atbaGunTTX.ammoList[$index]")
 		)
 		(element TooltipSystemExcursionMouseInstruction		_shipTTX="shipTTX")

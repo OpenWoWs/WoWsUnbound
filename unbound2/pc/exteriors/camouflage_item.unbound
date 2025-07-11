@@ -1,7 +1,9 @@
-(def element CamouflageItemStatic (_id:number, _amount:number="0", _isReward:bool="false", _params:dict="{}")
+(def element CamouflageItemStatic (_id:number, _amount:number=0, _isReward:bool=false, _params:dict={})
 	(scope
 		(var exteriorEntity:gfx = "$datahub.getPrimaryEntity(CC.exteriorConfig, _id)")
 		(var exteriorConfig:gfx = "exteriorEntity ? exteriorEntity.exteriorConfig : null")
+
+		(macro PULL_RARITY "exteriorEntity" "'rarity'")
 
 		(var isAvailableFakeColorSchemes:bool = "'colorsNum' in _params && _params.colorsNum")
 		(var fakeColorScheme:dict = "isAvailableFakeColorSchemes ? _params : null")
@@ -30,6 +32,7 @@
 			_fakeColorScheme = "fakeColorScheme"
 			_exteriorType = "exteriorConfig.type"
 			_isUnlinkedMSkin = "isUnlinkedMSkin"
+			_rarity = "rarity"
 		)
 	)
 
@@ -42,13 +45,14 @@
 			_fakeColorScheme = "fakeColorScheme"
 			_noMouseInstructions = "true"
 			_rewardShipId = "'shipId' in _params ? _params.shipId : null"
+			_rarity = "rarity"
 		)
 		(macro DEFAULT_TOOLTIP_BEHAVIOUR "0")
 	)
 )
 
-(def element CamouflageItemView (	_camouflageId:number, _camoName:str, _exteriorType:str, _amount:number="0", _useRepaintedIcon:bool="false",
-									_fakeColorScheme:dict="{}", _isUnlinkedMSkin:bool="false", _exteriorsInStorage:bool="false", _isReward:bool="false")	layout=true
+(def element CamouflageItemView (	_camouflageId:number, _camoName:str, _exteriorType:str, _amount:number=0, _useRepaintedIcon:bool=false, _rarity:str=null,
+									_fakeColorScheme:dict={}, _isUnlinkedMSkin:bool=false, _exteriorsInStorage:bool=false, _isReward:bool=false)	layout=true
 	(scope
 		(var isAmountVisible:bool = "(_amount > 0 && (_exteriorType == SC.Exteriors.EXTERIOR_TYPE.CAMOUFLAGE || _isUnlinkedMSkin)) || _amount < 0")
 		(var pathImageUrl:str = "_exteriorType == SC.Exteriors.EXTERIOR_TYPE.CAMOUFLAGE 	? 'url:../exteriors/camouflages/' + _camoName + '.png' :
@@ -59,7 +63,7 @@
 	)
 	(bind name "'ExteriorWithAmount_' + _camoName")
 	(style (height = "60px") (width = "60px"))
-	
+
 	(block
 		(bind visible "!_useRepaintedIcon")
 		
@@ -78,6 +82,10 @@
 				_fakeColorScheme = "_fakeColorScheme"
 			)
 		)
+	)
+
+	(element RarityPattern _rarity="_rarity"
+		(bind alpha "!_exteriorsInStorage && !_isReward ? 0.2 : 1")
 	)
 
 	(block
@@ -100,14 +108,15 @@
 	)
 
 	(block
-		(style (position = "absolute"))
+		(style (position = "absolute") (top = -2px) (left = -2px))
 		(controller $Instance renderer='LinkableItemIcon'
 			(bind enabled "_isUnlinkedMSkin")
 		)
 	)
 )
 
-(def element CamouflageTooltip (_id:number, _isReward:bool="false", _amount:number="0", _fakeColorScheme:dict="{}", _noMouseInstructions:bool="false", _rewardShipId:number="null")
+(def element CamouflageTooltip (_id:number, _isReward:bool=false, _amount:number=0, _fakeColorScheme:dict={},
+								_noMouseInstructions:bool=false, _rewardShipId:number=null, _rarity:str=null)
 	(scope
 		(var shipEntityFromReward:gfx = "_rewardShipId ? $datahub.getPrimaryEntity(CC.ship, _rewardShipId) : null")
 		(var shipInfoFromReward:gfx =	 "shipEntityFromReward ? shipEntityFromReward.ship : null"	(event "shipEntityFromReward.ship.evUpdate")
@@ -122,6 +131,7 @@
 		(var hasOwnCamouflage:gfx = "exteriorEntity ? exteriorEntity.hasComponent(CC.ownCamouflage) : false")
 		(var isCamouflage:gfx = "exteriorConfig ? exteriorConfig.type == SC.Exteriors.EXTERIOR_TYPE.CAMOUFLAGE : false")
 		(var isPermoflage:gfx = "exteriorConfig ? exteriorConfig.type == SC.Exteriors.EXTERIOR_TYPE.PERMOFLAGE : false")
+		(var isShipDestruction:gfx = "exteriorConfig ? exteriorConfig.type == SC.Exteriors.EXTERIOR_TYPE.SHIP_DESTRUCTION : false")
 		(var isTileflage:bool = "hasOwnCamouflage ? exteriorEntity.ownCamouflage.isTileflage : false")
 
 		(var exteriorPriceName:str =	"exteriorConfig && !isCamouflage	? _id :
@@ -201,9 +211,10 @@
 		
 		(var useRepaintedIcon:bool = "camoColorSchemes.length > 0 || _fakeColorScheme")
 
-		(var headerIconPath:str =	"isCamouflage	? ('url:../exteriors/camouflages/' + exteriorConfig.name + '.png') :
-									isPermoflage	? ('url:../exteriors/permoflages/' + exteriorConfig.name + '.png')
-													: ('url:../exteriors/skins/' + exteriorConfig.name + '.png')")
+		(var headerIconPath:str =	"isCamouflage		? ('url:../exteriors/camouflages/' + exteriorConfig.name + '.png') :
+									isPermoflage		? ('url:../exteriors/permoflages/' + exteriorConfig.name + '.png') :
+									isShipDestruction	? ('url:../exteriors/ship_destruction/' + exteriorConfig.name + '.png')
+														: ('url:../exteriors/skins/' + exteriorConfig.name + '.png')")
 
 		(var headerIconType:str = "useRepaintedIcon	?	SC.Ui_styles.TOOLTIP_SYSTEM_HEADER_ICON_TYPE.CAMO_REPAINT
 													:	SC.Ui_styles.TOOLTIP_SYSTEM_HEADER_ICON_TYPE.SIMPLE")
@@ -250,6 +261,8 @@
 																				_text: 'IDS_SERVICE_SHIP_TO_OPERATE_EXTERIORS' }
 																		:	{	_unifiedStatus: SC.Ui_styles.UNIFIED_STATUS.MOUSE_LEFT,
 																				_text: mouseInstructionText }")
+
+		(macro IS_RARITY_SHOWN "_rarity" "'isRarityShown'")
 	)
 	(style (hitTest = "false") (width = "320px"))
 	(macro TOOLTIP_SYSTEM_DEFAULT_BACKGROUND)
@@ -266,6 +279,21 @@
 				_subheaderText = "subheaderText"
 				_headerIconType = "headerIconType"
 				_data = "{camouflageId: _id, fakeColorScheme: _fakeColorScheme}"
+			)
+		)
+
+		(block
+			(style (width = 100%))
+			(controller $Instance renderer='TooltipSystemHorizontalDivider' (bind enabled "isRarityShown"))
+		)
+		(block
+			(style (width = 100%))
+			(controller $Instance renderer='TooltipSystemRarityText'
+				(bind enabled "isRarityShown")
+				(args
+					_rarity		= "_rarity"
+					_entityName	= "tr('IDS_RARITY_ITEM_ENTITY_NAME')"
+				)
 			)
 		)
 

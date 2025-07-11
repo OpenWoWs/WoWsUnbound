@@ -734,6 +734,8 @@
 		(var shipInfo:gfx =	 "shipEntity ? shipEntity.ship : null")
 		(var ownShipInfo:gfx = "shipEntity && shipEntity.hasComponent(CC.ownShip) ? shipEntity.ownShip : null" (event "shipEntity.evAdded") (event "shipEntity.evRemoved"))
 
+		(macro PULL_RARITY "shipEntity" "'rarity'")
+
 		(var crewId:number =		"ownShipInfo ? ownShipInfo.crewId : null"		(event "ownShipInfo.evCrewChanged"))
 		(var isPrimary:bool =		"ownShipInfo ? ownShipInfo.isPrimary : false"	(event "ownShipInfo.evIsPrimaryChanged"))
 		(var costTotal:number =		"ownShipInfo ? ownShipInfo.costTotal : null"	(event "ownShipInfo.evUpdateDockState"))
@@ -898,6 +900,11 @@
 			(element ShipSlotNameBackPanel _isSelected = "_isSelected" _rollOver = "_rollOver")
 		)
 
+		
+		(element RarityPattern _rarity="rarity"
+			(bind alpha "isShipHasRestrictions ? 0.4 : 1")
+		)
+
 		(block
 			(bind alpha "isShipHasRestrictions ? 0.3 : 1")
 
@@ -1010,6 +1017,8 @@
 		(var shipInfo:gfx =	 "shipEntity ? shipEntity.ship : null")
 		(var ownShipInfo:gfx = "shipEntity && shipEntity.hasComponent(CC.ownShip) ? shipEntity.ownShip : null" (event "shipEntity.evAdded") (event "shipEntity.evRemoved"))
 
+		(macro PULL_RARITY "shipEntity" "'rarity'")
+
 		(var crewId:number =		"ownShipInfo ? ownShipInfo.crewId : null"		(event "ownShipInfo.evCrewChanged"))
 		(var isPrimary:bool =		"ownShipInfo ? ownShipInfo.isPrimary : false"	(event "ownShipInfo.evIsPrimaryChanged"))
 		(var costTotal:number =		"ownShipInfo ? ownShipInfo.costTotal : null"	(event "ownShipInfo.evUpdateDockState"))
@@ -1113,6 +1122,10 @@
 			(class $FullsizeAbsolute)
 			(element ShipSlotNameBackPanel _isSelected = "_isSelected" _rollOver = "_rollOver")
 		)
+
+		
+		(element RarityPattern _rarity="rarity")
+
 		
 		(block
 			(bind alpha "isShipHasRestrictions ? 0.4 : 1")

@@ -5,6 +5,8 @@
 		(var shipDestructionId:number = "shipDestructionEntity ? shipDestructionEntity.ownShipDestruction.id : null")
 		(var exteriorConfig:gfx = "shipDestructionEntity.exteriorConfig")
 
+		(macro PULL_RARITY "shipDestructionEntity" "'rarity'")
+
 		(var peculiarityEyeEntity:gfx = "exteriorConfig ? $datahub.getPrimaryEntity(CC.peculiarityEye, exteriorConfig.peculiarity) : null")
 		(var isPeculiarityDisabled:bool = "exteriorConfig.peculiarity && !peculiarityEyeEntity.peculiarityEye.enabled" (event "peculiarityEyeEntity.peculiarityEye.evEnabledChanged"))
 
@@ -35,17 +37,24 @@
 														: {}")
 
 		(style (height = 60px) (width = 60px))
-	
+
 		(block
 			(class $Fullsize)
 			(style (bind backgroundImage "'url:../exteriors/ship_destruction/' + exteriorConfig.name + '.png'"))
 		)
 
+		(element RarityPattern _rarity="rarity")
+
 		(block
 			(bind visible "isInstalled")
 
-			(class $FullsizeAbsolute)
-			(style (hitTest = "false") (padding = "XXS") (backgroundImage = "'url:../service_kit/frames/one_pixel_frame.png'") (scale9grid = "2"))
+			(style
+				(height = 64px) (width = 64px)
+				(position = "absolute")
+				(top = -2px) (left = -2px)
+				(backgroundImage = "'url:../service_kit/frames/one_pixel_frame.png'") (scale9grid = "2")
+				(hitTest = "false")
+			)
 			(bind colorTransform "	isInstalled	? COLOR_TRANSFORM_WHITE_TO_YELLOW
 												: {}")
 		)
@@ -62,7 +71,7 @@
 		)
 
 		(block
-			(style (position = "absolute") (top = 1px))
+			(style (position = "absolute") (left = -2px) (top = -2px))
 			(controller $Instance renderer='LinkableItemIcon'
 				(bind enabled "isAvailableToLink")
 			)
@@ -70,10 +79,7 @@
 	)
 
 	(block
-		(style	(position = "absolute") 
-				(top = 1px)
-				(bind left "isAvailableToLink ? 19 : 0")
-		)
+		(style (position = "absolute") (top = -2px) (bind left "isAvailableToLink ? 17 : -2"))
 		(controller $Instance renderer='PeculiarityDisabledIcon'
 			(bind enabled "isPeculiarityDisabled")
 			(args
@@ -99,6 +105,7 @@
 					_isExteriorTab = "true"
 					_isActionsAvailable = "_isActionsAvailable"
 					_sid = "_sid"
+					_rarity = "rarity"
 				)
 				(macro DEFAULT_TOOLTIP_BEHAVIOUR "0")
 			)
@@ -117,12 +124,14 @@
 		)
 )
 
-(def element ShipDestructionItemStatic (_id:number, _amount:number=0, _isReward:bool="false", _sid:number=0)
+(def element ShipDestructionItemStatic (_id:number, _amount:number=0, _isReward:bool=false, _sid:number=0)
 	(scope
 		(var shipDestructionEntity:gfx = "$datahub.getPrimaryEntity(CC.exteriorConfig, _id)")
 		(var exteriorConfig:gfx = "shipDestructionEntity ? shipDestructionEntity.exteriorConfig : null")
 		(var ownShipDestruction:gfx = "shipDestructionEntity && shipDestructionEntity.ownShipDestruction ? shipDestructionEntity.ownShipDestruction : null")
 		(var isLinkedToShip:bool = "ownShipDestruction ? ownShipDestruction.isLinkedToShip : false" (event "ownShipDestruction.evUpdated"))
+
+		(macro PULL_RARITY "shipDestructionEntity" "'rarity'")
 	)
 	(bind name "'ExteriorItemDock_' + exteriorConfig.name")
 	(style (width = 100%) (align = "center|middle"))
@@ -136,6 +145,7 @@
 			_isReward = "_isReward"
 			_amount = "_amount"
 			_exteriorType = "exteriorConfig.type"
+			_rarity = "rarity"
 		)
 	)
 
@@ -147,12 +157,14 @@
 			_amount = "_amount"
 			_noMouseInstructions = "true"
 			_sid = "_sid"
+			_rarity = "rarity"
 		)
 		(macro DEFAULT_TOOLTIP_BEHAVIOUR "0")
 	)
 )
 
-(def element ShipDestructionItemView (_shipDestructionName:str, _exteriorType:str, _amount:number=0, _isReward:bool="false")	layout=true
+(def element ShipDestructionItemView (_shipDestructionName:str, _exteriorType:str, _amount:number=0,
+										_isReward:bool=false, _rarity:str=null)	layout=true
 	(scope
 		(var isInStorage:bool = "_amount > 0")
 		(var isAmountVisible:bool = "isInStorage && _exteriorType == SC.Exteriors.EXTERIOR_TYPE.SHIP_DESTRUCTION")
@@ -160,10 +172,14 @@
 	)
 	(bind name "'ExteriorWithAmount_' + _shipDestructionName")
 	(style (height = 60px) (width = 60px))
-	
+
 	(block
 		(class $Fullsize)
 		(style (bind backgroundImage "pathImageUrl"))
+		(bind alpha "!isInStorage && !_isReward ? 0.2 : 1")
+	)
+
+	(element RarityPattern _rarity="_rarity"
 		(bind alpha "!isInStorage && !_isReward ? 0.2 : 1")
 	)
 
@@ -180,18 +196,20 @@
 	)
 
 	(block
-		(style (position = "absolute"))
+		(style (position = "absolute") (left = -2px) (top = -2px))
 		(controller $Instance renderer='LinkableItemIcon')
 	)
 )
 
-(def element ShipDestructionIconWithHeaderAndSubheader (_id:number, _noMouseInstructions:bool="false", _sid:number="0")
+(def element ShipDestructionIconWithHeaderAndSubheader (_id:number, _noMouseInstructions:bool=false, _sid:number=0)
 	(scope
 		(var shipDestructionEntity:gfx = "$datahub.getPrimaryEntity(CC.exteriorConfig, _id)")
 		(var exteriorConfig:gfx = "shipDestructionEntity ? shipDestructionEntity.exteriorConfig : null")
 		(var pathImageUrl:str = "'url:../exteriors/ship_destruction/' + exteriorConfig.name + '.png'")
 		(var headerText:str = "tr('IDS_' + toUpper(exteriorConfig.name))")
 		(var subheaderText:str = "'IDS_EXTERIOR_TYPE_' + SC.Exteriors.EXTERIOR_TYPE.VALUE_TO_NAME[exteriorConfig.type]")
+
+		(macro PULL_RARITY "shipDestructionEntity" "'rarity'")
 	)
 	(style (width = 100%))
 
@@ -201,14 +219,16 @@
 		(style (width = 400px) (flow = "horizontal") (align = "middle"))
 		(block
 			(style (height = 60px) (width = 60px))
-			
+
 			(block
 				(class $Fullsize)
 				(style (bind backgroundImage "pathImageUrl"))
 			)
 
+			(element RarityPattern _rarity="rarity")
+
 			(block
-				(style (position = "absolute"))
+				(style (position = "absolute") (top = -2px) (left = -2px))
 				(controller $Instance renderer='LinkableItemIcon')
 			)
 		)
@@ -235,18 +255,19 @@
 			_id = "_id"
 			_noMouseInstructions = "_noMouseInstructions"
 			_sid = "_sid"
+			_rarity = "rarity"
 		)
 		(macro DEFAULT_TOOLTIP_BEHAVIOUR "0")
 	)
 )
 
-(def element ShipDestructionTooltip (_id:number, _isReward:bool="false", _amount:number=0, _noMouseInstructions:bool="false",
-									_isExteriorTab:bool="false", _isActionsAvailable:bool="false", _isShowUB2Tooltip:bool="false", _sid:number=0)
+(def element ShipDestructionTooltip (_id:number, _isReward:bool=false, _amount:number=0, _noMouseInstructions:bool=false, _rarity:str=null,
+									_isExteriorTab:bool=false, _isActionsAvailable:bool=false, _isShowUB2Tooltip:bool=false, _sid:number=0)
 	(scope
 		(var shipDestructionEntity:gfx = "$datahub.getPrimaryEntity(CC.exteriorConfig, _id)")
 		(var exteriorConfig:gfx = "shipDestructionEntity ? shipDestructionEntity.exteriorConfig : null")
 		(var hasOwnShipDestruction:gfx = "shipDestructionEntity ? shipDestructionEntity.hasComponent(CC.ownShipDestruction) : false")
-	
+
 		(macro PULL_CURRENT_SHIP_ID)
 
 		(var shipEntity:gfx = "shipId ? $datahub.getPrimaryEntity(CC.ship, shipId) : null")
@@ -306,6 +327,8 @@
 																				_text: 'IDS_SERVICE_SHIP_TO_OPERATE_EXTERIORS' }
 																		:	{	_unifiedStatus: SC.Ui_styles.UNIFIED_STATUS.MOUSE_LEFT,
 																				_text: mouseInstructionText }")
+
+		(macro IS_RARITY_SHOWN "_rarity" "'isRarityShown'")
 	)
 	(macro PULL_TOOLTIP_UB2_STATE)
 
@@ -348,6 +371,21 @@
 				(args
 					_unifiedStatus = "SC.Ui_styles.UNIFIED_STATUS.CHECK"
 					_text = "'IDS_INSTALLED'"
+				)
+			)
+		)
+
+		(block
+			(style (width = 100%))
+			(controller $Instance renderer='TooltipSystemHorizontalDivider' (bind enabled "isRarityShown"))
+		)
+		(block
+			(style (width = 100%))
+			(controller $Instance renderer='TooltipSystemRarityText'
+				(bind enabled "isRarityShown")
+				(args
+					_rarity		= "_rarity"
+					_entityName	= "tr('IDS_RARITY_ITEM_ENTITY_NAME')"
 				)
 			)
 		)

@@ -357,7 +357,7 @@
 		(var lootboxStorageComponent:gfx = "lootboxEntity.lootboxStorageComponent")
 		(var lootboxExp:number = "lootboxStorageComponent.lootExp" (event "lootboxStorageComponent.evUpdate"))
 		(var boughtToday:number = "lootboxStorageComponent.boughtToday" (event "lootboxStorageComponent.evUpdate"))
-		(var maxBought:number = "lootboxEntity.lootboxConfigComponent.maxBought" (event "lootboxEntity.lootboxConfigComponent.evUpdate"))
+		(var maxBought:number = "lootboxEntity.lootboxConfigComponent.maxBought" (event "lootboxEntity.lootboxConfigComponent.evPricesUpdate"))
 		(var allBoxesBought:bool = "maxBought == boughtToday")
 
 		(var canBuyLootbox:bool = "lootboxExp >= lootboxEntity.lootboxConfigComponent.prices[boughtToday]")

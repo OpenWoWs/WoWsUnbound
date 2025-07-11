@@ -92,7 +92,9 @@
 		(var progress:number = "slot.progress.max != 0 ? 1 - slot.progress.value / slot.progress.max : 0" (event "slot.progress.evChanged"))
 		(var remain:number = "isWorking ? slot.progress.value : slot.progress.max - slot.progress.value" (event "slot.progress.evChanged"))
 
-		(var showProgressBar:bool = "(isActive || isAirplanesVisType) && progress > 0")
+		(var isHiddenProgress:bool = "weaponType == SC.Ships.SHIP_WEAPON_TYPES.ATBA && !isWeaponActive")
+
+		(var showProgressBar:bool = "!isHiddenProgress && (isActive || isAirplanesVisType) && progress > 0")
 
 		(controller $Animation
 			(bindcall play
@@ -218,7 +220,7 @@
 		(controller $FxInstance lifetime=0.5
 			(bind renderer "'SlotWorkStartedFX'")
 			(args accented = "!(isWeaponActive)")
-			(bindcall create (event "slot.weaponSlot.evReloaded") (bind enabled "isActive && !(isAirplanesVisType)"))
+			(bindcall create (event "slot.weaponSlot.evReloaded") (bind enabled "!isHiddenProgress && isActive && !(isAirplanesVisType)"))
 		)
 
 		(block

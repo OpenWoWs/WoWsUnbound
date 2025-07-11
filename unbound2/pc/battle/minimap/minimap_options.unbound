@@ -212,6 +212,15 @@
 		(macro IS_SPECTATOR_MODE_SCOPE "'isSpectatorMode'")
 		(var minimapOptions:gfx = "$datahub.getCollection(CC.minimapOption)")
 	)
+
+	
+	(block
+		(class $FullsizeAbsolute)
+		(style
+			(backgroundColor = 0x00000001)
+		)
+	)
+
 	(element TooltipSystemHeaderSubheaderText
 			_headerText="'IDS_MINIMAP_OPTIONS_CAPTION'"
 			_unifiedStatus="SC.Ui_styles.UNIFIED_STATUS.DEFAULT"

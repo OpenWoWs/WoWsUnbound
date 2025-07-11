@@ -203,6 +203,20 @@
 	)
 )
 
+(def element TooltipSystemHorizontalDividerNM () layout=true
+	(style
+		(width = 100%)
+		(paddingLeft = "-M") (paddingRight = "-M")
+	)
+
+	(block
+		(style
+			(width = 100%) (height = 2) (backgroundSize = "fill")
+			(backgroundImage = 'url:../service_kit/dividers/divider_h.png')
+		)
+	)
+)
+
 (def element TooltipSystemVerticalDivider () layout=true
 	(style
 		(height = 100%) (marginLeft = "M") (marginRight = "M")
@@ -260,6 +274,29 @@
 								sourceText="tr(_descriptionText)"
 								postfix=''
 								init=true)
+	)
+)
+
+(def element TooltipSystemRarityText (_rarity:str, _entityName:str, _data:dict) layout=true
+	(style (width = 100%))
+
+	(block
+		(class $FullsizeAbsolute)
+		(style
+			(bind paddingLeft "_data.paddingLeft ? _data.paddingLeft : -M")
+			(bind paddingRight "_data.paddingRight ? _data.paddingRight : -M")
+			(bind paddingTop "_data.paddingTop ? _data.paddingTop : -SXS")
+			(bind paddingBottom "_data.paddingBottom ? _data.paddingBottom : -SXS")
+		)
+
+		(element RarityPattern _rarity="_rarity")
+	)
+
+	(tf
+		(class $TextDefaultNM)
+		(style (width = 100%))
+		(alpha = "TA")
+		(bind text "subst('IDS_RARITY_' + toUpper(_rarity) + '_DESCRIPTION', [], {entity: _entityName})")
 	)
 )
 

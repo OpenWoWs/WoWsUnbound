@@ -40,9 +40,8 @@
 	{ label: 'IDS_OPTIONS_CONTRAST_UI',					type: ROW_TYPE.control,	controlType: CONTROL_TYPE.switcher,		option: 'graphics.GUI.contrast' },
 
 	{ label: 'IDS_PREFERENCES_GRAPHICS_SECTION_HEADER_SMOOTHING',	type: ROW_TYPE.header },
-	{ label: 'IDS_MSAA_MODE',	type: ROW_TYPE.control,	controlType: CONTROL_TYPE.itemChooser,	option: 'graphics.msaa.quality',	isFirstInNestedSection: true },
-	{ label: 'IDS_SMOOTHING',	type: ROW_TYPE.control,	controlType: CONTROL_TYPE.itemChooser,	option: 'graphics.postFX.fxaa.quality' },
-	{ label: 'IDS_TXAA',		type: ROW_TYPE.control,	controlType: CONTROL_TYPE.switcher,		option: 'graphics.postFX.txaa' },
+	{ label: 'IDS_TEMPORAL_FILTER_MODE',							type: ROW_TYPE.control, controlType: CONTROL_TYPE.itemChooser, option: 'graphics.postFX.aaMode',	isFirstInNestedSection: true },
+	{ label: 'IDS_SMOOTHING',										type: ROW_TYPE.control, controlType: CONTROL_TYPE.itemChooser, option: 'graphics.postFX.fxaa.quality' },
 
 	{ label: 'IDS_PREFERENCES_GRAPHICS_SECTION_HEADER_ENVIRONMENT',	type: ROW_TYPE.header },
 	{ label: 'IDS_SEA_SIMULATION_QUALITY',		type: ROW_TYPE.control,	controlType: CONTROL_TYPE.itemChooser,	option: 'graphics.sea.simulation.quality',	isFirstInNestedSection: true },

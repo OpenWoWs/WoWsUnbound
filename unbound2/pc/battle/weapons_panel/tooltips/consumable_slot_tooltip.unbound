@@ -11,7 +11,7 @@
 		(var usageAttributes:gfx = "_viewData.usageAttributes")
 		(var usageNegative:array = "usageAttributes.negative")
 		(var usagePositive:array = "usageAttributes.positive")
-		(var usageNeutral:array = "usageAttributes.neutral" (event "_battleConsumable.evMaxChargeChanged") (event "_battleConsumable.evReloadTimeCoeffChanged") (event "_battleConsumable.evWorkTimeCoeffChanged"))
+		(var usageNeutral:array = "usageAttributes.neutral" (event "_battleConsumable.evCurrentChargeeChanged") (event "_battleConsumable.evReloadTimeCoeffChanged") (event "_battleConsumable.evWorkTimeCoeffChanged"))
 
 		(var activeAttributes:gfx = "_viewData.activeAttributes")
 		(var activeNegative:array = "activeAttributes ? activeAttributes.negative : []")

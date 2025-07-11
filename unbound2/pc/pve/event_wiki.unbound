@@ -114,7 +114,7 @@
 
 (def element EventWikiTextWithHeaderElement (_headerText:str, _paragraphText:str, _textWidth:number) layout=true
 	(style
-		(bind width "_textWidth")
+		(bind width "_textWidth - EVENT_WIKI.SCROLL_BAR_WIDTH") 
 		(marginLeft = "S")
 		(marginTop = "S")
 	)
@@ -243,9 +243,9 @@
 			(marginTop = "S")
 			(backgroundSize = "cover")
 			(bind width "!withPicture ? 0 : isSmall ? 300 : 400")
-			(marginLeft = "20px")
+			(bind marginLeft "isSmall ? 20px : 30px")
 			(bind height "isSmall ? 300 : 400")
-			(bind backgroundImage "'url:../event_wiki/' + toUpper(_topicName) + '/' + toLower(categoryName) + '/' + toLower(selectedElementName) + '.png'")
+			(bind backgroundImage "'url:../event_wiki/' + toLower(_topicName) + '/' + toLower(categoryName) + '/' + toLower(selectedElementName) + '.png'")
 		)
 	)
 )

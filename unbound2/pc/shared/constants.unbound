@@ -340,8 +340,9 @@
 	
 	
 	
+	
 
-	"1 << 0 | 1 << 2 | 1 << 6 | 1 << 7 | 1 << 8 | 1 << 10 | 1 << 12 | 1 << 13"
+	"1 << 0 | 1 << 1 | 1 << 2 | 1 << 6 | 1 << 7 | 1 << 8 | 1 << 10 | 1 << 12 | 1 << 13"
 )
 
 (def constant AttributeModifiersCategory {
@@ -397,4 +398,9 @@
 (def constant KeybindingPrefRow	{
 	RIGHT_PADDING:		80,
 	SPACE_BETWEEN_KEYS:	136
+})
+
+
+(def constant EVENT_WIKI {
+	SCROLL_BAR_WIDTH: 8px
 })

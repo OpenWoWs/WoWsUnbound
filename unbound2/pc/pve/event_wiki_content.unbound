@@ -46,7 +46,7 @@
 		},
 	'PCVE039':
 		{
-		'backgroundImagePath': 'PCVE039/briefing_background_PCVE039.jpg',
+		'backgroundImagePath': 'pcve039/bg_pcve039.jpg',
 		'content':
 			[
 				{	

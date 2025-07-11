@@ -8739,6 +8739,8 @@
 		<bind name="watchDH" value="'camoGroup'; 			['exteriorEntity.ownCamouflage.evUpdated']; exteriorEntity.ownCamouflage.camoGroup"/>
 		<bind name="primaryEntityDH" value="'peculiarityEyeEntity'; CC.peculiarityEye; exteriorConfig.peculiarity"/>
 		<bind name="watchDH" value="'isPeculiarityDisabled'; ['peculiarityEyeEntity.peculiarityEye.evEnabledChanged']; exteriorConfig.peculiarity &amp;&amp; !peculiarityEyeEntity.peculiarityEye.enabled"/>
+		<bind name="watchDH" value="'rarityCategoryName'; []; exteriorEntity &amp;&amp; exteriorEntity.rarityCategoryComponent ? exteriorEntity.rarityCategoryComponent.name : null"/>
+		<bind name="watch" value="'rarity'; rarityCategoryName"/>
 		<bind name="primaryEntityDH" value="'exteriorFinalNewTip';	CC.newGuidingTip; SC.Context_guiding_tip.TIP_TYPE.EXTERIOR_INSTALL"/>
 		<bind name="watchDH" value="'isExteriorFinalNewTipActive';	['exteriorFinalNewTip.newGuidingTip.evChanged'];			exteriorFinalNewTip.newGuidingTip.isActive"/>
 		<bind name="watchDH" value="'tipTargetId';					['exteriorFinalNewTip.newGuidingTip.evChanged',
@@ -8800,6 +8802,14 @@
 			<block>
 				<style>
 					<position value="absolute"/>
+					<height value="100%"/>
+				</style>
+				<bind name="alpha" value="!exteriorsInStorage ? 0.3 : 1"/>
+				<bind name="instance" value="'RarityPattern'; {_rarity: rarity}"/>
+			</block>
+			<block>
+				<style>
+					<position value="absolute"/>
 					<right value="0px"/>
 					<bottom value="0px"/>
 				</style>
@@ -8808,7 +8818,6 @@
 			<block>
 				<style>
 					<position value="absolute"/>
-					<top value="1px"/>
 				</style>
 				<bind name="style" value="'left'; hasColorSchemeConfig ? '22px' : '0'"/>
 				<bind name="instance" value="'LinkableItemIcon'; isAvailableToLink ? {} : null"/>
@@ -8844,7 +8853,7 @@
 		</block>
 		<block>
 			<bind name="controller" value="'lesta.unbound.controls.UbInteractiveController'; null; 'clickArea_'"/>
-			<bind name="tooltip" value="'CamouflageTooltip'; {_id: camouflageId}"/>
+			<bind name="tooltip" value="'CamouflageTooltip'; {_id: camouflageId, _rarity: rarity}"/>
 			<styleClass value="$FullsizeAbsolute"/>
 			<style>
 				<backgroundColor value="0x01000000"/>
@@ -8862,6 +8871,7 @@
 		<block>
 			<style>
 				<position value="absolute"/>
+				<top value="-1px"/>
 			</style>
 			<bind name="instance" value="'OverColorPickerController'; hasColorSchemeConfig	?	{	_camouflageId: camouflageId,
 																					_rollOver: rollOver,
@@ -8890,6 +8900,8 @@
 		<bind name="watch" value="'camouflageId'; exteriorEntity.ownCamouflage.id"/>
 		<bind name="watch" value="'exteriorConfig'; exteriorEntity.exteriorConfig"/>
 		<bind name="watchDH" value="'exteriorsInStorage';	['exteriorEntity.countComponent.evUpdate']; exteriorEntity.countComponent.value"/>
+		<bind name="watchDH" value="'rarityCategoryName'; []; exteriorEntity &amp;&amp; exteriorEntity.rarityCategoryComponent ? exteriorEntity.rarityCategoryComponent.name : null"/>
+		<bind name="watch" value="'rarity'; rarityCategoryName"/>
 		<bind name="watchDH" value="'camoColorSchemes'; 		['exteriorEntity.ownCamouflage.evUpdated']; exteriorEntity.ownCamouflage.camoColorSchemes"/>
 		<bind name="watchDH" value="'hasColorSchemeConfig';	['exteriorEntity.ownCamouflage.evUpdated']; exteriorEntity.ownCamouflage.hasColorSchemeConfig"/>
 		<bind name="watch" value="'useRepaintedIcon'; camoColorSchemes.length &gt; 0"/>
@@ -8929,6 +8941,14 @@
 																		: null"/>
 			</block>
 			<block>
+				<style>
+					<position value="absolute"/>
+					<height value="100%"/>
+				</style>
+				<bind name="alpha" value="!exteriorsInStorage ? 0.3 : 1"/>
+				<bind name="instance" value="'RarityPattern'; {_rarity: rarity}"/>
+			</block>
+			<block>
 				<bind name="name" value="'item_count_' + camouflageId"/>
 				<style>
 					<position value="absolute"/>
@@ -8954,7 +8974,7 @@
 		</block>
 		<block>
 			<bind name="controller" value="'lesta.unbound.controls.UbInteractiveController'; null; 'clickArea_'"/>
-			<bind name="tooltip" value="'CamouflageTooltip'; {_id: camouflageId}"/>
+			<bind name="tooltip" value="'CamouflageTooltip'; {_id: camouflageId, _rarity: rarity}"/>
 			<styleClass value="$FullsizeAbsolute"/>
 			<style>
 				<backgroundColor value="0x01000000"/>
@@ -8983,6 +9003,7 @@
 		<block>
 			<style>
 				<position value="absolute"/>
+				<top value="-1px"/>
 			</style>
 			<bind name="instance" value="'OverColorPickerController'; hasColorSchemeConfig	?	{	_camouflageId: camouflageId,
 																					_rollOver: rollOver,
@@ -9007,6 +9028,8 @@
 														:	null"/>
 		<bind name="primaryEntityDH" value="'exteriorEntity'; CC.exteriorConfig; _id"/>
 		<bind name="watchDH" value="'exteriorConfig'; []; exteriorEntity.exteriorConfig"/>
+		<bind name="watchDH" value="'rarityCategoryName'; []; exteriorEntity &amp;&amp; exteriorEntity.rarityCategoryComponent ? exteriorEntity.rarityCategoryComponent.name : null"/>
+		<bind name="watch" value="'rarity'; rarityCategoryName"/>
 		<bind name="watch" value="'hasOwnCamouflage'; !!exteriorEntity.ownCamouflage"/>
 		<bind name="watchDH" value="'camoColorSchemesDH'; 	['exteriorEntity.ownCamouflage.evUpdated']; exteriorEntity.ownCamouflage.camoColorSchemes"/>
 		<bind name="watchDH" value="'isLinkedToShip';		['exteriorEntity.ownCamouflage.evUpdated']; exteriorEntity.ownCamouflage.isLinkedToShip"/>
@@ -9019,14 +9042,16 @@
 											_amount: _amount,
 											_fakeColorScheme: fakeColorScheme,
 											_noMouseInstructions: true,
-											_rewardShipId: _params.shipId}"/>
+											_rewardShipId: _params.shipId,
+											_rarity: rarity}"/>
 		<bind name="instance" value="'CamouflageItemView';	{	_camouflageId: _id,
 												_camoName: exteriorConfig.name,
 												_amount: _amount,
 												_useRepaintedIcon: useRepaintedIcon,
 												_fakeColorScheme: fakeColorScheme,
 												_exteriorType: exteriorConfig.type,
-												_isUnlinkedMSkin: isUnlinkedMSkin}"/>
+												_isUnlinkedMSkin: isUnlinkedMSkin,
+												_rarity: rarity}"/>
 	</block>
 	<block className="CamouflageItemView">
 		<bind name="watch" value="'isAmountVisible'; _amount &gt; 0 &amp;&amp; (_exteriorType == SC.Exteriors.EXTERIOR_TYPE.CAMOUFLAGE || _isUnlinkedMSkin)"/>
@@ -9045,6 +9070,13 @@
 			<bind name="instance" value="'CamouflageRepaintedIcon'; _useRepaintedIcon	? {	_camouflageId: _camouflageId,
 																			_fakeColorScheme: _fakeColorScheme}
 																		: null"/>
+		</block>
+		<block>
+			<style>
+				<position value="absolute"/>
+				<height value="100%"/>
+			</style>
+			<bind name="instance" value="'RarityPattern'; {_rarity: _rarity}"/>
 		</block>
 		<block>
 			<style>
@@ -9088,6 +9120,7 @@
 		<block>
 			<style>
 				<marginLeft value="-4px"/>
+				<marginTop value="1px"/>
 			</style>
 			<bind name="style" value="'hitTest'; _rollOver &amp;&amp; _isActionsAvailable"/>
 			<bind name="soundOn" value="'click'; 'click'; 'button_camouflage'"/>
@@ -9313,6 +9346,7 @@
 																				_text: 'IDS_SERVICE_SHIP_TO_OPERATE_EXTERIORS' }
 																		:	{	_unifiedStatus: SC.Ui_styles.UNIFIED_STATUS.MOUSE_LEFT,
 																				_text: mouseInstructionText }"/>
+		<bind name="watch" value="'isRarityShown'; _rarity != null &amp;&amp; _rarity != SC.Common.RARITY_CATEGORY_NAMES.COMMON"/>
 		<style>
 			<hitTest value="false"/>
 			<width value="320px"/>
@@ -9397,6 +9431,28 @@
 													isInstalled	?	{	_unifiedStatus: SC.Ui_styles.UNIFIED_STATUS.CHECK,
 																		_text: 'IDS_INSTALLED' }
 																	:	null"/>
+			</block>
+			<block className="TooltipSystemHorizontalDivider">
+				<bind name="visible" value="isRarityShown"/>
+				<style>
+					<width value="100%"/>
+					<height value="2px"/>
+					<marginTop value="12px"/>
+					<marginBottom value="12px"/>
+					<marginRight value="-16px"/>
+					<marginLeft value="-16px"/>
+					<backgroundSize value="fill"/>
+					<backgroundImage value="url:../service_kit/dividers/divider_h.png"/>
+				</style>
+			</block>
+			<block>
+				<bind name="visible" value="isRarityShown"/>
+				<style>
+					<width value="100%"/>
+				</style>
+				<bind name="instance" value="'TooltipSystemRarityText';	isRarityShown	?	{	_rarity: _rarity,
+																			_entityName: tr('IDS_RARITY_ITEM_ENTITY_NAME') }
+																	: null"/>
 			</block>
 			<block className="TooltipSystemHorizontalDivider">
 				<bind name="visible" value="isAmountVisible || isNotInStorageVisible || isPriceVisible || isNotForSaleVisible"/>
@@ -13014,6 +13070,7 @@
 				<bind name="instance" value="'AppliedFilter'; { _filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_TYPE,		_panelEntityId: panelEntity.id }"/>
 				<bind name="instance" value="'AppliedFilter'; { _filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_NATION,		_panelEntityId: panelEntity.id }"/>
 				<bind name="instance" value="'AppliedFilter'; { _filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_SPECIAL,	_panelEntityId: panelEntity.id }"/>
+				<bind name="instance" value="'AppliedFilter'; { _filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_RARITY,		_panelEntityId: panelEntity.id }"/>
 				<style>
 					<flow value="horizontal"/>
 				</style>
@@ -13302,6 +13359,7 @@
 					<bind name="instance" value="'FilterBlock'; {_title: 'IDS_CLASS',	_filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_TYPE, 		needDivider: true,	_panelEntityId: panelEntity.id, _ident: 0, _inCarousel: true}"/>
 					<bind name="instance" value="'FilterBlock'; {_title: 'IDS_NATION',	_filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_NATION,	needDivider: true,	_panelEntityId: panelEntity.id, _ident: 0, _inCarousel: true}"/>
 					<bind name="instance" value="'FilterBlock'; {_title: 'IDS_SPECIAL',	_filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_SPECIAL,	needDivider: true,	_panelEntityId: panelEntity.id, _ident: 0, _inCarousel: true}"/>
+					<bind name="instance" value="'FilterBlock'; {_title: 'IDS_RARITY',	_filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_RARITY,	needDivider: true,	_panelEntityId: panelEntity.id, _ident: 0, _inCarousel: true}"/>
 					<style>
 						<flow value="horizontal"/>
 					</style>
@@ -13909,7 +13967,8 @@
 		<bind name="instance" value="(_filterType == SC.Common.SHIP_FILTER_TYPE.SHIP_LEVEL)	? 'ShipLevelCheckBox' :
 					(_filterType == SC.Common.SHIP_FILTER_TYPE.SHIP_TYPE)	? 'ShipClassCheckBox' :
 					(_filterType == SC.Common.SHIP_FILTER_TYPE.SHIP_NATION)	? (_field != 'Events' ? 'ShipNationCheckBox' : 'EmptyItem') :
-					(_filterType == SC.Common.SHIP_FILTER_TYPE.SHIP_SPECIAL)? 'ShipSpecialCheckBox'
+					(_filterType == SC.Common.SHIP_FILTER_TYPE.SHIP_SPECIAL)? 'ShipSpecialCheckBox' :
+					(_filterType == SC.Common.SHIP_FILTER_TYPE.SHIP_RARITY)	? 'ShipRarityCheckBox'
 																			: 'FilterCheckBox'; 
 		{_filterType: _filterType, value: _value, field: _field, _ident: _ident, _tooltipPrefix: _tooltipPrefix, _disabled: (_inCarousel ? !_enabled : false)}"/>
 	</block>
@@ -13935,6 +13994,9 @@
 												: { _text: isSupershipLevel	? tooltipPrefix + 'HINT_CHECKBOX_FILTER_LEVEL_SUPERSHIP'
 																			: subst(tooltipPrefix + 'HINT_CHECKBOX_FILTER_LEVEL', [], {level: field}),
 													_unifiedStatus:	 SC.Ui_styles.UNIFIED_STATUS.DEFAULT}"/>
+		<bind name="watch" value="'index'; Number(field) - 1"/>
+		<bind name="watch" value="'eventName'; SC.Common.SHIP_FILTER_STATISTICS.TIERS[index]"/>
+		<bind name="watch" value="'eventPostfix'; value ? '_unselected' : '_selected'"/>
 		<style>
 			<marginBottom value="8px"/>
 			<width value="80px"/>
@@ -13943,8 +14005,10 @@
 											_label: toRomanShipLevels(field),
 											_disabled: _disabled,
 											_action: 'setFilterValue',
+											_directEvent: SC.Common.STATISTICS_EVENTS.LOG,
 											_statusTooltipData: statusTooltipData,
-											_actionParams: {type: _filterType, field: field, value: !value, ident: _ident}}"/>
+											_actionParams: {type: _filterType, field: field, value: !value, ident: _ident},
+											_directEventParams: {event: eventName + '_' + eventPostfix}}"/>
 	</block>
 	<block className="ShipClassCheckBox">
 		<bind name="name" value="'CarouselCheckBox_' + SC.Common.SHIP_FILTER_TYPE.VALUE_TO_NAME[_filterType] + '_' + field"/>
@@ -13953,6 +14017,7 @@
 													_unifiedStatus:	 SC.Ui_styles.UNIFIED_STATUS.ATTENTION}
 												: { _text: toUpperCase(tooltipPrefix + 'HINT_CHECKBOX_FILTER_CLASS_' + field),
 													_unifiedStatus:	 SC.Ui_styles.UNIFIED_STATUS.DEFAULT}"/>
+		<bind name="watch" value="'eventPostfix'; value ? '_unselected' : '_selected'"/>
 		<style>
 			<marginBottom value="8px"/>
 			<width value="80px"/>
@@ -13963,8 +14028,10 @@
 											_statusTooltipData: statusTooltipData,
 											_disabled: _disabled,
 											_action: 'setFilterValue',
+											_directEvent: SC.Common.STATISTICS_EVENTS.LOG,
 											_statusTooltipData: statusTooltipData,
-											_actionParams: {type: _filterType, field: field, value: !value, ident: _ident}}"/>
+											_actionParams: {type: _filterType, field: field, value: !value, ident: _ident},
+											_directEventParams: {event: SC.Common.SHIP_FILTER_STATISTICS[toUpperCase(field)] + '_' + eventPostfix}}"/>
 	</block>
 	<block className="ShipNationCheckBox">
 		<bind name="name" value="'CarouselCheckBox_' + SC.Common.SHIP_FILTER_TYPE.VALUE_TO_NAME[_filterType] + '_' + field"/>
@@ -13973,6 +14040,7 @@
 													_unifiedStatus:	 SC.Ui_styles.UNIFIED_STATUS.ATTENTION}
 												: { _text: toUpperCase(tooltipPrefix + 'HINT_CHECKBOX_FILTER_NATION_' + field),
 													_unifiedStatus:	 SC.Ui_styles.UNIFIED_STATUS.DEFAULT}"/>
+		<bind name="watch" value="'eventPostfix'; value ? '_unselected' : '_selected'"/>
 		<style>
 			<marginBottom value="8px"/>
 			<width value="80px"/>
@@ -13983,8 +14051,10 @@
 											_statusTooltipData: statusTooltipData,
 											_disabled: _disabled,
 											_action: 'setFilterValue',
+											_directEvent: SC.Common.STATISTICS_EVENTS.LOG,
 											_statusTooltipData: statusTooltipData,
-											_actionParams: {type: _filterType, field: field, value: !value, ident: _ident}}"/>
+											_actionParams: {type: _filterType, field: field, value: !value, ident: _ident},
+											_directEventParams: {event: SC.Common.SHIP_FILTER_STATISTICS[toUpperCase(field)] + '_' + eventPostfix}}"/>
 	</block>
 	<block className="ShipSpecialCheckBox">
 		<bind name="visible" value="isVisible"/>
@@ -14017,6 +14087,7 @@
 													_unifiedStatus:	 SC.Ui_styles.UNIFIED_STATUS.ATTENTION}
 												: { _text: toUpperCase('IDS_HINT_CHECKBOX_FILTER_' + field),
 													_unifiedStatus:	 SC.Ui_styles.UNIFIED_STATUS.DEFAULT}"/>
+		<bind name="watch" value="'eventPostfix'; value ? '_unselected' : '_selected'"/>
 		<style>
 			<marginBottom value="8px"/>
 			<width value="80px"/>
@@ -14028,8 +14099,34 @@
 											_statusTooltipData: statusTooltipData,
 											_disabled: _disabled,
 											_action: 'setFilterValue',
+											_directEvent: SC.Common.STATISTICS_EVENTS.LOG,
 											_statusTooltipData: statusTooltipData,
-											_actionParams: {type: _filterType, field: field, value: !value, ident: _ident}}"/>
+											_actionParams: {type: _filterType, field: field, value: !value, ident: _ident},
+											_directEventParams: {event: SC.Common.SHIP_FILTER_STATISTICS[toUpperCase(field)] + '_' + eventPostfix}}"/>
+	</block>
+	<block className="ShipRarityCheckBox">
+		<bind name="name" value="'CarouselCheckBox_' + SC.Common.SHIP_FILTER_TYPE.VALUE_TO_NAME[_filterType] + '_' + toUpperCase(field)"/>
+		<bind name="watch" value="'imagePath'; 'url:../service_kit/filters/' + toLowerCase(field) + '.png'"/>
+		<bind name="watch" value="'statusTooltipData'; _disabled	? {	_text: toUpperCase('IDS_HINT_CHECKBOX_FILTER_RARITY_NOT_AVAILABLE_' + field),
+													_unifiedStatus:	 SC.Ui_styles.UNIFIED_STATUS.ATTENTION}
+												: {	_text: toUpperCase('IDS_HINT_CHECKBOX_FILTER_RARITY_' + field),
+													_unifiedStatus:	 SC.Ui_styles.UNIFIED_STATUS.DEFAULT}"/>
+		<bind name="watch" value="'eventName'; toUpperCase(field) + '_' + (!value ? 'SELECTED' : 'UNSELECTED')"/>
+		<style>
+			<marginBottom value="8px"/>
+			<width value="80px"/>
+		</style>
+		<bind name="instance" value="'CheckBox'; {	_isChecked: value,
+									_customLabelInstance: 'CheckBoxImageLabel',
+									_customLabelInstanceParams: {	_height: 39, _width: 39, _marginTop: -10,
+																	_marginLeft: '2px', _imagePath: imagePath},
+									_statusTooltipData: statusTooltipData,
+									_disabled: _disabled,
+									_action: 'setFilterValue',
+									_directEvent: SC.Common.STATISTICS_EVENTS.LOG,
+									_statusTooltipData: statusTooltipData,
+									_actionParams: {type: _filterType, field: field, value: !value, ident: _ident},
+									_directEventParams: {event: SC.Common.SHIP_FILTERS_RARITY_STATISTICS[eventName]}}"/>
 	</block>
 	<block className="AppliedHardSystemFilter">
 		<bind name="collectionDH" value="CC.battleType; 'selectedBattleTypes'; 'selected'"/>
@@ -14102,7 +14199,8 @@
 		<bind name="watch" value="'tooltipTitle';	_filterType == SC.Common.SHIP_FILTER_TYPE.SHIP_LEVEL	? 'IDS_LEVEL'	:
 									_filterType == SC.Common.SHIP_FILTER_TYPE.SHIP_TYPE		? 'IDS_CLASS'	:
 									_filterType == SC.Common.SHIP_FILTER_TYPE.SHIP_NATION 	? 'IDS_NATION'	:
-									_filterType == SC.Common.SHIP_FILTER_TYPE.SHIP_SPECIAL	? 'IDS_SPECIAL'
+									_filterType == SC.Common.SHIP_FILTER_TYPE.SHIP_SPECIAL	? 'IDS_SPECIAL' :
+									_filterType == SC.Common.SHIP_FILTER_TYPE.SHIP_RARITY	? 'IDS_RARITY'
 																							: null"/>
 		<bind name="transition" value="(rollOver &amp;&amp; !mouseDown) || appliedFiltersInfotipSelected; 0.15; {alpha: 0.7}; {alpha: 1}"/>
 		<bind name="appear" value="'addedToStage'; 0.15; 0; {alpha: 0, top: 10}; {alpha: 0.7, top: 0}; SC.Common.EASING_FUNCTIONS.IN_QUAD"/>
@@ -14148,6 +14246,8 @@
 						<bind name="instance" value="'CloseButton'; {
 						_action: 'resetFilterType',
 						_actionParams: { type: _filterType, ident: 0 },
+						_directEvent: SC.Common.STATISTICS_EVENTS.LOG,
+						_directEventParams: {event: SC.Common.SHIP_FILTER_STATISTICS[SC.Common.SHIP_FILTER_TYPE.VALUE_TO_NAME[_filterType] + '_UNSELECTED']},
 						_tooltipText: 'IDS_HINT_RESET_FILTER'
 					}"/>
 					</block>
@@ -14204,7 +14304,8 @@
 			</style>
 			<bind name="repeat" value="selectedItems;	(_filterType == SC.Common.SHIP_FILTER_TYPE.SHIP_TYPE)	? 'CarouselFilterShipTypeIcon' :
 										(_filterType == SC.Common.SHIP_FILTER_TYPE.SHIP_NATION)	? 'CarouselFilterTinyNationFlag' :
-										(_filterType == SC.Common.SHIP_FILTER_TYPE.SHIP_SPECIAL)? 'CarouselFilterSpecialSortingIcon'
+										(_filterType == SC.Common.SHIP_FILTER_TYPE.SHIP_SPECIAL)? 'CarouselFilterSpecialSortingIcon' :
+										(_filterType == SC.Common.SHIP_FILTER_TYPE.SHIP_RARITY)	? 'CarouselFilterRarityIcon'
 																								: 'CarouselFilterShipTypeIcon'"/>
 			<style>
 				<flow value="horizontal"/>
@@ -14309,7 +14410,8 @@
 						<marginTop value="11px"/>
 						<hitTest value="false"/>
 					</style>
-					<bind name="instance" value="'CloseButton'; {}"/>
+					<bind name="instance" value="'CloseButton'; {	_directEvent: SC.Common.STATISTICS_EVENTS.LOG,
+													_directEventParams: {event: SC.Common.SHIP_FILTER_STATISTICS.ALL_UNSELECTED}}"/>
 				</block>
 				<style>
 					<flow value="horizontal"/>
@@ -14387,6 +14489,27 @@
 				<width value="39px"/>
 				<top value="-9px"/>
 				<left value="-2px"/>
+			</style>
+			<bind name="style" value="'backgroundImage'; imagePath"/>
+		</block>
+	</block>
+	<block className="CarouselFilterRarityIcon">
+		<bind name="entityDH" value="'filterEntity'; $value"/>
+		<bind name="watchDH" value="'_field'; ['filterEntity.shipFilterItem.evUpdate']; filterEntity.shipFilterItem.field"/>
+		<bind name="watch" value="'imagePath'; 'url:../service_kit/filters/' + toLowerCase(_field) + '.png'"/>
+		<style>
+			<marginLeft value="-2px"/>
+			<height value="21px"/>
+			<width value="39px"/>
+		</style>
+		<block>
+			<style>
+				<width value="39px"/>
+				<height value="39px"/>
+				<position value="absolute"/>
+				<top value="-9px"/>
+				<left value="-2px"/>
+				<hitTest value="false"/>
 			</style>
 			<bind name="style" value="'backgroundImage'; imagePath"/>
 		</block>
@@ -17020,6 +17143,10 @@
 		<bind name="watchDH" value="'isInNewbieGifts'; ['routeEntityisInNewbieGifts.route.evIsActiveChanged']; routeEntityisInNewbieGifts.route.isActive"/>
 		<bind name="primaryEntityDH" value="'routeEntityisInStrategicActions'; CC.route; SC.Ui_windows.ROUTE.STRATEGIC_ACTIONS"/>
 		<bind name="watchDH" value="'isInStrategicActions'; ['routeEntityisInStrategicActions.route.evIsActiveChanged']; routeEntityisInStrategicActions.route.isActive"/>
+		<bind name="primaryEntityDH" value="'routeEntityisInBarge'; CC.route; SC.Ui_windows.ROUTE.BARGE"/>
+		<bind name="watchDH" value="'isInBarge'; ['routeEntityisInBarge.route.evIsActiveChanged']; routeEntityisInBarge.route.isActive"/>
+		<bind name="primaryEntityDH" value="'routeEntitybargeData'; CC.route; SC.Ui_windows.ROUTE.BARGE"/>
+		<bind name="watchDH" value="'bargeData'; ['routeEntitybargeData.dataComponent.evDataChanged']; routeEntitybargeData.dataComponent.data"/>
 		<bind name="firstEntityDH" value="'dockEntity'; CC.dockDataMarker"/>
 		<bind name="watchDH" value="'shipId'; ['dockEntity.shipSelection.evShipUpdate']; dockEntity.shipSelection.currentShipId"/>
 		<bind name="watchDH" value="'shipIdForModuleInset'; ['dockEntity.shipSelection.evShipViewUpdate']; dockEntity.shipSelection.currentShipIdForModuleInset"/>
@@ -17029,12 +17156,19 @@
 		<bind name="firstEntityDH" value="'windowManagerEntity'; CC.windowManager"/>
 		<bind name="watchDH" value="'windowQueue'; 	['windowManagerEntity.windowManager.evChanged']; windowManagerEntity.windowManager.windowQueue"/>
 		<bind name="watch" value="'isLoadingBattle'; isIn('LoadingBattle', windowQueue)"/>
+		<bind name="firstEntityDH" value="'gamefaceGlobalState'; CC.gamefaceGlobalState"/>
+		<bind name="watchDH" value="'gfStateHasControl'; ['gamefaceGlobalState.gamefaceGlobalState.evChanged', 'gamefaceGlobalState.gamefaceGlobalState.evGamefaceHasControlChanged']; gamefaceGlobalState.gamefaceGlobalState.gamefaceHasControl"/>
 		<bind name="firstEntityDH" value="'divisionDataEntity'; CC.division"/>
 		<bind name="firstEntityDH" value="'dockDataEntity'; CC.dockData"/>
 		<bind name="watchDH" value="'isArmorVisible'; ['dockDataEntity.dockData.evIsArmorVisibleChanged']; dockDataEntity.dockData.isArmorVisible"/>
 		<bind name="firstEntityDH" value="'balancerInfoEntity'; CC.balancerInfo"/>
 		<bind name="watchDH" value="'isPreparingForBattle'; ['balancerInfoEntity.balancerInfo.evIsPreparingForBattleChanged']; balancerInfoEntity.balancerInfo.isPreparingForBattle"/>
-		<bind name="watch" value="'isNotificationLogHidden'; isInBalancer || isPreparingForBattle || isLoadingBattle || isInStrategicActions || isInNewbieGifts "/>
+		<bind name="watch" value="'isNotificationLogHidden'; isInBalancer || 
+											isPreparingForBattle || 
+											isLoadingBattle || 
+											isInStrategicActions || 
+											isInNewbieGifts ||
+											(isInBarge &amp;&amp; !bargeData.chatPanelVisible)"/>
 		<styleClass value="$FullsizeAbsolute"/>
 		<block>
 			<styleClass value="$BottomMenu"/>
@@ -17044,7 +17178,7 @@
 			<block>
 				<styleClass value="$Fullsize"/>
 				<block>
-					<bind name="visible" value="!isInShipyard &amp;&amp; !isInStrategicActions"/>
+					<bind name="visible" value="!isInShipyard &amp;&amp; !isInStrategicActions &amp;&amp; !(isInBarge &amp;&amp; !bargeData.chatPanelVisible)"/>
 					<styleClass value="$Fullsize"/>
 					<block>
 						<style>
@@ -17129,6 +17263,8 @@
 			</style>
 		</block>
 		<block>
+			<bind name="fade" value="isInBarge &amp;&amp; gfStateHasControl; 0.05; {alpha: 1}; {alpha: 0}; {alpha: 1};
+					SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
 			<bind name="instance" value="'SystemNotificationContainer'; {}"/>
 		</block>
 		<block>
@@ -17254,6 +17390,7 @@
 		<bind name="style" value="'width'; _width + 'px'"/>
 		<bind name="style" value="'height'; _height + 'px'"/>
 		<bind name="style" value="'backgroundImage'; _imagePath"/>
+		<bind name="style" value="'backgroundSize'; _backgroundSize ? _backgroundSize : 'empty'"/>
 	</block>
 
 	<!-- clan -->
@@ -28291,7 +28428,9 @@
 					SC.Common.EASING_FUNCTIONS.OUT_QUAD; prevDockState == SC.Ui_windows.ROUTE.PORT ? 0.5 : 0"/>
 			<bind name="name" value="'barge'"/>
 			<styleClass value="$FullsizeAbsolute"/>
-			<bind name="instance" value="'LootBoxes'; {}"/>
+			<block className="LootboxesInset" type="ublock">
+				<bind name="build!" value="$ubPlayerProxy; {}"/>
+			</block>
 		</block>
 		<block>
 			<bind name="fade" value="currentDockState == SC.Ui_windows.ROUTE.SHIP_PREVIEW; 0.4; {alpha: 0}; {alpha: 1}; {alpha: 0};
@@ -31094,8 +31233,8 @@
 	<block className="EconomicBoostItemStatic">
 		<bind name="controller" value="'lesta.unbound.controls.UbInteractiveController'"/>
 		<bind name="primaryEntityDH" value="'ecoBoostEntity'; CC.ecoBoost; _id"/>
-		<bind name="watch" value="'type'; ecoBoostEntity.ecoBoost.type"/>
-		<bind name="watch" value="'name'; ecoBoostEntity.ecoBoost.name"/>
+		<bind name="watchDH" value="'type'; []; ecoBoostEntity.ecoBoost.type"/>
+		<bind name="watchDH" value="'name'; []; ecoBoostEntity.ecoBoost.name"/>
 		<bind name="watch" value="'isLinkableBoost'; type == SC.Common.ECOBOOST_TYPES.LINKABLE"/>
 		<bind name="watch" value="'isUnlinkedLinkableBoost'; type == SC.Common.ECOBOOST_TYPES.LINKABLE &amp;&amp; !_params.shipId"/>
 		<bind name="watch" value="'tooltipElementName';	type == SC.Common.ECOBOOST_TYPES.LINKABLE	? 'MultiBoostTooltip' :
@@ -31112,7 +31251,7 @@
 													_isUnlinkedLinkableBoost: isUnlinkedLinkableBoost}"/>
 	</block>
 	<block className="EconomicBoostItemView">
-		<bind name="name" value="'EconomicBoostItem_' + name"/>
+		<bind name="name" value="'EconomicBoostItem_' + _name"/>
 		<bind name="watch" value="'isAmountVisible'; _amount &gt; 0 &amp;&amp;	(_type == SC.Common.ECOBOOST_TYPES.COMMON || _isUnlinkedLinkableBoost)"/>
 		<style>
 			<width value="60px"/>
@@ -35899,7 +36038,7 @@
 								rewardItem.subtype == 'MSkin')				? tr('IDS_EXTERIOR_TYPE_' + rewardItem.subtype) :
 								rewardItem.subtype == 'ShipDestruction'		? 'IDS_EXTERIOR_TYPE_SHIP_DESTRUCTION' :
 								rewardItem.subtype == 'Ensign'				? ensignEntity.ensign.group	? ('IDS_ENSIGN_GROUP_SUBTYPE_' + ensignEntity.ensign.group)
-																									: 'IDS_SEASON_ENSIGN' :
+																										: 'IDS_SEASON_ENSIGN' :
 								rewardItem.subtype == 'Camoboost'			? tr('IDS_ECONOMIC_BOOST_TYPE_EXPENDABLE_' + ecoBoostRarity) :
 								rewardItem.subtype == 'Multiboost'		||
 								rewardItem.subtype == 'Globalboost'			? 'IDS_ECONOMIC_BOOST_TYPE_MULTIBOOST'
@@ -36382,6 +36521,8 @@
 	<block className="RewardShip">
 		<bind name="primaryEntityDH" value="'shipEntity'; CC.ship; rewardItem.id; 'evUpdate'"/>
 		<bind name="watchDH" value="'shipInfo'; ['shipEntity.ship.evUpdate', 'shipEntity.ship.evCurrentSkinChanged', 'shipEntity.ship.evFlagNameWithCrewChanged']; shipEntity.ship"/>
+		<bind name="watchDH" value="'rarityCategoryName'; []; shipEntity &amp;&amp; shipEntity.rarityCategoryComponent ? shipEntity.rarityCategoryComponent.name : null"/>
+		<bind name="watch" value="'rarity'; rarityCategoryName"/>
 		<bind name="watch" value="'rentDuration'; rewardItem.params.rentDuration"/>
 		<bind name="watch" value="'rentUntil'; rewardItem.params.rentUntil"/>
 		<bind name="watch" value="'isRentShip'; rentDuration || rentUntil"/>
@@ -36438,6 +36579,13 @@
 				<styleClass value="$MiddleAlignedAbsolutely"/>
 				<styleClass value="$MiddleVAligned"/>
 				<bind name="style" value="'backgroundImage'; 'url:' + shipInfo.pathPreview"/>
+			</block>
+			<block>
+				<style>
+					<position value="absolute"/>
+					<height value="80px"/>
+				</style>
+				<bind name="instance" value="'RarityPattern'; {_rarity: rarity}"/>
 			</block>
 			<block>
 				<styleClass value="$Fullsize"/>
@@ -37948,7 +38096,6 @@
 		<bind name="watch" value="'isInstalledAndActive';	isInstalled &amp;&amp; amount"/>
 		<bind name="watch" value="'isUnclickable'; !canBeBought &amp;&amp; !isInstalled &amp;&amp; !amount"/>
 		<bind name="watchDH" value="'name';			[];		ecoBoostEntity.ecoBoost.name"/>
-		<bind name="watch" value="'boostTitle'; 'IDS_' + toUpperCase(name)"/>
 		<bind name="watchDH" value="'canBeBought';	['ecoBoostEntity.ecoBoost.evUpdated'];		ecoBoostEntity.ecoBoost.canBuy"/>
 		<bind name="watchDH" value="'attributesPositive';	['ecoBoostEntity.attributes.evChanged'];	ecoBoostEntity.attributes.positive"/>
 		<bind name="watch" value="'boostInfluence';	attributesPositive[0]['measuredValue']"/>
@@ -41868,1025 +42015,6 @@
 				<right value="20px"/>
 			</style>
 			<bind name="instance" value="'CloseButton'; { _tooltipText: 'IDS_CLOSE' }"/>
-		</block>
-	</block>
-
-	<!-- lootboxes -->
-	<block className="LootBoxes">
-		<bind name="collectionDH" value="CC.userPrefs; 'userPrefsCollection'"/>
-		<bind name="entityDH" value="'userPrefsEntity'; userPrefsCollection[0].id"/>
-		<bind name="watchDH" value="'userPrefs'; ['userPrefsEntity.userPrefs.evUserPrefsChanged']; userPrefsEntity.userPrefs.userPrefs"/>
-		<bind name="collectionDH" value="CC.battleType; 'selectedBattleTypes'; 'selected'"/>
-		<bind name="watch" value="'selectedBattleTypeGPID'; selectedBattleTypes[0].battleType.battleTypeGameParamId"/>
-		<bind name="collectionDH" value="CC.eventHubPhase; 'eventHubPhaseCollection'"/>
-		<bind name="watch" value="'currentPhaseEventID'; eventHubPhaseCollection[0].eventHubPhase.battleTypeGameParamId"/>
-		<bind name="watch" value="'isInEventHub'; isIn(selectedBattleTypes[0].eventBattleState.name, SC.Ui_common.EVENTS.EVENT_HUB_OPERATIONS)"/>
-		<bind name="primaryEntityDH" value="'eventHubFeatureEntity'; CC.accountFeature; SC.Common.ACCOUNT_FEATURE.BIT_MASKS[31]"/>
-		<bind name="watchDH" value="'eventHubFeatureState'; ['eventHubFeatureEntity.accountFeature.evStateChanged']; eventHubFeatureEntity.accountFeature.state"/>
-		<bind name="watch" value="'isEventHubUnlocked'; eventHubFeatureState != 'locked'"/>
-		<bind name="watch" value="'isEventModeEnabled'; selectedBattleTypeGPID == currentPhaseEventID || (isInEventHub &amp;&amp; !isEventHubUnlocked)"/>
-		<bind name="firstEntityDH" value="'dockDataEntity'; CC.dockData"/>
-		<bind name="watchDH" value="'isDockInputLocked';  ['dockDataEntity.dockData.evIsDockInputLockedChanged']; dockDataEntity.dockData.isDockInputLocked"/>
-		<bind name="transition" value="isDockInputLocked; 0.15; {alpha: 1}; {alpha: 0}; {alpha: 1}; SC.Common.EASING_FUNCTIONS.IN_QUAD; 0.15"/>
-		<bind name="style" value="'hitTest'; !isDockInputLocked"/>
-		<bind name="primaryEntityDH" value="'isBlurEnabledEntity'; CC.preference; 'graphics.GUI.blur'"/>
-		<bind name="watchDH" value="'isBlurEnabled'; ['isBlurEnabledEntity.preference.evValueChanged']; isBlurEnabledEntity.preference.value"/>
-		<bind name="primaryEntityDH" value="'contrastEntity'; CC.preference; 'graphics.GUI.contrast'"/>
-		<bind name="watchDH" value="'contrast'; ['contrastEntity.preference.evValueChanged']; contrastEntity.preference.value"/>
-		<bind name="firstEntityDH" value="'lootboxEntity'; CC.lootboxConfigComponent"/>
-		<bind name="watchDH" value="'maxBought';				['lootboxEntity.lootboxConfigComponent.evUpdate'];	lootboxEntity.lootboxConfigComponent.maxBought"/>
-		<bind name="watchDH" value="'lootboxExp';			['lootboxEntity.lootboxStorageComponent.evUpdate'];	lootboxEntity.lootboxStorageComponent.lootExp"/>
-		<bind name="watchDH" value="'boughtToday';			['lootboxEntity.lootboxStorageComponent.evUpdate'];	lootboxEntity.lootboxStorageComponent.boughtToday"/>
-		<bind name="watchDH" value="'lootboxesInStorage';	['lootboxEntity.lootboxStorageComponent.evUpdate'];	lootboxEntity.lootboxStorageComponent.inStorage"/>
-		<bind name="watchDH" value="'dropTimeStamp';			['lootboxEntity.lootboxStorageComponent.evUpdate'];	lootboxEntity.lootboxStorageComponent.dropAt"/>
-		<bind name="watchDH" value="'openedLootboxRewards';	['lootboxEntity.lootboxComponent.evUpdate'];		lootboxEntity.lootboxComponent.rewards"/>
-		<bind name="watchDH" value="'activeAnimation';		['lootboxEntity.lootboxAnimationState.evUpdate'];	lootboxEntity.lootboxAnimationState.active"/>
-		<bind name="watchDH" value="'lootboxOpened';			['lootboxEntity.lootboxAnimationState.evUpdate'];	lootboxEntity.lootboxAnimationState.open"/>
-		<bind name="collectionDH" value="CC.lootboxTypeInfoComponent; 'lootboxTypesEntitiesList'"/>
-		<bind name="changeDispatch" value="lootboxTypesEntitiesList; 'evLootboxTypesListChanged'"/>
-		<bind name="action" value="'evLootboxTypesListChanged'; 'setUserPref'; {value: 0, name: 'selectedLootbox'}"/>
-		<bind name="firstEntityDH" value="'currentBargeBannerEntity'; CC.currentBargeBanner"/>
-		<bind name="watchDH" value="'currentName'; ['currentBargeBannerEntity.currentBargeBanner.evChanged']; currentBargeBannerEntity.currentBargeBanner.name"/>
-		<bind name="primaryEntityDH" value="'bargeBannerEntity'; CC.bargeBanner; currentName"/>
-		<bind name="watchDH" value="'data';				['bargeBannerEntity.byteArrayData.evUpdate']; bargeBannerEntity.byteArrayData ? bargeBannerEntity.byteArrayData.data : null"/>
-		<bind name="watchDH" value="'startTime';			[]; bargeBannerEntity.bargeBanner.startTime"/>
-		<bind name="watchDH" value="'finishTime';		[]; bargeBannerEntity.bargeBanner.finishTime"/>
-		<bind name="watchDH" value="'url';				[]; bargeBannerEntity.bargeBanner.url"/>
-		<bind name="watchDH" value="'mainText';			[]; bargeBannerEntity.bargeBanner.mainText"/>
-		<bind name="watchDH" value="'tooltipText';		[]; bargeBannerEntity.bargeBanner.tooltipText"/>
-		<bind name="primaryEntityDH" value="'featureEntity_29'; CC.accountFeature; SC.Common.ACCOUNT_FEATURE.BIT_MASKS[29]"/>
-		<bind name="watchDH" value="'feature_29'; ['featureEntity_29.accountFeature.evStateChanged']; featureEntity_29.accountFeature.state"/>
-		<bind name="watch" value="'featureState'; feature_29"/>
-		<bind name="action" value="''; 'featureSeen'; {featureIndex: 29}"/>
-		<bind name="serverTime" value="'serverTime'"/>
-		<bind name="watch" value="'eventLootboxBannerTillStart'; (startTime - serverTime)"/>
-		<bind name="watch" value="'eventLootboxBannerTillEnd'; (finishTime - serverTime)"/>
-		<bind name="watch" value="'eventBannerVisible'; eventLootboxBannerTillEnd &gt; 0 &amp;&amp; eventLootboxBannerTillStart &lt; 0 &amp;&amp; feature_29 != 'locked'"/>
-		<bind name="watch" value="'allBoxesBought'; maxBought == boughtToday"/>
-		<bind name="watch" value="'canBuyLootbox'; lootboxExp &gt;= lootboxEntity.lootboxConfigComponent.prices[boughtToday]"/>
-		<bind name="watch" value="'curLootboxPrice'; allBoxesBought	? -1
-													:  lootboxEntity.lootboxConfigComponent.prices[boughtToday]"/>
-		<bind name="watch" value="'isGetBtnEnabled'; canBuyLootbox &amp;&amp; !allBoxesBought &amp;&amp; !activeAnimation"/>
-		<bind name="watch" value="'isOpenALLBtnEnabled'; !activeAnimation &amp;&amp; (lootboxesInStorage &gt; 1)"/>
-		<bind name="watch" value="'openLootboxesBtnLabel';
-		lootboxesInStorage &gt;= SC.Common.LOOTBOX_CONSTANTS.MAX_MASS_LOOTBOX_OPEN_AMOUNT	? subst(	'IDS_SUBST_PL_OPEN_N_CONTAINERS', [],
-																									{ count: SC.Common.LOOTBOX_CONSTANTS.MAX_MASS_LOOTBOX_OPEN_AMOUNT },
-																									SC.Common.LOOTBOX_CONSTANTS.MAX_MASS_LOOTBOX_OPEN_AMOUNT	)
-																						: 'IDS_OPEN_ALL_LOOTBOXES' "/>
-		<bind name="changeDispatch" value="activeAnimation; 'activeAnimationChangedEv'; {}; 2"/>
-		<bind name="action" value="'activeAnimationChangedEv'; activeAnimation ? 'lockBargeControls' : 'unlockBargeControls'; {}"/>
-		<bind name="primaryEntityDH" value="'routeEntityisOnBarge'; CC.route; SC.Ui_windows.ROUTE.BARGE"/>
-		<bind name="watchDH" value="'isOnBarge'; ['routeEntityisOnBarge.route.evIsActiveChanged']; routeEntityisOnBarge.route.isActive"/>
-		<bind name="dispatch" value="'isOnBarge' + varChanged; 'dockStateChanged'; {}; SC.Common.UBSCOPE_EVENT_DIRECTIONS.NONE; 0"/>
-		<bind name="dispatch" value="'dockStateChanged'; 'evDeactivateBanners'; {enableBannersValue: false}; SC.Common.UBSCOPE_EVENT_DIRECTIONS.NONE; 0"/>
-		<bind name="dispatch" value="'dockStateChanged'; 'evActivateBanners'; {enableBannersValue: true}; SC.Common.UBSCOPE_EVENT_DIRECTIONS.NONE; 1"/>
-		<bind name="catch" value="'evActivateBanners';	{enableBanners: true}"/>
-		<bind name="catch" value="'evDeactivateBanners';	{enableBanners: false}"/>
-		<bind name="style" value="'hitTest'; enableBanners"/>
-		<bind name="stageSize"/>
-		<bind name="watch" value="'leftOffset'; ((20 + (stageWidth - 1280)/14))"/>
-		<styleClass value="$FullsizeAbsolute"/>
-		<block>
-			<bind name="style" value="'marginLeft'; (leftOffset - 11) + 'px'"/>
-			<style>
-				<marginTop value="720:16,1080:32ah"/>
-			</style>
-			<block>
-				<styleClass value="$FullsizeAbsolute"/>
-				<style>
-					<marginLeft value="-12px"/>
-					<marginRight value="-12px"/>
-					<marginBottom value="-6px"/>
-					<marginTop value="-6px"/>
-				</style>
-				<block className="BlurMapCustom">
-					<bind name="primaryEntityDH" value="'isBlurEnabledEntity'; CC.preference; 'graphics.GUI.blur'"/>
-					<bind name="watchDH" value="'isBlurEnabled'; ['isBlurEnabledEntity.preference.evValueChanged']; isBlurEnabledEntity.preference.value"/>
-					<styleClass value="$FullsizeAbsolute"/>
-					<style>
-						<hitTest value="false"/>
-					</style>
-					<bind name="visible" value="isBlurEnabled"/>
-					<block className="mc_blurmap5_feather" type="native">
-						<bind name="appear" value="'startShow'; 0.3; 0; {alpha: 0}; {alpha: 1}"/>
-						<bind name="appear" value="'startHide'; 0.15; 0; {alpha: 1}; {alpha: 0}"/>
-						<styleClass value="$Fullsize"/>
-						<bind name="blurMap" value="0"/>
-					</block>
-				</block>
-			</block>
-			<block>
-				<bind name="style" value="'hitTest'; activeAnimation ? false : true"/>
-				<bind name="style" value="'colorMatrixFilter'; activeAnimation ? '0 -80 0 -20' : ''"/>
-				<bind name="instance" value="'BackButton'; {_text: 'IDS_RETURN_FROM_MODAL_WINDOW_BUTTON', _action: 'navigateTo', _actionParams: {route: SC.Ui_windows.ROUTE.PORT}}"/>
-			</block>
-		</block>
-		<block>
-			<style>
-				<position value="absolute"/>
-				<top value="720:24,1080:40ah"/>
-			</style>
-			<bind name="style" value="'right'; (leftOffset - 4) + 'px'"/>
-			<bind name="style" value="'hitTest'; activeAnimation ? false : true"/>
-			<bind name="style" value="'colorMatrixFilter'; activeAnimation ? '0 -80 0 -20' : ''"/>
-			<bind name="instance" value="'ModalWindowCloseIcon'; {}"/>
-		</block>
-		<block>
-			<style>
-				<top value="19sh"/>
-				<width value="100%"/>
-				<position value="absolute"/>
-			</style>
-			<block>
-				<style>
-					<position value="absolute"/>
-					<width value="300px"/>
-				</style>
-				<bind name="style" value="'marginLeft'; (leftOffset) + 'px'"/>
-				<block type="text">
-					<styleClass value="$TextDefaultBold17NM"/>
-					<style>
-						<alpha value="0.8"/>
-						<marginBottom value="16px"/>
-					</style>
-					<bind name="text" value="toUpperCase(tr('IDS_LOOTBOXES'))"/>
-				</block>
-				<block>
-					<style>
-						<width value="100%"/>
-						<alpha value="0.8"/>
-						<marginBottom value="8px"/>
-					</style>
-					<bind name="repeat" value="[	{_paragraphText: 'IDS_LOOTBOX_HINT_0'},
-								{_paragraphText: 'IDS_LOOTBOX_HINT_1'}]; 'RepeatParagraphItem'; {	_maxWidth: 300, _marginBottom: '18px',
-																									_middleAligned: false, _class: '$TextDefault17NM',
-																									_textAlign: 'left', _leading: -2}"/>
-					<block className="BlurMapCustom">
-						<bind name="primaryEntityDH" value="'isBlurEnabledEntity'; CC.preference; 'graphics.GUI.blur'"/>
-						<bind name="watchDH" value="'isBlurEnabled'; ['isBlurEnabledEntity.preference.evValueChanged']; isBlurEnabledEntity.preference.value"/>
-						<styleClass value="$FullsizeAbsolute"/>
-						<style>
-							<hitTest value="false"/>
-						</style>
-						<bind name="visible" value="isBlurEnabled"/>
-						<block className="mc_blurmap5_feather" type="native">
-							<bind name="appear" value="'startShow'; 0.3; 0; {alpha: 0}; {alpha: 1}"/>
-							<bind name="appear" value="'startHide'; 0.15; 0; {alpha: 1}; {alpha: 0}"/>
-							<styleClass value="$Fullsize"/>
-							<bind name="blurMap" value="0"/>
-						</block>
-					</block>
-				</block>
-				<block>
-					<bind name="firstEntityDH" value="'selfPlayerEntity'; CC.accountSelf"/>
-					<bind name="watchDH" value="'hasRecruitsStatus'; ['selfPlayerEntity.accountSelf.evHasRecruitsStatusChanged']; selfPlayerEntity.accountSelf.hasRecruitsStatus"/>
-					<bind name="instance" value="'ReferralSystemBanner'; hasRecruitsStatus == SC.Common.HAS_RECRUITS_STATUS.NO ? {} : null"/>
-				</block>
-				<block>
-					<bind name="visible" value="eventBannerVisible"/>
-					<style>
-						<marginTop value="24px"/>
-					</style>
-					<bind name="instance" value="'EventLootboxBanner';	{	_backgroundImage	: data,
-															_showAnimation		: true,
-															_bannerText			: mainText,
-															_instructionText 	: tooltipText,
-															_request 			: 'openMetashop',
-															_requestParams 		: { url: url, params: {}, skipURLTranslation: true }
-														}"/>
-					<bind name="primaryEntityDH" value="'lootboxArmoryNewTip';		CC.newGuidingTip; SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_ARMORY"/>
-					<bind name="primaryEntityDH" value="'lootboxArmoryRepeatNewTip';	CC.newGuidingTip; SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_ARMORY_REPEAT"/>
-					<bind name="watchDH" value="'isLootboxArmoryNewTipActive';		['lootboxArmoryNewTip.newGuidingTip.evChanged'];		lootboxArmoryNewTip.newGuidingTip.isActive"/>
-					<bind name="watchDH" value="'isLootboxArmoryRepeatNewTipActive';	['lootboxArmoryRepeatNewTip.newGuidingTip.evChanged'];	lootboxArmoryRepeatNewTip.newGuidingTip.isActive"/>
-					<bind name="watch" value="'armoryTipId'; 	isLootboxArmoryNewTipActive			? SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_ARMORY : 
-												isLootboxArmoryRepeatNewTipActive	? SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_ARMORY_REPEAT
-																					: SC.Context_guiding_tip.TIP_TYPE.NONE"/>
-					<bind name="watch" value="'armoryTipVisible'; eventBannerVisible &amp;&amp; armoryTipId != SC.Context_guiding_tip.TIP_TYPE.NONE"/>
-					<bind name="instance" value="'NewGuidingTipHub'; armoryTipVisible	? {	_newTipId: armoryTipId,
-																			_tipPositioning: 'right', 
-																			_offset: 5,
-																			_hasNextButton: lootboxesInStorage &gt;= 1,
-																			_hasFinishButton: lootboxesInStorage == 0,
-																			_noArrow: true}
-																		: null"/>
-				</block>
-			</block>
-			<block>
-				<style>
-					<position value="absolute"/>
-					<width value="320px"/>
-					<top value="-14px"/>
-				</style>
-				<bind name="style" value="'right'; (leftOffset) + 'px'"/>
-				<block>
-					<styleClass value="$FullsizeAbsolute"/>
-					<style>
-						<marginLeft value="-30px"/>
-						<marginRight value="-30px"/>
-						<marginBottom value="-33px"/>
-						<marginTop value="-33px"/>
-					</style>
-					<bind name="visible" value="isBlurEnabled"/>
-					<block className="mc_blurmap10_feather" type="native">
-						<bind name="appear" value="'startShow'; 0.3; 0; {alpha: 0}; {alpha: 0.55}"/>
-						<bind name="appear" value="'startHide'; 0.15; 0; {alpha: 0.55}; {alpha: 0}"/>
-						<styleClass value="$Fullsize"/>
-						<bind name="blurMap" value="0"/>
-					</block>
-				</block>
-				<block className="notification_panel" type="native">
-					<bind name="visible" value="contrast"/>
-					<styleClass value="$FullsizeAbsolute"/>
-					<style>
-						<marginLeft value="-30px"/>
-						<marginRight value="-30px"/>
-						<marginBottom value="-33px"/>
-						<marginTop value="-33px"/>
-					</style>
-				</block>
-				<block>
-					<style>
-						<width value="100%"/>
-						<height value="91px"/>
-					</style>
-					<block>
-						<bind name="fade" value="!(allBoxesBought); 0.15; {alpha: 0, top: 5}; {alpha: 1, top: 0}; {alpha: 0, top: -5}; 1"/>
-						<bind name="name" value="'earnedExp'"/>
-						<styleClass value="$MiddleAligned"/>
-						<style>
-							<backgroundColor value="0x01000000"/>
-						</style>
-						<bind name="tooltip" value="'SimpleStatusTooltip'; {_text: 'IDS_LOOTBOX_EXP_HINT'}"/>
-						<block>
-							<block type="text">
-								<style>
-									<fontSize value="48"/>
-								</style>
-								<styleClass value="$TextAccentBoldAccountLevel1"/>
-								<bind name="text" value="format(lootboxExp, -1)"/>
-							</block>
-							<block>
-								<styleClass value="$MiddleVAligned"/>
-								<style>
-									<paddingLeft value="2px"/>
-								</style>
-								<block>
-									<style>
-										<marginLeft value="-1px"/>
-										<marginRight value="-2px"/>
-									</style>
-									<bind name="instance" value="'Currency'; { _currency: SC.Common.CURRENCIES.XP, _extraLarge: true }"/>
-								</block>
-							</block>
-							<style>
-								<flow value="horizontal"/>
-							</style>
-						</block>
-						<block type="text">
-							<style>
-								<marginTop value="-9px"/>
-								<marginBottom value="9px"/>
-							</style>
-							<styleClass value="$MiddleAligned"/>
-							<styleClass value="$TextHeader"/>
-							<bind name="class" value="'$FontColorBlueish'"/>
-							<bind name="text" value="'IDS_AVAILABLE_EXP_FOR_LOOTBOXES'"/>
-						</block>
-					</block>
-					<block>
-						<bind name="fade" value="allBoxesBought; 0.15; {alpha: 0, top: 5}; {alpha: 1, top: 0}; {alpha: 0, top: -5}; 1"/>
-						<bind name="countdown" value="dropTimeStamp; 'countdownText'; 'hh:mm:ss'"/>
-						<style>
-							<width value="100%"/>
-							<position value="absolute"/>
-							<bottom value="17px"/>
-						</style>
-						<block type="text">
-							<style>
-								<width value="100%"/>
-								<textAlign value="center"/>
-							</style>
-							<styleClass value="$TextHeaderWhiteBold"/>
-							<bind name="class" value="'$FontColorOrange'"/>
-							<bind name="text" value="toUpperCase(tr('IDS_LOOTBOX_PURCHASE_WILL_BE_AVAILABLE_AFTER'))"/>
-						</block>
-						<block type="text">
-							<style>
-								<marginTop value="3px"/>
-							</style>
-							<styleClass value="$MiddleAligned"/>
-							<styleClass value="$TextHeaderWhiteBold"/>
-							<bind name="class" value="'$FontColorOrange'"/>
-							<bind name="pureText" value="countdownText"/>
-						</block>
-					</block>
-				</block>
-				<block>
-					<style>
-						<width value="100%"/>
-					</style>
-					<block className="HorizontalDivider">
-						<styleClass value="$PxHorizontalCorrection"/>
-						<style>
-							<width value="100%"/>
-							<height value="2px"/>
-							<backgroundSize value="fill"/>
-							<marginTop value="1px"/>
-							<backgroundImage value="url:../service_kit/dividers/divider_h.png"/>
-						</style>
-					</block>
-					<block>
-						<block className="HorizontalDivider">
-							<styleClass value="$PxHorizontalCorrection"/>
-							<style>
-								<width value="100%"/>
-								<height value="2px"/>
-								<backgroundSize value="fill"/>
-								<marginTop value="1px"/>
-								<backgroundImage value="url:../service_kit/dividers/divider_h.png"/>
-							</style>
-						</block>
-						<style>
-							<position value="absolute"/>
-							<width value="100%"/>
-						</style>
-					</block>
-				</block>
-				<block>
-					<style>
-						<height value="144px"/>
-						<width value="100%"/>
-					</style>
-					<bind name="transition" value="allBoxesBought; 0.15; {height: 146}; {height: 104}; {height: 144}; SC.Common.EASING_FUNCTIONS.OUT_QUAD; 0.17"/>
-					<bind name="primaryEntityDH" value="'lootboxDailyNewTip';		CC.newGuidingTip; SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_DAILY"/>
-					<bind name="primaryEntityDH" value="'lootboxDailyRepeatNewTip';	CC.newGuidingTip; SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_DAILY_REPEAT"/>
-					<bind name="watchDH" value="'isLootboxDailyNewTipActive';		['lootboxDailyNewTip.newGuidingTip.evChanged'];			lootboxDailyNewTip.newGuidingTip.isActive"/>
-					<bind name="watchDH" value="'isLootboxDailyRepeatNewTipActive';	['lootboxDailyRepeatNewTip.newGuidingTip.evChanged'];	lootboxDailyRepeatNewTip.newGuidingTip.isActive"/>
-					<bind name="watch" value="'dailyTipId'; 	isLootboxDailyNewTipActive			? SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_DAILY : 
-											isLootboxDailyRepeatNewTipActive	? SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_DAILY_REPEAT
-																				: SC.Context_guiding_tip.TIP_TYPE.NONE"/>
-					<bind name="watch" value="'dailyTipVisible'; dailyTipId != SC.Context_guiding_tip.TIP_TYPE.NONE"/>
-					<bind name="instance" value="'NewGuidingTipHub'; dailyTipVisible ? {	_newTipId: dailyTipId,
-																		_tipPositioning: 'left', 
-																		_offset: 16,
-																		_oppositeDirectionOffset: 24,
-																		_pointerOffset: allBoxesBought ? 46 : 44,
-																		_oppositePointerOffset: allBoxesBought ? -50 : -70,
-																		_hasNextButton: lootboxesInStorage &gt;= 1 || eventBannerVisible,
-																		_hasFinishButton: lootboxesInStorage == 0 &amp;&amp; !eventBannerVisible,
-																		_noArrow: true}
-																	: null"/>
-					<block>
-						<styleClass value="$MiddleAligned"/>
-						<style>
-							<marginBottom value="39px"/>
-							<marginTop value="62px"/>
-						</style>
-						<bind name="repeat" value="lootboxEntity.lootboxConfigComponent.prices; 'LootboxProgressBarWithLootbox'; {_isGetBtnEnabled: isGetBtnEnabled, _activeAnimation: activeAnimation}"/>
-						<style>
-							<flow value="horizontal"/>
-						</style>
-					</block>
-					<block>
-						<params>
-							<param name="name" value="getLootBox"/>
-						</params>
-						<bind name="primaryEntityDH" value="'featureEntity_30'; CC.accountFeature; SC.Common.ACCOUNT_FEATURE.BIT_MASKS[30]"/>
-						<bind name="watchDH" value="'feature_30'; ['featureEntity_30.accountFeature.evStateChanged']; featureEntity_30.accountFeature.state"/>
-						<bind name="watch" value="'featureState'; feature_30"/>
-						<bind name="action" value="''; 'featureSeen'; {featureIndex: 30}"/>
-						<bind name="fade" value="(canBuyLootbox &amp;&amp; !allBoxesBought); 0.15; {alpha: 0, top: 5}; {alpha: 1, top: 0}; {alpha: 0, top: -5}; 1; 0.15"/>
-						<styleClass value="$MiddleAligned"/>
-						<style>
-							<width value="200px"/>
-						</style>
-						<block>
-							<bind name="instance" value="'DefaultButton'; {	_width: 			'200px', 
-															_enabled: 			isGetBtnEnabled, 
-															_isTransactionBtn: 	true,
-															_request:			'openPurchaseLootboxWindow',
-															_requesParams: 		{},
-															_focusIndex:		0,
-															_defaultFocused:	isGetBtnEnabled,
-															_label: 			'IDS_PURCHASE_LOOTBOX_C'}"/>
-						</block>
-						<block>
-							<bind name="watch" value="'isNewMarkerLootbox'; feature_30 == 'new'"/>
-							<style>
-								<position value="absolute"/>
-								<top value="-8px"/>
-								<right value="-16px"/>
-							</style>
-							<bind name="instance" value="'MarkerNewAttention'; isNewMarkerLootbox &amp;&amp; canBuyLootbox ? { } : null"/>
-						</block>
-					</block>
-					<block>
-						<bind name="fade" value="!canBuyLootbox &amp;&amp; !allBoxesBought; 0.15; {alpha: 0, top: 5}; {alpha: 1, top: 0}; {alpha: 0, top: -5}; 1; 0.15"/>
-						<styleClass value="$MiddleAligned"/>
-						<block type="text">
-							<styleClass value="$TextHeader"/>
-							<bind name="class" value="'$FontColorBlueish'"/>
-							<bind name="text" value="tr('IDS_EXP_TO_NEXT_LOOTBOX') + tr('IDS_COLON')"/>
-						</block>
-						<block>
-							<style>
-								<marginLeft value="2px"/>
-								<marginTop value="2px"/>
-							</style>
-							<bind name="instance" value="'PriceTag'; {	priceInfo: {	finalPrice: curLootboxPrice - lootboxExp,
-																		currency: SC.Common.CURRENCIES.XP	},
-														_medium: true	}"/>
-							<style>
-								<flow value="horizontal"/>
-							</style>
-						</block>
-						<style>
-							<flow value="horizontal"/>
-						</style>
-					</block>
-				</block>
-				<block>
-					<style>
-						<width value="100%"/>
-					</style>
-					<block className="HorizontalDivider">
-						<styleClass value="$PxHorizontalCorrection"/>
-						<style>
-							<width value="100%"/>
-							<height value="2px"/>
-							<backgroundSize value="fill"/>
-							<marginTop value="1px"/>
-							<backgroundImage value="url:../service_kit/dividers/divider_h.png"/>
-						</style>
-					</block>
-					<block>
-						<block className="HorizontalDivider">
-							<styleClass value="$PxHorizontalCorrection"/>
-							<style>
-								<width value="100%"/>
-								<height value="2px"/>
-								<backgroundSize value="fill"/>
-								<marginTop value="1px"/>
-								<backgroundImage value="url:../service_kit/dividers/divider_h.png"/>
-							</style>
-						</block>
-						<style>
-							<position value="absolute"/>
-							<width value="100%"/>
-						</style>
-					</block>
-				</block>
-				<block>
-					<bind name="primaryEntityDH" value="'lootboxOpenNewTip';			CC.newGuidingTip; SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_OPEN"/>
-					<bind name="primaryEntityDH" value="'lootboxOpenRepeatNewTip';	CC.newGuidingTip; SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_OPEN_REPEAT"/>
-					<bind name="watchDH" value="'isLootboxOpenNewTipActive';			['lootboxOpenNewTip.newGuidingTip.evChanged'];			lootboxOpenNewTip.newGuidingTip.isActive"/>
-					<bind name="watchDH" value="'isLootboxOpenRepeatNewTipActive';	['lootboxOpenRepeatNewTip.newGuidingTip.evChanged'];	lootboxOpenRepeatNewTip.newGuidingTip.isActive"/>
-					<bind name="watch" value="'openTipId'; 	isLootboxOpenNewTipActive		? SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_OPEN : 
-											isLootboxOpenRepeatNewTipActive	? SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_OPEN_REPEAT
-																			: SC.Context_guiding_tip.TIP_TYPE.NONE"/>
-					<bind name="watch" value="'openTipVisible'; openTipId != SC.Context_guiding_tip.TIP_TYPE.NONE"/>
-					<style>
-						<marginTop value="21px"/>
-						<marginBottom value="40px"/>
-						<width value="100%"/>
-					</style>
-					<block type="text">
-						<bind name="transition" value="(lootboxesInStorage &gt; 0); 0.15; {alpha: 0, top: 5}; {alpha: 1, top: 0}; {alpha: 0, top: -5}; SC.Common.EASING_FUNCTIONS.OUT_QUAD; 0.15"/>
-						<style>
-							<width value="100%"/>
-							<marginBottom value="24px"/>
-							<marginTop value="-3px"/>
-							<textAlign value="center"/>
-						</style>
-						<styleClass value="$TextHeaderWhiteBold"/>
-						<bind name="class" value="'$FontSizeHeader4'"/>
-						<bind name="text" value="subst('IDS_OWNED_LOOTBOXES', [], {lootboxesCount: lootboxesInStorage}, lootboxesInStorage)"/>
-					</block>
-					<block type="text">
-						<bind name="transition" value="(lootboxesInStorage &lt;= 0); 0.15; {alpha: 0, top: 5}; {alpha: 1, top: 0}; {alpha: 0, top: -5}; SC.Common.EASING_FUNCTIONS.OUT_QUAD; 0.15"/>
-						<style>
-							<width value="100%"/>
-							<position value="absolute"/>
-							<textAlign value="center"/>
-						</style>
-						<styleClass value="$TextHeaderWhiteBold"/>
-						<bind name="class" value="'$FontColorOrange'"/>
-						<bind name="text" value="toUpperCase(tr('IDS_YOU_HAVE_NO_LOOTBOXES'))"/>
-					</block>
-					<block>
-						<params>
-							<param name="name" value="openLootBox"/>
-						</params>
-						<bind name="watch" value="'_isOpenBtnEnabled'; !activeAnimation &amp;&amp; lootboxesInStorage &gt; 0"/>
-						<bind name="transition" value="(lootboxesInStorage &gt; 0); 0.15; {alpha: 0, top: 5}; {alpha: 1, top: 0}; {alpha: 0, top: -5}"/>
-						<styleClass value="$MiddleAligned"/>
-						<style>
-							<width value="218px"/>
-						</style>
-						<bind name="instance" value="'DefaultButton'; {	_width: '218px',
-														_enabled: _isOpenBtnEnabled,
-														_isTransactionBtn: true,
-														_action: 'LootboxProxy.openLootbox',
-														_actionParams: {},
-														_focusIndex: 1,
-														_dispatch: 'openLootboxClicked',
-														_label: 'IDS_OPEN_LOOTBOX',
-														_defaultFocused: !isGetBtnEnabled}"/>
-						<bind name="instance" value="'NewGuidingTipHub'; openTipVisible 	? {	_newTipId: openTipId,
-																			_tipPositioning: 'left', 
-																			_offset: 5}
-																		: null"/>
-						<bind name="action" value="'click'; openTipId == SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_OPEN_REPEAT ? 'deactivateTipChain': ''; 
-										{tip_chain_id: SC.Context_guiding_tip.TIP_CHAIN_ID.LOOTBOXES_REPEAT}"/>
-						<bind name="dispatch" value="'openLootboxClicked'; lootboxOpened ? 'hideRewards' : null; {}; SC.Common.UBSCOPE_EVENT_DIRECTIONS.DOWN"/>
-					</block>
-					<block>
-						<params>
-							<param name="name" value="openAllLootBoxes"/>
-						</params>
-						<bind name="firstEntityDH" value="'lootboxStateEntity'; CC.lootboxOpeningState"/>
-						<bind name="handleEventDH" value="'lootboxStateEntity.lootboxOpeningState.evLootboxesOpenStarted'; 'startOpenLootboxes'"/>
-						<bind name="action" value="'startOpenLootboxes'; 'openLootboxes'; {}"/>
-						<bind name="action" value="'click'; 'setUserPref'; {value: 0, name: 'selectedLootbox'}"/>
-						<bind name="action" value="'click'; openTipId == SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_OPEN_REPEAT ? 'deactivateTipChain': ''; 
-										{tip_chain_id: SC.Context_guiding_tip.TIP_CHAIN_ID.LOOTBOXES_REPEAT}"/>
-						<bind name="fade" value="(lootboxesInStorage &gt; 1); 0.15; {alpha: 0, top: 5}; {alpha: 1, top: 0}; {alpha: 0, top: -5}"/>
-						<styleClass value="$MiddleAligned"/>
-						<style>
-							<width value="218px"/>
-							<marginTop value="8px"/>
-						</style>
-						<bind name="style" value="'hitTest'; isOpenALLBtnEnabled"/>
-						<bind name="instance" value="'DefaultButton'; {	_width: '218px',
-														_enabled: isOpenALLBtnEnabled,
-														_isTransactionBtn: true,
-														_action: 'LootboxProxy.openLootboxes',
-														_actionParams: {},
-														_focusIndex: 2,
-														_label: openLootboxesBtnLabel	}"/>
-					</block>
-					<block>
-						<bind name="transition" value="(lootboxesInStorage &gt; 0); 0.15; {alpha: 0, top: 5}; {alpha: 1, top: 0}; {alpha: 0, top: -5}"/>
-						<styleClass value="$MiddleAligned"/>
-						<style>
-							<width value="218px"/>
-							<marginTop value="8px"/>
-						</style>
-						<bind name="instance" value="'DefaultButton';	{	_type: SC.Ui_styles.BUTTON_TYPE.SECONDARY,
-															_width: '218px', _height: '27px',
-															_enabled: _isOpenBtnEnabled,
-															_focusIndex: 3,
-															_isTransactionBtn: true,
-															_request: 'showLootboxTypes',
-															_label: toUpperCase(tr('IDS_OPEN_LOOTBOX_TYPES')) }"/>
-					</block>
-				</block>
-			</block>
-			<block>
-				<bind name="visible" value="lootboxOpened"/>
-				<style>
-					<top value="19.5sh"/>
-				</style>
-				<styleClass value="$MiddleAlignedAbsolutely"/>
-				<styleClass value="$MiddleVAligned"/>
-				<block>
-					<bind name="repeat" value="(lootboxOpened ? openedLootboxRewards : 0); 'LootboxRewardItemAdapter'; {_isEventModeEnabled: isEventModeEnabled}"/>
-					<style>
-						<flow value="horizontal"/>
-					</style>
-				</block>
-			</block>
-		</block>
-		<bind name="var" value="{lootboxGot: false}"/>
-		<bind name="handleEventDH" value="'lootboxEntity.lootboxStorageComponent.evLootboxGot'; 'lootboxBoughtEv'"/>
-		<bind name="watchDH" value="'isEpicBox';				['lootboxEntity.lootboxStorageComponent.evLootboxGot'];	lootboxEntity.lootboxStorageComponent.isCurBoxEpic"/>
-		<bind name="watchDH" value="'chosenToGotBoxType';	['lootboxEntity.lootboxStorageComponent.evLootboxGot'];	lootboxEntity.lootboxStorageComponent.chosenBoxType"/>
-		<bind name="catch" value="'lootboxBoughtEv'; {lootboxGot: true}"/>
-		<bind name="watch" value="'isEpicLootboxGotNotFromLuckyType'; (isEpicBox &amp;&amp; (chosenToGotBoxType != SC.Common.COMMON_LOOTBOX_TYPES.LUCKY) &amp;&amp; lootboxGot)"/>
-		<bind name="dispatch" value="'lootboxBoughtEv'; 'lootboxBoughtFinishedEv'; {}; 2; 4.5"/>
-		<bind name="catch" value="'lootboxBoughtFinishedEv'; {lootboxGot: false}"/>
-		<block>
-			<styleClass value="$EyeLevelVAligned"/>
-			<styleClass value="$MiddleAlignedAbsolutely"/>
-			<bind name="fade" value="!(isEpicLootboxGotNotFromLuckyType); 0.25; {alpha: 0}; {alpha: 1}; {alpha: 0}; 1; 3.2"/>
-			<bind name="instance" value="'LuckyLootboxAnimation'; isEpicLootboxGotNotFromLuckyType ? {} : null"/>
-		</block>
-	</block>
-	<block className="LuckyLootboxAnimation">
-		<bind name="dispatch" value="'addedToStage'; 'startAnimationEv'; {}; 2; 1"/>
-		<bind name="dispatch" value="'startAnimationEv'; 'startIssueAnimationEv'; {}; 2; 0.25"/>
-		<bind name="var" value="{luckyIssuedState: 'not_issued'}"/>
-		<bind name="catch" value="'startIssueAnimationEv'; {luckyIssuedState: 'animation'}"/>
-		<block>
-			<styleClass value="$MiddleAlignedAbsolutely"/>
-			<styleClass value="$MiddleVAligned"/>
-			<block className="icon_lucky_animation" type="native">
-				<style>
-					<position value="absolute"/>
-				</style>
-				<bind name="soundOn" value="'startAnimationEv'; 'epicwin'; 'lucky_soundset'"/>
-				<bind name="event" value="'startAnimationEv'; 'gotoAndPlay'; 'animation_lucky'"/>
-			</block>
-		</block>
-		<block>
-			<bind name="visible" value="luckyIssuedState == 'animation'"/>
-			<style>
-				<marginTop value="42px"/>
-			</style>
-			<styleClass value="$MiddleAlignedAbsolutely"/>
-			<block>
-				<style>
-					<position value="absolute"/>
-				</style>
-				<block className="icon_issued" type="native">
-					<style>
-						<marginLeft value="1.7%"/>
-						<alpha value="0.9"/>
-					</style>
-					<bind name="scaleX" value="0.85"/>
-					<bind name="scaleY" value="0.85"/>
-					<innerBind elementName="item.item" name="text" value="toUpperCase(tr('IDS_PURCHASE_CHANCE_LOOTBOX_EPIC'))"/>
-					<bind name="gotoAndPlay!" value="luckyIssuedState ? luckyIssuedState : 'not_issued'"/>
-				</block>
-			</block>
-		</block>
-	</block>
-	<block className="LootboxProgressBarWithLootbox">
-		<bind name="controller" value="'lesta.unbound.controls.UbInteractiveController'"/>
-		<bind name="firstEntityDH" value="'lootboxEntity'; CC.lootboxConfigComponent"/>
-		<bind name="watchDH" value="'lootboxExp';			['lootboxEntity.lootboxStorageComponent.evUpdate'];	lootboxEntity.lootboxStorageComponent.lootExp"/>
-		<bind name="watchDH" value="'boughtToday';			['lootboxEntity.lootboxStorageComponent.evUpdate'];	lootboxEntity.lootboxStorageComponent.boughtToday"/>
-		<bind name="watchDH" value="'lootboxPrices';			['lootboxEntity.lootboxConfigComponent.evUpdate'];	lootboxEntity.lootboxConfigComponent.prices"/>
-		<bind name="watch" value="'expToLootbox'; 			lootboxPrices[$index] - lootboxExp"/>
-		<bind name="watch" value="'isBought'; ($index &lt; boughtToday)"/>
-		<bind name="watch" value="'canBuy'; (lootboxExp &gt;= lootboxPrices[$index]) &amp;&amp; !isBought"/>
-		<bind name="watch" value="'rawLootboxProgress';	$index == 0 ?	lootboxExp / $value :
-										$index == 1 ?	(lootboxExp - lootboxPrices[0]) / ($value - lootboxPrices[0])
-													:	(lootboxExp - lootboxPrices[1]) / ($value - lootboxPrices[1])"/>
-		<bind name="watch" value="'curLootboxProgress';	rawLootboxProgress &gt; 1	? 1
-																: rawLootboxProgress"/>
-		<bind name="var" value="{progressBarWidth: ['55px', '95px', '135px'],
-				progressBarHeight: '9px'}"/>
-		<bind name="style" value="'marginRight'; ($index == 2 ? '21px' : '0px')"/>
-		<bind name="watch" value="'curBarInProgress';	lootboxExp &lt; lootboxPrices[0]	? 0 :
-										lootboxExp &lt; lootboxPrices[1]	? 1
-																		: 2"/>
-		<bind name="style" value="'alpha'; isBought ? 0.7 : 1"/>
-		<style>
-			<flow value="horizontal"/>
-		</style>
-		<block>
-			<styleClass value="$MiddleVAligned"/>
-			<style>
-				<marginRight value="1px"/>
-			</style>
-			<bind name="instance" value="'DefaultProgressBar'; {_width: progressBarWidth[$index], _height: progressBarHeight, _progress: curLootboxProgress}"/>
-		</block>
-		<block>
-			<bind name="visible" value="$index == 0"/>
-			<style>
-				<position value="absolute"/>
-				<left value="-8px"/>
-				<marginTop value="6px"/>
-			</style>
-			<bind name="instance" value="'PriceTag'; { priceInfo: { finalPrice: 0, currency: SC.Common.CURRENCIES.XP } }"/>
-			<style>
-				<flow value="horizontal"/>
-			</style>
-		</block>
-		<block>
-			<style>
-				<position value="absolute"/>
-				<top value="-40px"/>
-				<right value="-25px"/>
-			</style>
-			<block>
-				<style>
-					<marginRight value="6px"/>
-				</style>
-				<block>
-					<bind name="watch" value="'unlockedLootbox'; canBuy || isBought"/>
-					<bind name="watch" value="'availableLootbox'; canBuy &amp;&amp; _isGetBtnEnabled"/>
-					<bind name="tooltip" value="'UnavailableLootboxTooltip'; !unlockedLootbox &amp;&amp; !_activeAnimation ?	{ _lootProgress: curLootboxProgress, _expToLootbox: expToLootbox } : null"/>
-					<bind name="tooltip" value="'SimpleStatusTooltip';	isBought			? {	_unifiedStatus: SC.Ui_styles.UNIFIED_STATUS.DEFAULT,
-																				_text: 'IDS_LOOTBOX_GOT' } :
-														_activeAnimation	? {	_unifiedStatus: SC.Ui_styles.UNIFIED_STATUS.DEFAULT,
-																				_text: 'IDS_LOOTBOX_ANIMATION_GOES' } :
-														canBuy				? {	_unifiedStatus: SC.Ui_styles.UNIFIED_STATUS.MOUSE_LEFT,
-																				_text: 'IDS_GET_LOOTBOX' }
-																			: null"/>
-					<style>
-						<width value="32px"/>
-						<height value="32px"/>
-						<left value="-3px"/>
-					</style>
-					<block>
-						<bind name="visible" value="availableLootbox"/>
-						<bind name="controller" value="'lesta.unbound.controls.UbInteractiveController'; null; 'ct_'"/>
-						<bind name="var" value="{
-		ctRollOver: {
-			redMultiplier: 1,
-			greenMultiplier: 1,
-			blueMultiplier: 1,
-			alphaMultiplier: 1,
-			redOffset: 30,
-			greenOffset: 30,
-			blueOffset: 30,
-			alphaOffset: 0
-		}
-	}"/>
-						<bind name="var" value="{ 
-		ctMouseDown: {
-			redMultiplier: 1,
-			greenMultiplier: 1,
-			blueMultiplier: 1,
-			alphaMultiplier: 1,
-			redOffset: -30,
-			greenOffset: -30,
-			blueOffset: -30,
-			alphaOffset: 0
-		}
-	}"/>
-						<bind name="colorTransform" value="	availableLootbox &amp;&amp; ct_mouseDown &amp;&amp; !false	? ctMouseDown :
-							availableLootbox &amp;&amp; (ct_rollOver || false)	? ctRollOver
-																		: {}"/>
-						<bind name="soundSet" value="'resources_widget'"/>
-						<bind name="request" value="'click'; 'openPurchaseLootboxWindow'; {}"/>
-						<style>
-							<marginTop value="10px"/>
-						</style>
-						<bind name="instance" value="'MarkerNewRewardsAnimate'; { _iconReward: 'url:../service_kit/port_banner/icon_banner_container.png' }"/>
-					</block>
-					<block>
-						<bind name="visible" value="!availableLootbox"/>
-						<styleClass value="$Fullsize"/>
-						<bind name="style" value="'alpha'; isBought ? 0.7 : 1"/>
-						<bind name="style" value="'backgroundImage'; unlockedLootbox	? 'url:../service_kit/port_banner/icon_banner_container.png'
-																	: 'url:../service_kit/port_banner/icon_banner_container_lock.png'"/>
-					</block>
-				</block>
-				<block className="icon_issued_small" type="native">
-					<bind name="visible" value="isBought"/>
-					<style>
-						<position value="absolute"/>
-						<top value="55%"/>
-						<left value="50%"/>
-						<hitTest value="false"/>
-					</style>
-					<bind name="rotation" value="-2"/>
-					<bind name="scaleX" value="0.95"/>
-					<bind name="scaleY" value="0.95"/>
-					<innerBind elementName="item.item" name="text" value="'IDS_RECEIVED'"/>
-					<bind name="gotoAndStop!" value="'issued'"/>
-				</block>
-			</block>
-			<block>
-				<styleClass value="$MiddleAlignedAbsolutely"/>
-				<style>
-					<marginTop value="46px"/>
-				</style>
-				<bind name="instance" value="'PriceTag'; { priceInfo: { finalPrice: $value, currency: SC.Common.CURRENCIES.XP } }"/>
-				<style>
-					<flow value="horizontal"/>
-				</style>
-			</block>
-		</block>
-	</block>
-	<block className="LootboxRewardItemAdapter">
-		<bind name="entityDH" value="'rewardEntity'; $value"/>
-		<bind name="appear" value="'addedToStage'; 0.25; 0.1 + $index*0.23; {alpha: 0, top: 35}; {alpha: 1, top: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
-		<bind name="appear" value="'hideRewards'; 0.15; 0; {alpha: 1, top: 0}; {alpha: 0, top: 20}"/>
-		<style>
-			<marginRight value="1.8sw"/>
-			<marginLeft value="1.8sw"/>
-		</style>
-		<bind name="name" value="'rewardItem_' + $index + '_' + rewardEntity.rewardComponent.name"/>
-		<block>
-			<styleClass value="$FullsizeAbsolute"/>
-			<block className="BlurMapCustom">
-				<bind name="primaryEntityDH" value="'isBlurEnabledEntity'; CC.preference; 'graphics.GUI.blur'"/>
-				<bind name="watchDH" value="'isBlurEnabled'; ['isBlurEnabledEntity.preference.evValueChanged']; isBlurEnabledEntity.preference.value"/>
-				<styleClass value="$FullsizeAbsolute"/>
-				<style>
-					<hitTest value="false"/>
-				</style>
-				<bind name="visible" value="isBlurEnabled"/>
-				<block className="mc_blurmap5_feather" type="native">
-					<bind name="appear" value="'startShow'; 0.3; 0; {alpha: 0}; {alpha: 1}"/>
-					<bind name="appear" value="'startHide'; 0.15; 0; {alpha: 1}; {alpha: 0}"/>
-					<styleClass value="$Fullsize"/>
-					<bind name="blurMap" value="0"/>
-				</block>
-			</block>
-		</block>
-		<block>
-			<bind name="instance" value="'RewardItem'; _isEventModeEnabled ? {	isPRMP: rewardEntity.rewardComponent.isPRMP,
-																params: rewardEntity.rewardComponent.params,
-																amount: rewardEntity.rewardComponent.amount,
-																name: rewardEntity.rewardComponent.name,
-																subtype: rewardEntity.rewardComponent.subtype,
-																type: rewardEntity.rewardComponent.type,
-																id: rewardEntity.rewardComponent.id,
-																_isClickDisabled: true }
-															: rewardEntity.rewardComponent"/>
-		</block>
-	</block>
-	<block className="EventLootboxBanner">
-		<style>
-			<width value="339px"/>
-			<height value="176px"/>
-		</style>
-		<bind name="tooltip" value="'SimpleStatusTooltip'; !isSelected	? {	_unifiedStatus: SC.Ui_styles.UNIFIED_STATUS.MOUSE_LEFT,
-															_text: _instructionText }
-														: null"/>
-		<block>
-			<bind name="visible" value="_backgroundImage"/>
-			<styleClass value="$Fullsize"/>
-			<style>
-				<backgroundSize value="cover"/>
-			</style>
-			<bind name="style" value="'backgroundImageData'; _backgroundImage"/>
-		</block>
-		<block>
-			<bind name="visible" value="!_backgroundImage"/>
-			<styleClass value="$Fullsize"/>
-			<style>
-				<backgroundSize value="cover"/>
-			</style>
-			<bind name="style" value="'backgroundImage'; 'url:../service_kit/lootbox_banners/default_lootboxes.png'"/>
-		</block>
-		<block type="text">
-			<styleClass value="$TextDefaultBold21NM"/>
-			<style>
-				<maxWidth value="300"/>
-				<position value="absolute"/>
-				<marginTop value="24px"/>
-				<marginLeft value="24px"/>
-				<leading value="-4"/>
-				<textColor value="0xFFDED1BE"/>
-			</style>
-			<bind name="text" value="toUpperCase(tr(_bannerText))"/>
-		</block>
-		<block>
-			<styleClass value="$FullsizeAbsolute"/>
-			<block className="white_panel_gradient" type="native">
-				<styleClass value="$FullsizeAbsolute"/>
-				<bind name="transition" value="event_banner_rollOver; 0.15; {alpha: 0}; {alpha: 0.3}"/>
-				<bind name="controller" value="'lesta.unbound.controls.UbInteractiveController'; null; 'event_banner_'"/>
-				<bind name="request" value="'click'; _request ? _request : null; _requestParams ? _requestParams : {}"/>
-			</block>
-		</block>
-	</block>
-	<block className="ReferralSystemBanner">
-		<bind name="controller" value="'lesta.unbound.controls.UbInteractiveController'"/>
-		<bind name="action" value="'click'; 'navigateTo'; { route: SC.Ui_windows.ROUTE.PORTAL, data: {url: SC.Ui_windows.GUI_URL.PLAYTOGETHER_IN_GAME}}"/>
-		<bind name="tooltip" value="'ReferralSystemTooltip'; {}"/>
-		<style>
-			<width value="339px"/>
-			<height value="90px"/>
-			<backgroundImage value="url:../service_kit/referral_system/lootboxes_referral_banner_bg.jpg"/>
-		</style>
-		<block type="text">
-			<styleClass value="$TextDefaultBold21NM"/>
-			<bind name="class" value="'$DropShadowDisabler'"/>
-			<style>
-				<maxWidth value="300"/>
-				<position value="absolute"/>
-				<marginTop value="24px"/>
-				<marginLeft value="24px"/>
-				<leading value="-4"/>
-				<textColor value="0xFFDED1BE"/>
-			</style>
-			<bind name="text" value="toUpperCase(tr('IDS_INVITE_FRIEND'))"/>
-		</block>
-		<block className="white_panel_gradient" type="native">
-			<styleClass value="$FullsizeAbsolute"/>
-			<bind name="transition" value="rollOver &amp;&amp; !(mouseDown); 0.15; {alpha: 0}; {alpha: 0.3}"/>
-		</block>
-	</block>
-
-	<!-- lootboxes_elements -->
-	<block className="UnavailableLootboxTooltip">
-		<styleClass value="$DefaultTooltipBehaviour"/>
-		<style>
-			<width value="280px"/>
-		</style>
-		<bind name="primaryEntityDH" value="'_blurEntity'; CC.preference; 'graphics.GUI.blur'"/>
-		<bind name="watchDH" value="'isBlurOptionEnabled'; ['_blurEntity.preference.evValueChanged']; _blurEntity.preference.value"/>
-		<bind name="primaryEntityDH" value="'_contrastEntity'; CC.preference; 'graphics.GUI.contrast'"/>
-		<bind name="watchDH" value="'isUIContrastOptionEnabled'; ['_contrastEntity.preference.evValueChanged']; _contrastEntity.preference.value"/>
-		<bind name="firstEntityDH" value="'windowManagerEntity'; CC.windowManager"/>
-		<bind name="watchDH" value="'windowQueue'; 	['windowManagerEntity.windowManager.evChanged']; windowManagerEntity.windowManager.windowQueue"/>
-		<bind name="watch" value="'isInBattle'; isIn('Battle', windowQueue)"/>
-		<bind name="watch" value="'isHighContrast'; isInBattle || isUIContrastOptionEnabled || !(isBlurOptionEnabled)"/>
-		<bind name="watch" value="'isBlurEnabled'; isBlurOptionEnabled &amp;&amp; !(isInBattle)"/>
-		<block>
-			<styleClass value="$FullsizeAbsolute"/>
-			<bind name="instance" value="'TooltipSystemBlur'; isBlurEnabled ? {} : null"/>
-		</block>
-		<block className="contrast_panel" type="native">
-			<bind name="visible" value="isHighContrast"/>
-			<style>
-				<alpha value="1.4"/>
-			</style>
-			<styleClass value="$FullsizeAbsolute"/>
-		</block>
-		<block>
-			<bind name="visible" value="!(isHighContrast)"/>
-			<styleClass value="$FullsizeAbsolute"/>
-			<style>
-				<backgroundImage value="url:../service_kit/panel_backgrounds/hint_panel.png"/>
-				<background9Slice value="[3]"/>
-			</style>
-		</block>
-		<block>
-			<styleClass value="$InfoBlockIndent"/>
-			<style>
-				<width value="100%"/>
-			</style>
-			<bind name="instance" value="'LootboxWithLabel'; {}"/>
-		</block>
-		<block>
-			<style>
-				<width value="100%"/>
-			</style>
-			<block className="HorizontalDivider">
-				<styleClass value="$PxHorizontalCorrection"/>
-				<style>
-					<width value="100%"/>
-					<height value="2px"/>
-					<backgroundSize value="fill"/>
-					<marginTop value="1px"/>
-					<backgroundImage value="url:../service_kit/dividers/divider_h.png"/>
-				</style>
-			</block>
-		</block>
-		<block>
-			<style>
-				<width value="100%"/>
-				<margin value="15px|12px"/>
-			</style>
-			<block>
-				<style>
-					<marginBottom value="10px"/>
-				</style>
-				<bind name="instance" value="'ExpToLootbox'; { _expToLootbox: _expToLootbox }"/>
-			</block>
-			<block>
-				<style>
-					<width value="100%"/>
-				</style>
-				<bind name="instance" value="'DefaultProgressBar'; {_progress: _lootProgress}"/>
-			</block>
-		</block>
-	</block>
-	<block className="ExpToLootbox">
-		<block>
-			<style>
-				<width value="100%"/>
-			</style>
-			<block type="text">
-				<style>
-					<alpha value="0.7"/>
-					<marginRight value="8px"/>
-				</style>
-				<styleClass value="$TextDefaultNM"/>
-				<bind name="text" value="'IDS_EXP_LEFT'"/>
-			</block>
-			<block>
-				<style>
-					<marginLeft value="-3px"/>
-					<marginTop value="-6px"/>
-					<marginBottom value="-5px"/>
-				</style>
-				<bind name="instance" value="'PriceTag'; { priceInfo: { finalPrice: _expToLootbox, currency: SC.Common.CURRENCIES.XP } }"/>
-			</block>
-			<style>
-				<flow value="horizontal"/>
-			</style>
-		</block>
-	</block>
-	<block className="LootboxWithLabel">
-		<style>
-			<width value="100%"/>
-			<flow value="horizontal"/>
-		</style>
-		<block>
-			<style>
-				<width value="32px"/>
-				<height value="32px"/>
-				<marginRight value="12px"/>
-			</style>
-			<bind name="style" value="'backgroundImage'; _lootboxAvailable	? 'url:../service_kit/port_banner/icon_banner_container.png'
-															: 'url:../service_kit/port_banner/icon_banner_container_lock.png'"/>
-		</block>
-		<block type="text">
-			<styleClass value="$TextDefault17NM"/>
-			<bind name="class" value="_lootboxAvailable ? '$FontColorGolden' : '$FontColorWhite'"/>
-			<style>
-				<marginTop value="10px"/>
-			</style>
-			<bind name="text" value="_lootboxAvailable ? 'IDS_LOOTBOX_AVAILABLE' : 'IDS_LOOTBOX_NOT_AVAILABLE'"/>
 		</block>
 	</block>
 
@@ -53623,6 +52751,8 @@
 		<bind name="watchDH" value="'shipId'; ['dockEntity.shipSelection.evShipUpdate']; dockEntity.shipSelection.currentShipId"/>
 		<bind name="primaryEntityDH" value="'exteriorEntity'; CC.exteriorConfig; $root.exteriorId"/>
 		<bind name="watchDH" value="'exteriorConfig'; []; exteriorEntity.exteriorConfig"/>
+		<bind name="watchDH" value="'rarityCategoryName'; []; exteriorEntity &amp;&amp; exteriorEntity.rarityCategoryComponent ? exteriorEntity.rarityCategoryComponent.name : null"/>
+		<bind name="watch" value="'rarity'; rarityCategoryName"/>
 		<bind name="watchDH" value="'isTileflage'; ['exteriorEntity.ownCamouflage.evUpdated']; exteriorEntity.ownCamouflage.isTileflage"/>
 		<bind name="watch" value="'exteriorPriceId'; isTileflage 	? SC.Exteriors.CAMO_PRICE_GROUP.TILEFLAGE + '_' + exteriorEntity.ownCamouflage.camoGroup :
 									!isCamouflage	? $root.exteriorId
@@ -53714,12 +52844,13 @@
 				<backgroundColor value="0x01000000"/>
 				<marginBottom value="16px"/>
 			</style>
-			<bind name="tooltip" value="'CamouflageTooltip'; {_id: $root.exteriorId, _noMouseInstructions: true}"/>
+			<bind name="tooltip" value="'CamouflageTooltip'; {_id: $root.exteriorId, _noMouseInstructions: true, _rarity: rarity}"/>
 			<bind name="instance" value="'ModalWindowSystemExpendableIconWithHeaderAndSubheader';	{	_headerIconType: headerIconType,
 																						_imageUrl: headerIconPath,
 																						_unifiedStatus: SC.Ui_styles.UNIFIED_STATUS.DEFAULT,
 																						_headerText: headerText,
 																						_subheaderText: subheaderText,
+																						_rarity: rarity,
 																						_data:	{	shipId: shipId,
 																									exteriorType: exteriorConfig.type,
 																									camouflageId: $root.exteriorId} }"/>
@@ -59326,6 +58457,7 @@
 									<bind name="instance" value="'AppliedFilter'; { _filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_TYPE,		_panelEntityId: panelEntity.id }"/>
 									<bind name="instance" value="'AppliedFilter'; { _filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_NATION,		_panelEntityId: panelEntity.id }"/>
 									<bind name="instance" value="'AppliedFilter'; { _filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_SPECIAL,	_panelEntityId: panelEntity.id }"/>
+									<bind name="instance" value="'AppliedFilter'; { _filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_RARITY,		_panelEntityId: panelEntity.id }"/>
 									<style>
 										<flow value="horizontal"/>
 									</style>
@@ -62202,11 +61334,12 @@
 																							rewardSubtype == SC.Common.CURRENCIES.FREE_XP			? SC.Sse.SSE_REWARD_CATEGORY.FREE_XP :
 																							isIn(rewardSubtype, SC.Common.CURRENCIES.IS_EVENT_CURRENCY) ? SC.Sse.SSE_REWARD_CATEGORY.META_CURRENCY
 																																					: rewardSubtype :
-								rewardType == SC.Common.REWARD_TYPE.EXTERIOR			?	rewardSubtype == SC.Ui_common.REWARD_EXTERIOR_TYPE.CAMOUFLAGE	||
-																							rewardSubtype == SC.Ui_common.REWARD_EXTERIOR_TYPE.PERMOFLAGE	||	
-																							rewardSubtype == SC.Ui_common.REWARD_EXTERIOR_TYPE.SKIN			||	
-																							rewardSubtype == SC.Ui_common.REWARD_EXTERIOR_TYPE.MSKIN		? SC.Sse.SSE_REWARD_CATEGORY.CAMO
-																																							: rewardSubtype
+								rewardType == SC.Common.REWARD_TYPE.EXTERIOR			?	rewardSubtype == SC.Ui_common.REWARD_EXTERIOR_TYPE.CAMOUFLAGE		||
+																							rewardSubtype == SC.Ui_common.REWARD_EXTERIOR_TYPE.PERMOFLAGE		||
+																							rewardSubtype == SC.Ui_common.REWARD_EXTERIOR_TYPE.SKIN				||
+																							rewardSubtype == SC.Ui_common.REWARD_EXTERIOR_TYPE.MSKIN			? SC.Sse.SSE_REWARD_CATEGORY.CAMO :
+																							rewardSubtype == SC.Ui_common.REWARD_EXTERIOR_TYPE.SHIP_DESTRUCTION	? SC.Sse.SSE_REWARD_CATEGORY.SHIP_DESTRUCTION
+																																								: rewardSubtype
 																			:	rewardType"/>
 		<bind name="catch" value="'evStartLootAnimation'; {isLootAnimation: true}"/>
 		<bind name="catch" value="'evLastAnimationFinished'; {isLootAnimation: false}"/>
@@ -68076,525 +67209,6 @@
 		</block>
 	</block>
 
-	<!-- modal_window_lootbox_types -->
-	<block className="ModalWindowLootboxTypes">
-		<bind name="lag" value="'lagAfterAddedToStage'; null; true; 0.4; 'addedToStage'; 3; SC.Common.UBSCOPE_EVENT_DIRECTIONS.DOWN"/>
-		<bind name="collectionDH" value="CC.userPrefs; 'userPrefsCollection'"/>
-		<bind name="entityDH" value="'userPrefsEntity'; userPrefsCollection[0].id"/>
-		<bind name="watchDH" value="'userPrefs'; ['userPrefsEntity.userPrefs.evUserPrefsChanged']; userPrefsEntity.userPrefs.userPrefs"/>
-		<bind name="action" value="(userPrefs.selectedLootbox == null) ? 'addedToStage' : ''; 'setUserPref' ; {value : 0, name : 'selectedLootbox'}"/>
-		<bind name="watch" value="'selectedLootboxIndex'; userPrefs.selectedLootbox"/>
-		<bind name="catch" value="'evSelectLootboxTypeCard'"/>
-		<bind name="changeDispatch" value="selectedLootboxIndex; 'evSelectLootboxTypeCard' + 'InPrefs'"/>
-		<bind name="action" value="'evSelectLootboxTypeCard' + 'InPrefs'; 'setUserPref' ; {value : selectedLootboxIndex, name : 'selectedLootbox'}"/>
-		<bind name="firstEntityDH" value="'lootboxEntity'; CC.lootboxConfigComponent"/>
-		<bind name="watchDH" value="'lootboxesInStorage'; ['lootboxEntity.lootboxStorageComponent.evUpdate']; lootboxEntity.lootboxStorageComponent.inStorage"/>
-		<bind name="collectionDH" value="CC.lootboxTypeInfoComponent; 'lootboxTypesEntitiesList'; 'sorted'"/>
-		<bind name="watch" value="'lootboxesTypesCount'; lootboxTypesEntitiesList.length"/>
-		<bind name="watch" value="'lootboxesTypesCountString'; subst(	'IDS_SUBST_PL_OWNED_LOOTBOXES_COUNT_TYPES', [],
-														{lootboxesTypesCount: lootboxesTypesCount},
-														lootboxesTypesCount	)"/>
-		<bind name="appear" value="'addedToStage'; 0; 0; {alpha: 0}; {alpha: 0}"/>
-		<bind name="appear" value="'lagAfterAddedToStage'; 0.3; 0; {alpha: 0}; {alpha: 1}"/>
-		<bind name="stageSize"/>
-		<styleClass value="$Fullsize"/>
-		<style>
-			<align value="center"/>
-		</style>
-		<block>
-			<styleClass value="$FullsizeAbsolute"/>
-			<bind name="appear" value="'startShow'; 0.2; 0.1; {alpha: 0}; {alpha: 1}"/>
-			<bind name="appear" value="'startHide'; 0.2; 0.2; {alpha: 1}; {alpha: 0}"/>
-			<bind name="instance" value="'BackgroundAnimatedSwitcher'; { _bgSymbol: 'url:../bg/nations_tree_v2.jpg' }"/>
-		</block>
-		<block>
-			<bind name="appear" value="'addedToStage'; 0; 0; {alpha: 0}; {alpha: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
-			<bind name="appear" value="'lagAfterAddedToStage'; 0.15; 1*0.075; {alpha: 0, top: 10}; {alpha: 1, top: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
-			<bind name="appear" value="'startHide'; 0.15; 1 * 0.055; {alpha: 1, top: 0}; {alpha: 0, top: -10}; SC.Common.EASING_FUNCTIONS.IN_QUAD"/>
-			<style>
-				<width value="100%"/>
-			</style>
-			<bind name="instance" value="'ModalWindowHeaderFullSize'; {	_hideDivider: true,
-														_paddingRight: '16px',
-														_paddingLeft: '16px',
-														_hideBackButton: true,
-														_windowName: 'IDS_LOOTBOXES'}"/>
-		</block>
-		<block>
-			<bind name="appear" value="'addedToStage'; 0; 0; {alpha: 0}; {alpha: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
-			<bind name="appear" value="'lagAfterAddedToStage'; 0.15; 1*0.075; {alpha: 0, top: 10}; {alpha: 1, top: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
-			<bind name="appear" value="'startHide'; 0.15; 1 * 0.055; {alpha: 1, top: 0}; {alpha: 0, top: -10}; SC.Common.EASING_FUNCTIONS.IN_QUAD"/>
-			<style>
-				<width value="100%"/>
-				<marginTop value="720:12,1080:16ah"/>
-			</style>
-			<block className="HorizontalDividerTwoPx">
-				<style>
-					<width value="100%"/>
-					<height value="2px"/>
-					<backgroundSize value="fill"/>
-					<backgroundImage value="url:../service_kit/dividers/divider_h.png"/>
-				</style>
-			</block>
-		</block>
-		<block>
-			<bind name="appear" value="'addedToStage'; 0; 0; {alpha: 0}; {alpha: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
-			<bind name="appear" value="'lagAfterAddedToStage'; 0.15; 1.5*0.075; {alpha: 0, top: 10}; {alpha: 1, top: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
-			<bind name="appear" value="'startHide'; 0.15; 1.5 * 0.055; {alpha: 1, top: 0}; {alpha: 0, top: -10}; SC.Common.EASING_FUNCTIONS.IN_QUAD"/>
-			<style>
-				<height value="48px"/>
-				<paddingTop value="16px"/>
-			</style>
-			<bind name="instance" value="'StatusLine'; { _text: subst(	'IDS_SUBST_PL_OWNED_LOOTBOXES_COUNT_TOTAL_WITH_TYPES', [],
-														{	lootboxesCount: lootboxesInStorage,
-															lootboxesTypesCountString: lootboxesTypesCountString	},
-														lootboxesInStorage	) }"/>
-		</block>
-		<block>
-			<bind name="appear" value="'addedToStage'; 0; 0; {alpha: 0}; {alpha: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
-			<bind name="appear" value="'lagAfterAddedToStage'; 0.15; 1.5*0.075; {alpha: 0, top: 10}; {alpha: 1, top: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
-			<bind name="appear" value="'startHide'; 0.15; 1.5 * 0.055; {alpha: 1, top: 0}; {alpha: 0, top: -10}; SC.Common.EASING_FUNCTIONS.IN_QUAD"/>
-			<style>
-				<width value="100%"/>
-			</style>
-			<block className="HorizontalDividerTwoPx">
-				<style>
-					<width value="100%"/>
-					<height value="2px"/>
-					<backgroundSize value="fill"/>
-					<backgroundImage value="url:../service_kit/dividers/divider_h.png"/>
-				</style>
-			</block>
-		</block>
-		<block>
-			<bind name="appear" value="'addedToStage'; 0; 0; {alpha: 0}; {alpha: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
-			<bind name="appear" value="'lagAfterAddedToStage'; 0.15; 2*0.075; {alpha: 0, top: 10}; {alpha: 1, top: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
-			<bind name="appear" value="'startHide'; 0.15; 2 * 0.055; {alpha: 1, top: 0}; {alpha: 0, top: -10}; SC.Common.EASING_FUNCTIONS.IN_QUAD"/>
-			<bind name="watch" value="'isBig'; stageWidth &gt; 1440"/>
-			<style>
-				<height value="100%"/>
-				<marginTop value="32px"/>
-				<marginBottom value="58px"/>
-			</style>
-			<block>
-				<styleClass value="$DefaultScrollBar"/>
-				<style>
-					<marginRight value="12px"/>
-					<height value="100%"/>
-					<flow value="htile"/>
-				</style>
-				<bind name="style" value="'width'; isBig ? '816px' : '544px'"/>
-				<bind name="repeat" value="lootboxTypesEntitiesList; 'LootboxCardContainer'; {_selectedIndex: userPrefs.selectedLootbox}"/>
-			</block>
-			<block>
-				<style>
-					<width value="410px"/>
-					<height value="100%"/>
-				</style>
-				<bind name="instance" value="'LootboxTypeManagementPanel'; {_selectedIndex: lootboxTypesEntitiesList[userPrefs.selectedLootbox].lootboxTypeInfoComponent.containerType}"/>
-			</block>
-			<style>
-				<flow value="horizontal"/>
-			</style>
-		</block>
-	</block>
-	<block className="LootboxCardContainer">
-		<bind name="dataRefDH" value="'lootboxTypesEntity'; '$dataRef.ref'"/>
-		<bind name="watchDH" value="'amount';		['lootboxTypesEntity.lootboxTypeInfoComponent.evAmountChanged']; lootboxTypesEntity.lootboxTypeInfoComponent.amount"/>
-		<bind name="watch" value="'subtype';			lootboxTypesEntity.lootboxTypeInfoComponent.subtype"/>
-		<bind name="watch" value="'containerType';	lootboxTypesEntity.lootboxTypeInfoComponent.containerType"/>
-		<bind name="watch" value="'isPremium'; isIn('_prem', toLowerCase(subtype))"/>
-		<bind name="watch" value="'title'; tr(toUpperCase('IDS_REWARD_LOOTBOX_' + subtype + '_TITLE' + (isPremium ? '' : '_SHORT') ))"/>
-		<bind name="watch" value="'isSelected'; _selectedIndex == $index"/>
-		<bind name="dispatch" value="'click'; 'evSelectLootboxTypeCard'; {selectedLootboxIndex: $index}; SC.Common.UBSCOPE_EVENT_DIRECTIONS.UP"/>
-		<bind name="tooltip" value="'LootboxTypeTooltip'; {	_imageUrl: 'url:../reward_icons/' + subtype + '.png',
-	 										_headerText: title,
-	 										_count: amount,
-	 										_isPremium: isPremium }"/>
-		<bind name="soundSet" value="'default_button'"/>
-		<bind name="controller" value="'lesta.unbound.controls.UbInteractiveController'; null; 'ct_'"/>
-		<bind name="var" value="{
-		ctRollOver: {
-			redMultiplier: 1,
-			greenMultiplier: 1,
-			blueMultiplier: 1,
-			alphaMultiplier: 1,
-			redOffset: 30,
-			greenOffset: 30,
-			blueOffset: 30,
-			alphaOffset: 0
-		}
-	}"/>
-		<bind name="var" value="{ 
-		ctMouseDown: {
-			redMultiplier: 1,
-			greenMultiplier: 1,
-			blueMultiplier: 1,
-			alphaMultiplier: 1,
-			redOffset: -30,
-			greenOffset: -30,
-			blueOffset: -30,
-			alphaOffset: 0
-		}
-	}"/>
-		<bind name="colorTransform" value="	false &amp;&amp; ct_mouseDown &amp;&amp; !isSelected	? ctMouseDown :
-							false &amp;&amp; (ct_rollOver || isSelected)	? ctRollOver
-																		: {}"/>
-		<style>
-			<width value="256px"/>
-			<height value="256px"/>
-			<marginRight value="16px"/>
-			<marginBottom value="16px"/>
-			<padding value="16px"/>
-		</style>
-		<block>
-			<styleClass value="$FullsizeAbsolute"/>
-			<style>
-				<backgroundImage value="url:../service_kit/frames/one_pixel_frame.png"/>
-				<background9Slice value="[2]"/>
-				<margin value="-16px"/>
-			</style>
-			<bind name="alpha" value="isSelected ? 0.5 :
-					ct_rollOver ? 0.2
-								: 0.1"/>
-		</block>
-		<block>
-			<styleClass value="$FullsizeAbsolute"/>
-			<style>
-				<backgroundColor value="0xFFFFFFFF"/>
-				<margin value="-16px"/>
-			</style>
-			<bind name="alpha" value="isSelected	? 0.1 :
-					ct_rollOver ? 0.08
-								: 0.04"/>
-		</block>
-		<block>
-			<style>
-				<position value="absolute"/>
-				<top value="16px"/>
-				<left value="16px"/>
-				<width value="192px"/>
-				<height value="192px"/>
-				<backgroundSize value="cover"/>
-			</style>
-			<bind name="style" value="'backgroundImage'; 'url:../reward_icons/big/' + subtype + '.png'"/>
-		</block>
-		<block type="text">
-			<styleClass value="$TextDefaultBold19NM"/>
-			<style>
-				<width value="100%"/>
-				<alpha value="0.9"/>
-			</style>
-			<bind name="text" value="title"/>
-		</block>
-		<block>
-			<style>
-				<position value="absolute"/>
-				<right value="0"/>
-				<bottom value="0"/>
-			</style>
-			<block type="text">
-				<styleClass value="$TextDefaultBold19NM"/>
-				<style>
-					<alpha value="0.9"/>
-				</style>
-				<bind name="text" value="amount"/>
-			</block>
-		</block>
-	</block>
-	<block className="FakeElement">
-		<style>
-			<width value="256px"/>
-			<height value="256px"/>
-			<marginRight value="16px"/>
-			<marginBottom value="16px"/>
-			<alpha value="0.1"/>
-		</style>
-		<block>
-			<styleClass value="$FullsizeAbsolute"/>
-			<style>
-				<backgroundImage value="url:../service_kit/frames/one_pixel_frame.png"/>
-				<background9Slice value="[2]"/>
-			</style>
-		</block>
-	</block>
-	<block className="LootboxTypeManagementPanel">
-		<bind name="collectionDH" value="CC.lootboxTypeInfoComponent; 'lootboxTypesEntitiesList'; 'sorted'"/>
-		<bind name="primaryEntityDH" value="'lootboxTypesEntity'; CC.lootboxTypeInfoComponent; _selectedIndex"/>
-		<bind name="watch" value="'isLinkAvailable';	lootboxTypesEntity.lootboxTypeInfoComponent.isLinkAvailable"/>
-		<bind name="watchDH" value="'amount';		['lootboxTypesEntity.lootboxTypeInfoComponent.evAmountChanged']; lootboxTypesEntity.lootboxTypeInfoComponent.amount"/>
-		<bind name="watch" value="'subtype';			lootboxTypesEntity.lootboxTypeInfoComponent.subtype"/>
-		<bind name="watch" value="'containerType';	lootboxTypesEntity.lootboxTypeInfoComponent.containerType"/>
-		<bind name="watch" value="'title'; tr(toUpperCase('IDS_REWARD_LOOTBOX_' + subtype + '_TITLE'))"/>
-		<bind name="watch" value="'isMultiple'; amount &gt; 1"/>
-		<bind name="firstEntityDH" value="'lootboxEntity'; CC.lootboxConfigComponent"/>
-		<bind name="watchDH" value="'isLootboxOpened';	['lootboxEntity.lootboxAnimationState.evUpdate']; lootboxEntity.lootboxAnimationState.open"/>
-		<bind name="watchDH" value="'activeAnimation'; ['lootboxEntity.lootboxAnimationState.evUpdate']; lootboxEntity.lootboxAnimationState.active"/>
-		<bind name="watch" value="'isModalClosureNeeded'; lootboxTypesEntitiesList.length == 1 &amp;&amp; !activeAnimation"/>
-		<style>
-			<width value="100%"/>
-		</style>
-		<bind name="style" value="'height'; _hasDescription ? '100%' : 'auto'"/>
-		<block>
-			<styleClass value="$FullsizeAbsolute"/>
-			<style>
-				<backgroundImage value="url:../service_kit/frames/one_pixel_frame.png"/>
-				<background9Slice value="[2]"/>
-				<alpha value="0.1"/>
-			</style>
-		</block>
-		<block>
-			<styleClass value="$FullsizeAbsolute"/>
-			<style>
-				<backgroundColor value="0xFFFFFFFF"/>
-				<alpha value="0.04"/>
-			</style>
-		</block>
-		<block>
-			<styleClass value="$Fullsize"/>
-			<style>
-				<minHeight value="340"/>
-				<margin value="32px"/>
-			</style>
-			<block>
-				<style>
-					<width value="100%"/>
-					<marginBottom value="24px"/>
-				</style>
-				<block type="text">
-					<styleClass value="$TextDefaultBold23NM"/>
-					<style>
-						<width value="100%"/>
-						<alpha value="0.9"/>
-					</style>
-					<bind name="text" value="title"/>
-				</block>
-			</block>
-			<block>
-				<style>
-					<marginBottom value="24px"/>
-				</style>
-				<block type="text">
-					<styleClass value="$TextDefault17NM"/>
-					<style>
-						<alpha value="0.9"/>
-					</style>
-					<bind name="text" value="subst('IDS_SUBST_LOOTBOXES_QUANTITY', [], {amount: amount})"/>
-				</block>
-				<style>
-					<flow value="horizontal"/>
-				</style>
-			</block>
-			<block>
-				<style>
-					<width value="100%"/>
-					<marginBottom value="40px"/>
-				</style>
-				<bind name="instance" value="'LootboxProbabiltyLink'; isLinkAvailable ? {} : null"/>
-			</block>
-			<block>
-				<style>
-					<width value="100%"/>
-					<position value="absolute"/>
-					<bottom value="0"/>
-					<left value="0"/>
-				</style>
-				<block>
-					<style>
-						<width value="100%"/>
-					</style>
-					<block className="HorizontalDividerTwoPx">
-						<style>
-							<width value="100%"/>
-							<height value="2px"/>
-							<backgroundSize value="fill"/>
-							<backgroundImage value="url:../service_kit/dividers/divider_h.png"/>
-						</style>
-					</block>
-					<block>
-						<block className="HorizontalDividerTwoPx">
-							<style>
-								<width value="100%"/>
-								<height value="2px"/>
-								<backgroundSize value="fill"/>
-								<backgroundImage value="url:../service_kit/dividers/divider_h.png"/>
-							</style>
-						</block>
-						<style>
-							<position value="absolute"/>
-							<width value="100%"/>
-						</style>
-					</block>
-				</block>
-				<block>
-					<styleClass value="$MiddleAligned"/>
-					<block>
-						<bind name="action" value="'click'; amount == 1 ? 'setUserPref' : null; {value: 0, name: 'selectedLootbox'}"/>
-						<bind name="dispatch" value="'left_click'; isLootboxOpened ? 'hideRewards' : null; {}"/>
-						<bind name="clickSplit"/>
-						<style>
-							<width value="210px"/>
-							<marginTop value="32px"/>
-						</style>
-						<bind name="instance" value="'DefaultButton';	{	_width: '210px', _height: '27px',
-															_enabled: !activeAnimation,
-															_focusIndex: 0,
-															_defaultFocused: true,
-															_action: 'LootboxProxy.openLootboxByType',
-															_actionParams: {lootboxType: containerType, count: amount},
-															_isTransactionBtn: true,
-															_label: toUpperCase(tr('IDS_OPEN_LOOTBOX')) }"/>
-						<bind name="primaryEntityDH" value="'lootboxModalNewTip';		CC.newGuidingTip; SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_MODAL"/>
-						<bind name="primaryEntityDH" value="'lootboxModalRepeatNewTip';	CC.newGuidingTip; SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_MODAL_REPEAT"/>
-						<bind name="watchDH" value="'isLootboxModalNewTipActive';		['lootboxModalNewTip.newGuidingTip.evChanged'];			lootboxModalNewTip.newGuidingTip.isActive"/>
-						<bind name="watchDH" value="'isLootboxModalRepeatNewTipActive';	['lootboxModalRepeatNewTip.newGuidingTip.evChanged'];	lootboxModalRepeatNewTip.newGuidingTip.isActive"/>
-						<bind name="watch" value="'modalTipId'; 	isLootboxModalNewTipActive			? SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_MODAL : 
-												isLootboxModalRepeatNewTipActive	? SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_MODAL_REPEAT
-																					: SC.Context_guiding_tip.TIP_TYPE.NONE"/>
-						<bind name="watch" value="'modalTipVisible'; modalTipId != SC.Context_guiding_tip.TIP_TYPE.NONE"/>
-						<bind name="instance" value="'NewGuidingTipHub'; modalTipVisible ? {	_newTipId: modalTipId,
-																			_tipPositioning: 'left', 
-																			_offset: 5}
-																		: null"/>
-						<bind name="action" value="'click'; modalTipId == SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_MODAL_REPEAT ? 'deactivateTipChain': ''; 
-										{tip_chain_id: SC.Context_guiding_tip.TIP_CHAIN_ID.LOOTBOXES_REPEAT}"/>
-					</block>
-					<block>
-						<bind name="action" value="'click'; isModalClosureNeeded ? 'closeLootboxTypesModal' : 'setUserPref'; {value: 0, name: 'selectedLootbox'}"/>
-						<bind name="action" value="'click'; modalTipId == SC.Context_guiding_tip.TIP_TYPE.LOOTBOXES_MODAL_REPEAT ? 'deactivateTipChain': ''; 
-										{tip_chain_id: SC.Context_guiding_tip.TIP_CHAIN_ID.LOOTBOXES_REPEAT}"/>
-						<style>
-							<width value="210px"/>
-						</style>
-						<bind name="style" value="'marginTop'; isMultiple ? '12px' : '0px'"/>
-						<bind name="instance" value="'DefaultButton'; isMultiple	? {	_width: '210px',
-																	_enabled: isMultiple &amp;&amp; !activeAnimation,
-																	_focusIndex: 1,
-																	_action: 'LootboxProxy.openLootboxesByType',
-																	_actionParams: {	lootboxType: containerType,
-																						count: amount	},
-																	_isTransactionBtn: true,
-																	_label: subst(	'IDS_SUBST_PL_OPEN_N_CONTAINERS', [],
-																					{count: amount}, amount	) }
-																: null"/>
-					</block>
-				</block>
-			</block>
-		</block>
-	</block>
-	<block className="LootboxProbabiltyLink">
-		<bind name="soundSet" value="'default_button'"/>
-		<bind name="controller" value="'lesta.unbound.controls.UbInteractiveController'"/>
-		<bind name="action" value="'click'; 'gotoUrlByIdent'; { ident: SC.Ui_windows.GUI_URL.LOOTBOX_CONTENTS }"/>
-		<bind name="tooltip" value="'SimpleStatusTooltip'; {	_unifiedStatus: SC.Ui_styles.UNIFIED_STATUS.MOUSE_LEFT,
-											_text: 'IDS_LOOTBOX_REWARDS_PROBABILITIES_TOOLTIP'	}"/>
-		<style>
-			<width value="100%"/>
-			<flow value="horizontal"/>
-		</style>
-		<bind name="alpha" value="rollOver ? 0.9 : 0.75"/>
-		<block type="text">
-			<styleClass value="$TextDefault17NM"/>
-			<style>
-				<width value="100%f"/>
-				<height value="40px"/>
-				<marginTop value="4px"/>
-			</style>
-			<default_text value="IDS_LOOTBOX_REWARDS_PROBABILITIES"/>
-		</block>
-		<block>
-			<style>
-				<width value="19px"/>
-				<height value="19px"/>
-				<marginLeft value="8px"/>
-				<marginTop value="2px"/>
-				<backgroundImage value="url:../service_kit/unified_status_icons/icon_info.png"/>
-			</style>
-		</block>
-	</block>
-	<block className="LootboxTypeTooltip">
-		<styleClass value="$DefaultTooltipBehaviour"/>
-		<style>
-			<width value="320px"/>
-		</style>
-		<bind name="primaryEntityDH" value="'_blurEntity'; CC.preference; 'graphics.GUI.blur'"/>
-		<bind name="watchDH" value="'isBlurOptionEnabled'; ['_blurEntity.preference.evValueChanged']; _blurEntity.preference.value"/>
-		<bind name="primaryEntityDH" value="'_contrastEntity'; CC.preference; 'graphics.GUI.contrast'"/>
-		<bind name="watchDH" value="'isUIContrastOptionEnabled'; ['_contrastEntity.preference.evValueChanged']; _contrastEntity.preference.value"/>
-		<bind name="firstEntityDH" value="'windowManagerEntity'; CC.windowManager"/>
-		<bind name="watchDH" value="'windowQueue'; 	['windowManagerEntity.windowManager.evChanged']; windowManagerEntity.windowManager.windowQueue"/>
-		<bind name="watch" value="'isInBattle'; isIn('Battle', windowQueue)"/>
-		<bind name="watch" value="'isHighContrast'; isInBattle || isUIContrastOptionEnabled || !(isBlurOptionEnabled)"/>
-		<bind name="dispatch" value="'Tooltip.selfOpened'; 'startShow'; {}; SC.Common.UBSCOPE_EVENT_DIRECTIONS.DOWN"/>
-		<bind name="dispatch" value="'Tooltip.selfClosed'; 'startHide'; {}; SC.Common.UBSCOPE_EVENT_DIRECTIONS.DOWN"/>
-		<block>
-			<styleClass value="$FullsizeAbsolute"/>
-			<style>
-				<margin value="-1px"/>
-			</style>
-			<block>
-				<styleClass value="$FullsizeAbsolute"/>
-				<bind name="instance" value="'TooltipSystemBlur'; !(isHighContrast) ? {} : null"/>
-			</block>
-			<block>
-				<bind name="visible" value="!(isHighContrast)"/>
-				<styleClass value="$FullsizeAbsolute"/>
-				<style>
-					<backgroundImage value="url:../service_kit/panel_backgrounds/hint_panel.png"/>
-					<background9Slice value="[3]"/>
-				</style>
-			</block>
-			<block>
-				<bind name="visible" value="isHighContrast"/>
-				<styleClass value="$FullsizeAbsolute"/>
-				<style>
-					<backgroundImage value="url:../service_kit/panel_backgrounds/hint_panel_high_contrast.png"/>
-					<background9Slice value="[3]"/>
-				</style>
-			</block>
-		</block>
-		<block>
-			<style>
-				<width value="100%"/>
-				<paddingRight value="16px"/>
-				<paddingLeft value="16px"/>
-				<paddingBottom value="12px"/>
-				<paddingTop value="12px"/>
-			</style>
-			<block>
-				<style>
-					<width value="100%"/>
-				</style>
-				<bind name="instance" value="'TooltipSystemHeaderWithIconAndText'; {	_imageUrl: _imageUrl,
-																_imageWidth: 60,
-																_imageHeight: 60,
-																_unifiedStatus: SC.Ui_styles.UNIFIED_STATUS.DEFAULT,
-																_headerText: _headerText,
-																_subheaderText: _isPremium	? 'IDS_LOOTBOX_PREMIUM'
-																							: 'IDS_LOOTBOX' }"/>
-			</block>
-			<block className="TooltipSystemHorizontalDivider">
-				<bind name="visible" value="true"/>
-				<style>
-					<width value="100%"/>
-					<height value="2px"/>
-					<marginTop value="12px"/>
-					<marginBottom value="12px"/>
-					<marginRight value="-16px"/>
-					<marginLeft value="-16px"/>
-					<backgroundSize value="fill"/>
-					<backgroundImage value="url:../service_kit/dividers/divider_h.png"/>
-				</style>
-			</block>
-			<block>
-				<style>
-					<width value="100%"/>
-				</style>
-				<bind name="instance" value="'TooltipSystemCounterLine'; {	_title: 'IDS_COUNT', _count: _count}"/>
-			</block>
-		</block>
-	</block>
-
 	<!-- modal_window_mini_dockyard_equipment -->
 	<block className="ModalWindowMiniDockyardEquipment">
 		<bind name="primaryEntityDH" value="'isBlurEnabledEntity'; CC.preference; 'graphics.GUI.blur'"/>
@@ -69175,103 +67789,6 @@
 														_spineAnimation: 'url:../animations/spine/battlepass/bp_icon_smoke/bp_icon_smoke.skel',
 														_title: 'IDS_STRATEGIC_ACTIONS_ONBOARDING_TITLE_',
 														_text: 'IDS_STRATEGIC_ACTIONS_ONBOARDING_TEXT_'}"/>
-	</block>
-
-	<!-- modal_window_open_all_loot_boxes -->
-	<block className="ModalWindowOpenAllLootBoxes">
-		<block className="ModalWindowContainer">
-			<bind name="primaryEntityDH" value="'_blurEntity'; CC.preference; 'graphics.GUI.blur'"/>
-			<bind name="watchDH" value="'isBlurOptionEnabled'; ['_blurEntity.preference.evValueChanged']; _blurEntity.preference.value"/>
-			<styleClass value="$FullsizeAbsolute"/>
-			<block>
-				<bind name="visible" value="!isBlurOptionEnabled"/>
-				<styleClass value="$FullsizeAbsolute"/>
-				<bind name="appear" value="'startShow'; 0.2; 0.1; 	{alpha: 0}; {alpha: 1}"/>
-				<bind name="appear" value="'startHide'; 0.2; 0.2; 	{alpha: 1}; {alpha: 0}"/>
-				<style>
-					<backgroundImage value="url:../bg/nations_tree_v2.jpg"/>
-					<backgroundSize value="cover"/>
-				</style>
-			</block>
-			<block>
-				<bind name="visible" value="isBlurOptionEnabled"/>
-				<styleClass value="$FullsizeAbsolute"/>
-				<block className="DeclareBlurLayer">
-					<bind name="primaryEntityDH" value="'isBlurEnabledEntity'; CC.preference; 'graphics.GUI.blur'"/>
-					<bind name="watchDH" value="'isBlurEnabled'; ['isBlurEnabledEntity.preference.evValueChanged']; isBlurEnabledEntity.preference.value"/>
-					<bind name="visible" value="isBlurEnabled"/>
-					<block className="transparentPixel" type="native">
-						<bind name="blurLayer" value="0"/>
-					</block>
-					<style>
-						<position value="absolute"/>
-					</style>
-				</block>
-				<block className="mc_blurmap_medium" type="native">
-					<styleClass value="$FullsizeAbsolute"/>
-					<bind name="appear" value="'startShow'; 0.2; 0.1; 	{alpha: 0}; {alpha: 1}"/>
-					<bind name="appear" value="'startHide'; 0.2; 0.2; 	{alpha: 1}; {alpha: 0}"/>
-					<bind name="blurMap" value="0"/>
-				</block>
-				<block>
-					<styleClass value="$FullsizeAbsolute"/>
-					<bind name="appear" value="'startShow'; 0.2; 0.1; 	{alpha: 0}; {alpha: 1}"/>
-					<bind name="appear" value="'startHide'; 0.2; 0.2; 	{alpha: 1}; {alpha: 0}"/>
-					<style>
-						<backgroundColor value="0x80000700"/>
-					</style>
-				</block>
-			</block>
-			<style>
-				<align value="center"/>
-			</style>
-			<block>
-				<styleClass value="$EyeLevelVAligned"/>
-				<bind name="instance" value="'ModalWaitingAllLootBoxesOpen'; {}"/>
-			</block>
-		</block>
-	</block>
-	<block className="ModalWaitingAllLootBoxesOpen">
-		<params>
-			<param name="name" value="waitingAllLootBoxesOpen"/>
-		</params>
-		<bind name="firstEntityDH" value="'lootboxStateEntity'; CC.lootboxOpeningState"/>
-		<bind name="watchDH" value="'lootboxOpened';['lootboxStateEntity.lootboxOpeningState.evLootboxOpenedChanged']; lootboxStateEntity.lootboxOpeningState.lootboxOpened"/>
-		<bind name="watchDH" value="'lootboxTotal';[]; lootboxStateEntity.lootboxOpeningState.lootboxTotal"/>
-		<bind name="watchDH" value="'lastOpenRewardsEntityId';['lootboxStateEntity.lootboxOpeningState.evLootboxesOpenEnded']; lootboxStateEntity.lootboxOpeningState.lastOpenRewards"/>
-		<bind name="handleEventDH" value="'lootboxStateEntity.lootboxOpeningState.evLootboxesOpenEnded'; 'evLootboxesOpenEnded'"/>
-		<bind name="dispatch" value="'addedToStage'; (lastOpenRewardsEntityId &gt; 0) ? 'delayedOpenModalWindowWithAllRewards' : null; {}; 2; 1.0"/>
-		<bind name="dispatch" value="'evLootboxesOpenEnded'; 'delayedOpenModalWindowWithAllRewards'; {}; 2; 1.0"/>
-		<bind name="request" value="'delayedOpenModalWindowWithAllRewards';	lootboxOpened &gt; 0	? 'openRewardsModal'
-																				: 'closeRewardsModal' ;
-															lootboxOpened &gt; 0	? {	rewardsEntityId: lastOpenRewardsEntityId,
-																					header: 'IDS_RECEIVED_LOOTBOXES_REWARDS',
-																					subheader: subst('IDS_OPENED_LOOTBOXES', [], {count: lootboxOpened}, lootboxOpened)}
-																				: {}"/>
-		<style>
-			<align value="center"/>
-		</style>
-		<block>
-			<bind name="appear" value="'startShow'; 0.15; 0.27; {alpha: 0, top: 5}; {alpha: 1, top: 0}"/>
-			<styleClass value="$MiddleAligned"/>
-			<style>
-				<position value="absolute"/>
-				<flow value="horizontal"/>
-			</style>
-			<block>
-				<block className="indicator_busy_small" type="native"/>
-			</block>
-			<block type="text">
-				<styleClass value="$TextDefaultBoldNM"/>
-				<bind name="class" value="'$FontColorBlueish'"/>
-				<style>
-					<marginLeft value="12px"/>
-					<marginTop value="4px"/>
-					<marginRight value="12px"/>
-				</style>
-				<bind name="text" value="toUpperCase(tr('IDS_LOOTBOXES_OPENING') + ' ' + lootboxOpened + '/' + lootboxTotal)"/>
-			</block>
-		</block>
 	</block>
 
 	<!-- modal_window_paragons_drop_branch -->
@@ -71657,351 +70174,6 @@
 																		_label: _data.buy.text,
 			_isExternal: !_data.buy.ingame
 		}"/>
-		</block>
-	</block>
-
-	<!-- modal_window_purchase_lootbox -->
-	<block className="ModalWindowPurchaseLootbox">
-		<bind name="instance" value="'SmallModalWindow'; {_headerText: 'IDS_PURCHASE_LOOTBOX_MODAL_HEADER', _contentElement: 'ModalWindowPurchaseLootboxContent'}"/>
-	</block>
-	<block className="ModalWindowPurchaseLootboxContent">
-		<bind name="firstEntityDH" value="'lootboxEntity'; CC.lootboxConfigComponent"/>
-		<bind name="watchDH" value="'boughtToday';	['lootboxEntity.lootboxStorageComponent.evUpdate'];	lootboxEntity.lootboxStorageComponent.boughtToday"/>
-		<bind name="watch" value="'curLootboxPrice'; lootboxEntity.lootboxConfigComponent.prices[boughtToday]"/>
-		<bind name="collectionDH" value="CC.userPrefs; 'userPrefsCollection'"/>
-		<bind name="entityDH" value="'userPrefsEntity'; userPrefsCollection[0].id"/>
-		<bind name="watchDH" value="'userPrefs'; ['userPrefsEntity.userPrefs.evUserPrefsChanged']; userPrefsEntity.userPrefs.userPrefs"/>
-		<bind name="action" value="(userPrefs.selectedLootboxType == null) ? 'addedToStage' : ''; 'setUserPref' ; {value : SC.Common.COMMON_LOOTBOX_TYPES.CREDITS, name : 'selectedLootboxType'}"/>
-		<bind name="var" value="{selectedType: (userPrefs.selectedLootboxType == null) ? SC.Common.COMMON_LOOTBOX_TYPES.CREDITS : userPrefs.selectedLootboxType}"/>
-		<bind name="catch" value="'evSeletedLootboxTypeChanged'"/>
-		<bind name="changeDispatch" value="selectedType; 'evSeletedLootboxTypeChanged' + 'InPrefs'"/>
-		<bind name="action" value="'evSeletedLootboxTypeChanged' + 'InPrefs'; 'setUserPref' ; {value : selectedType, name : 'selectedLootboxType'}"/>
-		<style>
-			<width value="472"/>
-		</style>
-		<block>
-			<bind name="appear" value="'addedToStage'; 0; 0; {alpha: 0}; {alpha: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
-			<bind name="appear" value="'lagAfterAddedToStage'; 0.15; 2*0.075; {alpha: 0, top: 10}; {alpha: 1, top: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
-			<bind name="appear" value="'startHide'; 0.15; 2 * 0.055; {alpha: 1, top: 0}; {alpha: 0, top: -10}; SC.Common.EASING_FUNCTIONS.IN_QUAD"/>
-			<style>
-				<width value="100%"/>
-			</style>
-			<block>
-				<params>
-					<param name="name" value="economicsLootbox"/>
-				</params>
-				<styleClass value="$SelectTypeListItem"/>
-				<bind name="catch" value="'click'; {selectedType: SC.Common.COMMON_LOOTBOX_TYPES.CREDITS}"/>
-				<bind name="soundOn" value="'mouseDown'; 'press'; 'default_button'"/>
-				<bind name="instance" value="'LootboxPurchaseTypeItem'; { _selected: selectedType == SC.Common.COMMON_LOOTBOX_TYPES.CREDITS, _type: SC.Common.COMMON_LOOTBOX_TYPES.CREDITS, _label: 'IDS_ECONOMICS_LOOTBOX_DESC'}"/>
-			</block>
-			<block>
-				<params>
-					<param name="name" value="beautyLootbox"/>
-				</params>
-				<styleClass value="$SelectTypeListItem"/>
-				<bind name="catch" value="'click'; {selectedType: SC.Common.COMMON_LOOTBOX_TYPES.SIGNALS}"/>
-				<bind name="soundOn" value="'mouseDown'; 'press'; 'default_button'"/>
-				<bind name="instance" value="'LootboxPurchaseTypeItem'; { _selected: selectedType == SC.Common.COMMON_LOOTBOX_TYPES.SIGNALS, _type: SC.Common.COMMON_LOOTBOX_TYPES.SIGNALS, _label: 'IDS_SIGNALS_LOOTBOX_HEADER'}"/>
-			</block>
-			<block>
-				<bind name="primaryEntityDH" value="'featureEntity_30'; CC.accountFeature; SC.Common.ACCOUNT_FEATURE.BIT_MASKS[30]"/>
-				<bind name="watchDH" value="'feature_30'; ['featureEntity_30.accountFeature.evStateChanged']; featureEntity_30.accountFeature.state"/>
-				<bind name="watch" value="'featureState'; feature_30"/>
-				<bind name="action" value="'click'; 'featureSeen'; {featureIndex: 30}"/>
-				<bind name="visible" value="feature_30 != 'locked'"/>
-				<params>
-					<param name="name" value="resourcesLootbox"/>
-				</params>
-				<styleClass value="$SelectTypeListItem"/>
-				<bind name="catch" value="'click'; {selectedType: SC.Common.COMMON_LOOTBOX_TYPES.RESOURCES}"/>
-				<bind name="soundOn" value="'mouseDown'; 'press'; 'default_button'"/>
-				<bind name="instance" value="'LootboxPurchaseTypeItem'; { _selected: selectedType == SC.Common.COMMON_LOOTBOX_TYPES.RESOURCES, _type: SC.Common.COMMON_LOOTBOX_TYPES.RESOURCES, _label: 'IDS_RESOURCES_LOOTBOX_DESC_HEADER', _subLabel: 'IDS_RESOURCES_LOOTBOX_DESC', _isNewMarkerLootbox: (feature_30 == 'new')}"/>
-			</block>
-			<block>
-				<params>
-					<param name="name" value="chanceLootbox"/>
-				</params>
-				<styleClass value="$SelectTypeListItem"/>
-				<bind name="catch" value="'click'; {selectedType: SC.Common.COMMON_LOOTBOX_TYPES.LUCKY}"/>
-				<bind name="soundOn" value="'mouseDown'; 'press'; 'default_button'"/>
-				<bind name="instance" value="'LootboxPurchaseTypeItem'; { _selected: selectedType == SC.Common.COMMON_LOOTBOX_TYPES.LUCKY, _type: SC.Common.COMMON_LOOTBOX_TYPES.LUCKY, _label: 'IDS_CHANCE_LOOTBOX_DESC_HEADER', _subLabel: 'IDS_CHANCE_LOOTBOX_DESC'}"/>
-			</block>
-		</block>
-		<block>
-			<styleClass value="$MiddleAligned"/>
-			<style>
-				<marginTop value="24px"/>
-			</style>
-			<block>
-				<bind name="appear" value="'addedToStage'; 0; 0; {alpha: 0}; {alpha: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
-				<bind name="appear" value="'lagAfterAddedToStage'; 0.15; 4*0.075; {alpha: 0, top: 10}; {alpha: 1, top: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
-				<bind name="appear" value="'startHide'; 0.15; 4 * 0.055; {alpha: 1, top: 0}; {alpha: 0, top: -10}; SC.Common.EASING_FUNCTIONS.IN_QUAD"/>
-				<bind name="watch" value="'purchaseBtnEnabled'; (selectedType != -1)"/>
-				<block>
-					<bind name="fade" value="purchaseBtnEnabled;	0.15; {alpha: 0, width: 0}; {alpha: 1, width: 128}; {alpha: 0, width: 0}"/>
-					<style>
-						<width value="128px"/>
-						<marginTop value="6px"/>
-						<marginRight value="27px"/>
-					</style>
-					<bind name="name" value="'modal_window_action_button' + 'IDS_YES'"/>
-					<bind name="instance" value="'DefaultButton'; {	_name: 'btn_ok',
-													_enabled: purchaseBtnEnabled, _isTransactionBtn: true,
-													_request: selectedType == SC.Common.COMMON_LOOTBOX_TYPES.LUCKY	? 'openPurchaseLootboxWindowChance'
-																													: 'LootboxProxy.buyLootbox',
-													_requestParams: {	userChoiceType: selectedType,
-																		isAnimated: selectedType == SC.Common.COMMON_LOOTBOX_TYPES.LUCKY},
-													_label: 'IDS_YES', _focusIndex: 1, _defaultFocused: true}"/>
-				</block>
-			</block>
-			<block>
-				<bind name="appear" value="'addedToStage'; 0; 0; {alpha: 0}; {alpha: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
-				<bind name="appear" value="'lagAfterAddedToStage'; 0.15; 3*0.075; {alpha: 0, top: 10}; {alpha: 1, top: 0}; SC.Common.EASING_FUNCTIONS.OUT_QUAD"/>
-				<bind name="appear" value="'startHide'; 0.15; 3 * 0.055; {alpha: 1, top: 0}; {alpha: 0, top: -10}; SC.Common.EASING_FUNCTIONS.IN_QUAD"/>
-				<style>
-					<width value="129px"/>
-				</style>
-				<block>
-					<bind name="visible" value="purchaseBtnEnabled"/>
-					<block className="DefaultButtonModal">
-						<style>
-							<marginBottom value="6px"/>
-							<marginTop value="6px"/>
-						</style>
-						<bind name="name" value="'Modal_window_action_Button' + 'IDS_NO'"/>
-						<bind name="instance" value="'DefaultButton'; {	_enabled: true,
-													_isTransactionBtn: true,
-													_label: 'IDS_NO',
-													_name: 'btn_cancel',
-													_focusIndex: 2,
-													_defaultFocused: false}"/>
-					</block>
-				</block>
-				<block>
-					<bind name="visible" value="!(purchaseBtnEnabled)"/>
-					<block className="DefaultButtonModal">
-						<style>
-							<marginBottom value="6px"/>
-							<marginTop value="6px"/>
-						</style>
-						<bind name="name" value="'Modal_window_action_Button' + 'IDS_CLOSE_UPPER_CASE'"/>
-						<bind name="instance" value="'DefaultButton'; {	_enabled: true,
-													_isTransactionBtn: true,
-													_label: 'IDS_CLOSE_UPPER_CASE',
-													_name: 'btn_cancel',
-													_focusIndex: 1,
-													_defaultFocused: false}"/>
-					</block>
-				</block>
-			</block>
-			<style>
-				<flow value="horizontal"/>
-			</style>
-		</block>
-	</block>
-	<block className="LootboxPurchaseTypeItem">
-		<bind name="controller" value="'lesta.unbound.controls.UbInteractiveController'"/>
-		<bind name="watch" value="'selectedLootBoxTypeIconUrl';	_type == SC.Common.COMMON_LOOTBOX_TYPES.CREDITS		? 'url:../service_kit/lootbox_types/ecoboost.png'	:
-												_type == SC.Common.COMMON_LOOTBOX_TYPES.SIGNALS		? 'url:../service_kit/lootbox_types/signals.png'	:
-												_type == SC.Common.COMMON_LOOTBOX_TYPES.RESOURCES	? 'url:../service_kit/lootbox_types/coal.png'		:
-												_type == SC.Common.COMMON_LOOTBOX_TYPES.LUCKY		? 'url:../service_kit/lootbox_types/random.png'
-																									: ''"/>
-		<styleClass value="$Fullsize"/>
-		<block>
-			<styleClass value="$FullsizeAbsolute"/>
-			<bind name="transition" value="(rollOver || _selected); 0.15; {alpha: 0}; {alpha: 1}"/>
-			<block className="dock_submenu_item_bg" type="native">
-				<styleClass value="$FullsizeAbsolute"/>
-				<bind name="transition" value="(_selected &amp;&amp; !(rollOver)); 0.15; {alpha: 1}; {alpha: 0.45}"/>
-			</block>
-		</block>
-		<block>
-			<styleClass value="$Fullsize"/>
-			<styleClass value="$SelectTypeListItemIndent"/>
-			<style>
-				<hitTest value="false"/>
-			</style>
-			<block>
-				<styleClass value="$MiddleVAligned"/>
-				<bind name="transition" value="(rollOver &amp;&amp; !mouseDown) || _selected; 0.15; {alpha: 0.7}; {alpha: 1}; {alpha: 0.7}; SC.Common.EASING_FUNCTIONS.IN_QUAD"/>
-				<block>
-					<style>
-						<height value="60px"/>
-						<width value="60px"/>
-					</style>
-					<bind name="style" value="'backgroundImage'; selectedLootBoxTypeIconUrl"/>
-				</block>
-			</block>
-			<block>
-				<styleClass value="$MiddleVAligned"/>
-				<style>
-					<marginLeft value="18px"/>
-				</style>
-				<block>
-					<block>
-						<bind name="transition" value="(rollOver &amp;&amp; !mouseDown) || _selected; 0.15; {alpha: 0.8}; {alpha: 1}; {alpha: 0.8}; SC.Common.EASING_FUNCTIONS.IN_QUAD"/>
-						<block type="text">
-							<styleClass value="$TextLargeHeaderBold"/>
-							<style>
-								<maxWidth value="320"/>
-							</style>
-							<bind name="text" value="_label"/>
-						</block>
-					</block>
-					<block>
-						<bind name="fade" value="_isNewMarkerLootbox; 0.15; {alpha: 0, top: 10}; {alpha: 1, top: 0}; {alpha: 0, top: -10}; 2"/>
-						<style>
-							<marginLeft value="-1px"/>
-							<marginTop value="2px"/>
-						</style>
-						<bind name="instance" value="'MarkerNewAttention'; { }"/>
-					</block>
-					<style>
-						<flow value="horizontal"/>
-					</style>
-				</block>
-				<block type="text">
-					<styleClass value="$TextDefault"/>
-					<style>
-						<maxWidth value="340"/>
-						<marginTop value="-3px"/>
-						<leading value="-3"/>
-					</style>
-					<bind name="text" value="_subLabel"/>
-				</block>
-			</block>
-			<style>
-				<flow value="horizontal"/>
-			</style>
-		</block>
-		<block className="HorizontalDividerTwoPx">
-			<style>
-				<width value="100%"/>
-				<height value="2px"/>
-				<backgroundSize value="fill"/>
-				<backgroundImage value="url:../service_kit/dividers/divider_h.png"/>
-			</style>
-		</block>
-	</block>
-
-	<!-- modal_window_purchase_lootbox_chance -->
-	<block className="ModalWindowPurchaseLootboxChance">
-		<block className="ModalWindowContainer">
-			<bind name="primaryEntityDH" value="'_blurEntity'; CC.preference; 'graphics.GUI.blur'"/>
-			<bind name="watchDH" value="'isBlurOptionEnabled'; ['_blurEntity.preference.evValueChanged']; _blurEntity.preference.value"/>
-			<styleClass value="$FullsizeAbsolute"/>
-			<block>
-				<bind name="visible" value="!isBlurOptionEnabled"/>
-				<styleClass value="$FullsizeAbsolute"/>
-				<bind name="appear" value="'startShow'; 0.2; 0.1; 	{alpha: 0}; {alpha: 1}"/>
-				<bind name="appear" value="'startHide'; 0.2; 0.2; 	{alpha: 1}; {alpha: 0}"/>
-				<style>
-					<backgroundImage value="url:../bg/nations_tree_v2.jpg"/>
-					<backgroundSize value="cover"/>
-				</style>
-			</block>
-			<block>
-				<bind name="visible" value="isBlurOptionEnabled"/>
-				<styleClass value="$FullsizeAbsolute"/>
-				<block className="DeclareBlurLayer">
-					<bind name="primaryEntityDH" value="'isBlurEnabledEntity'; CC.preference; 'graphics.GUI.blur'"/>
-					<bind name="watchDH" value="'isBlurEnabled'; ['isBlurEnabledEntity.preference.evValueChanged']; isBlurEnabledEntity.preference.value"/>
-					<bind name="visible" value="isBlurEnabled"/>
-					<block className="transparentPixel" type="native">
-						<bind name="blurLayer" value="0"/>
-					</block>
-					<style>
-						<position value="absolute"/>
-					</style>
-				</block>
-				<block className="mc_blurmap_medium" type="native">
-					<styleClass value="$FullsizeAbsolute"/>
-					<bind name="appear" value="'startShow'; 0.2; 0.1; 	{alpha: 0}; {alpha: 1}"/>
-					<bind name="appear" value="'startHide'; 0.2; 0.2; 	{alpha: 1}; {alpha: 0}"/>
-					<bind name="blurMap" value="0"/>
-				</block>
-				<block>
-					<styleClass value="$FullsizeAbsolute"/>
-					<bind name="appear" value="'startShow'; 0.2; 0.1; 	{alpha: 0}; {alpha: 1}"/>
-					<bind name="appear" value="'startHide'; 0.2; 0.2; 	{alpha: 1}; {alpha: 0}"/>
-					<style>
-						<backgroundColor value="0x80000700"/>
-					</style>
-				</block>
-			</block>
-			<style>
-				<align value="center"/>
-			</style>
-			<block>
-				<styleClass value="$EyeLevelVAligned"/>
-				<bind name="instance" value="'LootboxPurchaseChance'; {}"/>
-			</block>
-		</block>
-	</block>
-	<block className="LootboxPurchaseChance">
-		<bind name="firstEntityDH" value="'lootboxEntity'; CC.lootboxConfigComponent"/>
-		<bind name="watchDH" value="'isEpicBox';		['lootboxEntity.lootboxStorageComponent.evLootboxGot'];	lootboxEntity.lootboxStorageComponent.isCurBoxEpic"/>
-		<bind name="var" value="{lootboxBought: false}"/>
-		<bind name="handleEventDH" value="'lootboxEntity.lootboxStorageComponent.evLootboxGot'; 'lootboxBoughtEv'"/>
-		<bind name="catch" value="'lootboxBoughtEv'; {lootboxBought: true}"/>
-		<bind name="catch" value="'lootboxChanceAnimationFinishedEv'"/>
-		<bind name="action" value="'lootboxChanceAnimationFinishedEv'; 'LootboxProxy.buyLootbox'; {userChoiceType: SC.Common.COMMON_LOOTBOX_TYPES.LUCKY, isAnimated: true}"/>
-		<bind name="var" value="{lootboxChanceAnimationFinished: false}"/>
-		<bind name="watch" value="'animatedAndBought'; (lootboxChanceAnimationFinished &amp;&amp; lootboxBought)"/>
-		<bind name="changeDispatch" value="animatedAndBought; 'animatedAndBoughtEv'; {}; 2; true"/>
-		<bind name="dispatch" value="'animatedAndBoughtEv'; 'preCloseModalWindowChance'; {}; 2; 2.4"/>
-		<bind name="request" value="'preCloseModalWindowChance';'closeModalWindowChance'; {}"/>
-		<bind name="action" value="'startHide'; lootboxBought ? 'LootboxProxy.onChanceAnimationFinished' : ''; {}"/>
-		<bind name="appear" value="'startHide'; 0.15; 0; {alpha: 1, top: 0}; {alpha: 0, top: 10}"/>
-		<styleClass value="$Fullsize"/>
-		<block>
-			<bind name="appear" value="'addedToStage'; 0.15; 0.15; {alpha: 0, top: 10}; {alpha: 1, top: 0}"/>
-			<styleClass value="$MiddleAlignedAbsolutely"/>
-			<styleClass value="$MiddleVAligned"/>
-			<block className="lootbox_chance_animation" type="native">
-				<bind name="event" value="'addedToStage'; 'gotoAndPlay'; 'animation'"/>
-				<bind name="soundOn" value="'addedToStage'; 'roll'; 'lucky_soundset'"/>
-				<bind name="dispatch" value="'lootboxChanceAnimationFinishedTL'; 'lootboxChanceAnimationFinishedEv'; {lootboxChanceAnimationFinished: true}"/>
-			</block>
-		</block>
-		<bind name="dispatch" value="'animatedAndBoughtEv'; 'startAnimationEv'; {}; 2; 0.6"/>
-		<bind name="dispatch" value="'startAnimationEv'; 'startIssueAnimationEv'; {}; 2; 0.25"/>
-		<bind name="var" value="{luckyIssuedState: 'not_issued'}"/>
-		<bind name="catch" value="'startIssueAnimationEv'; {luckyIssuedState: isEpicBox ? 'animation' : 'not_issued'}"/>
-		<block>
-			<styleClass value="$MiddleAlignedAbsolutely"/>
-			<styleClass value="$MiddleVAligned"/>
-			<block className="icon_lucky_animation" type="native">
-				<style>
-					<position value="absolute"/>
-				</style>
-				<bind name="soundOn" value="'startAnimationEv'; (isEpicBox ? 'epicwin' : 'epicfail'); 'lucky_soundset'"/>
-				<bind name="event" value="'startAnimationEv';  isEpicBox ? 'gotoAndPlay' : null; 'animation_lucky'"/>
-				<bind name="event" value="'startAnimationEv';  isEpicBox ? null : 'gotoAndPlay'; 'animation_unlucky'"/>
-			</block>
-		</block>
-		<block>
-			<bind name="visible" value="luckyIssuedState == 'animation'"/>
-			<style>
-				<marginTop value="42px"/>
-			</style>
-			<styleClass value="$MiddleAlignedAbsolutely"/>
-			<block>
-				<style>
-					<position value="absolute"/>
-				</style>
-				<block className="icon_issued" type="native">
-					<style>
-						<marginLeft value="1.7%"/>
-						<alpha value="0.9"/>
-					</style>
-					<bind name="scaleX" value="0.85"/>
-					<bind name="scaleY" value="0.85"/>
-					<innerBind elementName="item.item" name="text" value="toUpperCase(tr('IDS_PURCHASE_CHANCE_LOOTBOX_EPIC'))"/>
-					<bind name="gotoAndPlay!" value="luckyIssuedState ? luckyIssuedState : 'not_issued'"/>
-				</block>
-			</block>
 		</block>
 	</block>
 
@@ -75398,7 +73570,8 @@
 				<top value="0"/>
 			</style>
 			<bind name="child" value="_headerIconType;	{	_imageUrl:		_imageUrl,
-											_data:			_data};
+											_data:			_data,
+											_rarity:		_rarity};
 										{	0:						'ModalWindowSystemCamouflageIcon',
 											1:				'ModalWindowSystemCamouflageIconRepaint',
 											2:				'ModalWindowSystemEconomicBoostIcon',
@@ -75478,11 +73651,37 @@
 			<width value="60px"/>
 			<height value="60px"/>
 		</style>
-		<bind name="style" value="'backgroundImage'; _imageUrl"/>
-		<bind name="instance" value="'LinkableItemIcon'; _data.exteriorType == SC.Exteriors.EXTERIOR_TYPE.MSKIN ? {} : null"/>
+		<block>
+			<styleClass value="$Fullsize"/>
+			<bind name="style" value="'backgroundImage'; _imageUrl"/>
+		</block>
+		<block>
+			<style>
+				<position value="absolute"/>
+				<height value="100%"/>
+			</style>
+			<bind name="instance" value="'RarityPattern'; {_rarity: _rarity}"/>
+		</block>
+		<block>
+			<style>
+				<position value="absolute"/>
+			</style>
+			<bind name="instance" value="'LinkableItemIcon'; _data.exteriorType == SC.Exteriors.EXTERIOR_TYPE.MSKIN ? {} : null"/>
+		</block>
 	</block>
 	<block className="ModalWindowSystemCamouflageIconRepaint">
+		<style>
+			<width value="60px"/>
+			<height value="60px"/>
+		</style>
 		<bind name="instance" value="'CamouflageRepaintedIcon';	{_camouflageId: _data.camouflageId}"/>
+		<block>
+			<style>
+				<position value="absolute"/>
+				<height value="100%"/>
+			</style>
+			<bind name="instance" value="'RarityPattern'; {_rarity: _rarity}"/>
+		</block>
 	</block>
 	<block className="ModalWindowSystemEconomicBoostIcon">
 		<bind name="instance" value="'EconomicBoostItemView';	{	_name: _data.name,
@@ -75505,8 +73704,23 @@
 			<width value="60px"/>
 			<height value="60px"/>
 		</style>
-		<bind name="style" value="'backgroundImage'; _imageUrl"/>
-		<bind name="instance" value="'LinkableItemIcon'; _data.exteriorType == SC.Exteriors.EXTERIOR_TYPE.SHIP_DESTRUCTION ? {} : null"/>
+		<block>
+			<styleClass value="$Fullsize"/>
+			<bind name="style" value="'backgroundImage'; _imageUrl"/>
+		</block>
+		<block>
+			<style>
+				<position value="absolute"/>
+				<height value="100%"/>
+			</style>
+			<bind name="instance" value="'RarityPattern'; {_rarity: _rarity}"/>
+		</block>
+		<block>
+			<style>
+				<position value="absolute"/>
+			</style>
+			<bind name="instance" value="'LinkableItemIcon'; _data.exteriorType == SC.Exteriors.EXTERIOR_TYPE.SHIP_DESTRUCTION ? {} : null"/>
+		</block>
 	</block>
 	<block className="ModalWindowSystemQuestionWithPrice">
 		<style>
@@ -76454,7 +74668,7 @@
 				<block type="text">
 					<bind name="visible" value="isTimeBased"/>
 					<style>
-						<width value="41px"/>
+						<width value="44px"/>
 						<textAlign value="left"/>
 						<alpha value="0.9"/>
 					</style>
@@ -84853,7 +83067,7 @@
 		<bind name="watchDH" value="'lootboxInStorage';	['lootboxEntity.lootboxStorageComponent.evUpdate']; lootboxEntity.lootboxStorageComponent.inStorage"/>
 		<bind name="watchDH" value="'lootboxExp';		['lootboxEntity.lootboxStorageComponent.evUpdate']; lootboxEntity.lootboxStorageComponent.lootExp"/>
 		<bind name="watchDH" value="'boughtToday';		['lootboxEntity.lootboxStorageComponent.evUpdate'];	lootboxEntity.lootboxStorageComponent.boughtToday"/>
-		<bind name="watchDH" value="'maxBought';			['lootboxEntity.lootboxConfigComponent.evUpdate'];	lootboxEntity.lootboxConfigComponent.maxBought"/>
+		<bind name="watchDH" value="'maxBought';			['lootboxEntity.lootboxConfigComponent.evPricesUpdate'];	lootboxEntity.lootboxConfigComponent.maxBought"/>
 		<bind name="watch" value="'canBuyLootbox'; (lootboxExp &gt;= lootboxEntity.lootboxConfigComponent.prices[boughtToday])"/>
 		<bind name="watch" value="'expToNextLootbox';	lootboxExp &gt;= lootboxEntity.lootboxConfigComponent.prices[1]	? lootboxEntity.lootboxConfigComponent.prices[2] - lootboxExp :
 										lootboxExp &gt;= lootboxEntity.lootboxConfigComponent.prices[0]	? lootboxEntity.lootboxConfigComponent.prices[1] - lootboxExp
@@ -88411,6 +86625,18 @@
 																	[], { _victoriesCount: victories }, victories),
 												_isReceived: true }"/>
 		<bind name="instance" value="'RewardCategory'; { _rewardCategory: rewardsCategory, _isReceived: true }"/>
+	</block>
+
+	<!-- rarity_elements -->
+	<block className="RarityPattern">
+		<bind name="watch" value="'rarity';	_rarity ? _rarity : SC.Common.RARITY_CATEGORY_NAMES.COMMON"/>
+		<style>
+			<height value="100%"/>
+			<background9Slice value="[1, 1, 10, 1]"/>
+			<hitTest value="false"/>
+		</style>
+		<bind name="style" value="'width'; _width ? _width : '13px'"/>
+		<bind name="style" value="'backgroundImage'; 'url:../service_kit/panel_backgrounds/rarity_' + toLowerCase(rarity) + '_panel.png'"/>
 	</block>
 
 	<!-- replays_table_content -->
@@ -97184,6 +95410,13 @@
 		<block>
 			<style>
 				<position value="absolute"/>
+				<height value="100%"/>
+			</style>
+			<bind name="instance" value="'RarityPattern'; {_rarity: _rarity}"/>
+		</block>
+		<block>
+			<style>
+				<position value="absolute"/>
 				<right value="0px"/>
 				<bottom value="0px"/>
 			</style>
@@ -97205,7 +95438,8 @@
 			<bind name="build!" value="$ubPlayerProxy"/>
 			<bind name="externalArgs" value="{_id: _id, 
 							_noMouseInstructions: _noMouseInstructions, 
-							_sid: $sid}"/>
+							_sid: $sid,
+							_rarity: _rarity}"/>
 		</block>
 	</block>
 
@@ -100471,6 +98705,8 @@
 		<bind name="watchDH" value="'upgradableShipInfo'; ['shipEntity.upgradableShipInfo.evUpdate']; shipEntity.upgradableShipInfo"/>
 		<bind name="watchDH" value="'highlightState'; ['shipEntity.highlight.evStateUpdated']; shipEntity.highlight.state"/>
 		<bind name="watch" value="'isFirstAvailableShip'; _isNewMarker != null ? _isNewMarker : (shipEntity.newItem != null) &amp;&amp; !_isShipTypePresentation"/>
+		<bind name="watchDH" value="'rarityCategoryName'; []; shipEntity &amp;&amp; shipEntity.rarityCategoryComponent ? shipEntity.rarityCategoryComponent.name : null"/>
+		<bind name="watch" value="'rarity'; rarityCategoryName"/>
 		<bind name="firstEntityDH" value="'dockEntity'; CC.dockDataMarker"/>
 		<bind name="watchDH" value="'shipIdForResearch'; ['dockEntity.shipSelection.evShipUpdate'] ; dockEntity.shipSelection.currentShipIdForResearch"/>
 		<bind name="watch" value="'isSelected'; shipIdForResearch == shipId &amp;&amp; !_isNotShipTree"/>
@@ -100639,6 +98875,14 @@
 																				_onShowDelay: 0.6,
 																				_hasNextButton: false}
 																			: null"/>
+				</block>
+				<block>
+					<style>
+						<position value="absolute"/>
+						<height value="100%"/>
+					</style>
+					<bind name="appear" value="'contentAlphaChangedEvent'; _isShipTypePresentation ? 0.9 : 0.3; 0; {alpha: prevContentAlpha}; {alpha: curContentAlpha}; SC.Common.EASING_FUNCTIONS.ON_OUT_QUAD"/>
+					<bind name="instance" value="'RarityPattern'; {_rarity: rarity, _width: '12px'}"/>
 				</block>
 				<block>
 					<bind name="watch" value="'isEnableForWatchModules'; !_isNotShipTree &amp;&amp; shipInfo.isManagementAvailable"/>
@@ -104778,6 +103022,7 @@
 							<bind name="instance" value="'AppliedFilter'; { _filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_TYPE,		_panelEntityId: panelEntity.id }"/>
 							<bind name="instance" value="'AppliedFilter'; { _filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_NATION,		_panelEntityId: panelEntity.id }"/>
 							<bind name="instance" value="'AppliedFilter'; { _filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_SPECIAL,	_panelEntityId: panelEntity.id }"/>
+							<bind name="instance" value="'AppliedFilter'; { _filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_RARITY,		_panelEntityId: panelEntity.id }"/>
 							<style>
 								<flow value="horizontal"/>
 							</style>
@@ -115179,6 +113424,9 @@
 		<bind name="watch" value="'isOwned'; shipOwnEntity != null"/>
 		<bind name="watch" value="'isEarlyAccess'; shipInfo.group == SC.Ships.SHIP_GROUPS.EARLY_ACCESS"/>
 		<bind name="watch" value="'isRental'; _rentDuration || _rentUntil"/>
+		<bind name="watchDH" value="'rarityCategoryName'; []; shipEntity &amp;&amp; shipEntity.rarityCategoryComponent ? shipEntity.rarityCategoryComponent.name : null"/>
+		<bind name="watch" value="'rarity'; rarityCategoryName"/>
+		<bind name="watch" value="'isRarityShown'; rarity != null &amp;&amp; rarity != SC.Common.RARITY_CATEGORY_NAMES.COMMON"/>
 		<bind name="watchDH" value="'isLocked';			['shipOwnEntity.ownShip.evUpdateLock'];			shipOwnEntity.ownShip.isLocked"/>
 		<bind name="watchDH" value="'isInFormation';		['shipOwnEntity.ownShip.evUpdateLock'];			shipOwnEntity.ownShip.isInFormation"/>
 		<bind name="watchDH" value="'ownShipExp';		['shipOwnEntity.ownShip.evUpdateConfig'];		shipOwnEntity.ownShip.exp"/>
@@ -115285,6 +113533,37 @@
 															: null"/>
 					</block>
 				</block>
+			</block>
+		</block>
+		<block>
+			<bind name="visible" value="isRarityShown"/>
+			<style>
+				<width value="100%"/>
+				<marginBottom value="4px"/>
+			</style>
+			<block className="HorizontalDivider">
+				<styleClass value="$PxHorizontalCorrection"/>
+				<style>
+					<width value="100%"/>
+					<height value="2px"/>
+					<backgroundSize value="fill"/>
+					<marginTop value="1px"/>
+					<backgroundImage value="url:../service_kit/dividers/divider_h.png"/>
+				</style>
+			</block>
+			<block>
+				<style>
+					<width value="100%"/>
+					<margin value="12px|12px|12px|7px"/>
+				</style>
+				<bind name="instance" value="'TooltipSystemRarityText';	isRarityShown	?	{	_rarity: rarity,
+																				_entityName: tr('IDS_RARITY_ITEM_ENTITY_NAME'),
+																				_data: {	marginLeft: '-12px',
+																							marginTop: '-12px',
+																							marginRight: '-12px',
+																							marginBottom: '-13px'	} 
+																			}
+																		: null"/>
 			</block>
 		</block>
 		<block>
@@ -116553,6 +114832,31 @@
 			<bind name="text" value="_descriptionText"/>
 		</block>
 	</block>
+	<block className="TooltipSystemRarityText">
+		<style>
+			<width value="100%"/>
+		</style>
+		<block>
+			<styleClass value="$FullsizeAbsolute"/>
+			<bind name="style" value="'marginLeft'; _data.marginLeft ? _data.marginLeft : -16px"/>
+			<bind name="style" value="'marginRight'; _data.marginRight ? _data.marginRight : -16px"/>
+			<bind name="style" value="'marginTop'; _data.marginTop ? _data.marginTop : -12px"/>
+			<bind name="style" value="'marginBottom'; _data.marginBottom ? _data.marginBottom : -12px"/>
+			<bind name="instance" value="'RarityPattern'; {_rarity: _rarity}"/>
+		</block>
+		<block type="text">
+			<params>
+				<param name="name" value="tooltipSystemRarityText"/>
+			</params>
+			<style>
+				<width value="100%"/>
+				<alpha value="0.9"/>
+				<leading value="-2"/>
+			</style>
+			<styleClass value="$TextDefaultNM"/>
+			<bind name="text" value="subst('IDS_RARITY_' + toUpperCase(_rarity) + '_DESCRIPTION', [], {entity: _entityName})"/>
+		</block>
+	</block>
 	<block className="TooltipSystemSubstituteDescriptionText">
 		<style>
 			<width value="100%"/>
@@ -117267,7 +115571,7 @@
 			<block type="text">
 				<bind name="visible" value="isTimeBased"/>
 				<style>
-					<width value="41px"/>
+					<width value="44px"/>
 					<textAlign value="left"/>
 					<alpha value="0.9"/>
 				</style>
@@ -118767,6 +117071,7 @@
 						<bind name="instance" value="'AppliedFilter'; { _filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_TYPE,		_panelEntityId: panelEntity.id }"/>
 						<bind name="instance" value="'AppliedFilter'; { _filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_NATION,		_panelEntityId: panelEntity.id }"/>
 						<bind name="instance" value="'AppliedFilter'; { _filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_SPECIAL,	_panelEntityId: panelEntity.id }"/>
+						<bind name="instance" value="'AppliedFilter'; { _filterType: SC.Common.SHIP_FILTER_TYPE.SHIP_RARITY,		_panelEntityId: panelEntity.id }"/>
 						<style>
 							<flow value="horizontal"/>
 						</style>

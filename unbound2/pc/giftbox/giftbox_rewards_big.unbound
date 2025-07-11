@@ -145,7 +145,7 @@
 	(style (align = "center") (width = 100%))
 	(block
 		(style	(width = 256px) (height = 256px) (marginBottom = "REWARD_BIG_MARGINS_IMAGE")
-				(bind backgroundImage "'url:../reward_icons/big/ship_' + shipProfitabilitySuffix + '.png'"))
+			(bind backgroundImage "'url:../reward_icons/big/ship_' + shipProfitabilitySuffix + '.png'"))
 	)
 	(block
 		(controller $Instance renderer='ShipLineItemNM'
@@ -170,6 +170,8 @@
 		(var exteriorEntity:gfx = "$datahub.getPrimaryEntity(CC.exteriorConfig, _rewardItem.id)")
 		(var exteriorConfig:gfx = "exteriorEntity ? exteriorEntity.exteriorConfig : null")
 		(var exteriorName:gfx = "exteriorConfig ? exteriorConfig.name : null")
+
+		(macro PULL_RARITY "exteriorEntity" "'rarity'")
 
 		(var isAvailableFakeColorSchemes:bool = "'colorsNum' in _rewardItem.params && _rewardItem.params.colorsNum")
 		(var fakeColorScheme:dict = "isAvailableFakeColorSchemes ? _rewardItem.params : null")
@@ -232,6 +234,7 @@
 				_fakeColorScheme = "fakeColorScheme"
 				_noMouseInstructions = "true"
 				_rewardShipId = "shipEntity ? _rewardItem.params.shipId : null"
+				_rarity = "rarity"
 			)
 			(macro DEFAULT_TOOLTIP_BEHAVIOUR "0")
 			(cache = false)

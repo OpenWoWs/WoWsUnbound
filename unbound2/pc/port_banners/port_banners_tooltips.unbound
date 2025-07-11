@@ -127,7 +127,7 @@
 		(var boughtToday:number =		"lootboxStorageComponent.boughtToday"	(event "lootboxStorageComponent.evUpdate"))
 		(var lootboxInStorage:number =	"lootboxStorageComponent.inStorage"		(event "lootboxStorageComponent.evUpdate"))
 		(var dropTimeStamp:number =		"lootboxStorageComponent.dropAt"		(event "lootboxStorageComponent.evUpdate"))
-		(var maxBought:number =			"lootboxConfigComponent.maxBought"		(event "lootboxConfigComponent.evUpdate"))
+		(var maxBought:number =			"lootboxConfigComponent.maxBought"		(event "lootboxConfigComponent.evPricesUpdate"))
 
 		(var lootboxPrices:array = "lootboxConfigComponent.prices" (event "lootboxConfigComponent.evUpdate"))
 		(var isMaxDailyExp:bool = "lootboxExp >= lootboxPrices[2]")

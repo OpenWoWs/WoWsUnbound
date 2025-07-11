@@ -48,6 +48,9 @@
 		(var shipBuyPrice:number = 0) 
 
 		(var hasWarning:bool = "isNeedService || (isLocked && !isInFormation)")
+
+		(macro PULL_RARITY "shipEntity" "'rarity'")
+		(macro IS_RARITY_SHOWN "rarity" "'isRarityShown'")
 	)
 	(style (width = "TOOLTIP_SHIP_MAX_WIDTH") (hitTest = false))
 	
@@ -107,7 +110,29 @@
 
 
 		)
-	)	
+	)
+
+	
+	(block
+		(bind visible "isRarityShown")
+		(style (width = 100%))
+		(element HorizontalDivider)
+
+		(block
+			(style (width = 100%) (paddingTop = "S") (paddingBottom = "S") (paddingLeft = "SXS") (paddingRight = "SXS"))
+			(controller $Instance renderer='TooltipSystemRarityText'
+				(bind enabled "isRarityShown")
+				(args
+					_rarity		= "rarity"
+					_entityName	= "tr('IDS_RARITY_ITEM_ENTITY_NAME')"
+					_data		= "{	paddingTop: -S,
+										paddingBottom: -10px,
+										paddingLeft: -SXS,
+										paddingRight: -SXS	}"
+				)
+			)
+		)
+	)
 
 	
 	(block
@@ -127,7 +152,7 @@
 			) 
 		)
 	)
-	
+
 	
 	(block
 		(bind visible "!inSideCompare")
@@ -1017,6 +1042,11 @@
 
 	(dispatch evSquadronItemClicked args="{index : $index}" dir="EventDirection.UP" on='click' (bind enabled "isClickable && !isSelected"))
 	(dispatch evSquadronItemClicked args="{index : $index}" dir="EventDirection.UP" on='addedToStage'(bind enabled "isClickable && selectedSlot == -1"))
+	
+	(macro SOUND_HANDLER
+		_soundSet = "	isClickable ? 'button_consumable' : ''"
+	)
+	
 	(macro MOUSE_EVENTS_DISPATCHER)
 
 	(element ShipInfoWeaponIcon

@@ -24,7 +24,7 @@
 
 		(var attributesNegative:array = "attributes ? attributes.negative : []" (event "attributes.evChanged"))
 		(var attributesPositive:array = "attributes ? attributes.positive : []" (event "attributes.evChanged"))
-		(var attributesNeutral:array = "attributes ? attributes.neutral : []" (event "attributes.evChanged") (event "battleConsumable.evMaxChargeChanged") (event "battleConsumable.evReloadTimeCoeffChanged") (event "battleConsumable.evWorkTimeCoeffChanged"))
+		(var attributesNeutral:array = "attributes ? attributes.neutral : []" (event "attributes.evChanged") (event "battleConsumable.evCurrentChargeChanged") (event "battleConsumable.evReloadTimeCoeffChanged") (event "battleConsumable.evWorkTimeCoeffChanged"))
 		(var attributesVisible:bool = "attributesNegative.length > 0 || attributesPositive.length > 0 || attributesNeutral.length > 0")
 
 		(var iconPath:str = "	state.type == SC.Battle.ENTITY_STATES.SHIP_PARAMS_CHANGE_BY_WEATHER				? 'url:../battle_hud/indicators/weather/' + data['weatherGpName'] + '.png' :

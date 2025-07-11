@@ -1055,6 +1055,8 @@
 	(scope
 		(macro PULL_SHIP_SCOPE "_rewardItem.id" "'shipEntity'" "'shipInfo'")
 
+		(macro PULL_RARITY "shipEntity" "'rarity'")
+
 		(var rentDuration:number = "_rewardItem.params.rentDuration")
 		(var rentUntil:number = "_rewardItem.params.rentUntil")
 		(var isRentShip:bool = "rentDuration || rentUntil")
@@ -1134,6 +1136,9 @@
 				(hitTest = false)
 			)
 		)
+
+		
+		(element RarityPattern _rarity="rarity")
 
 		
 		(block

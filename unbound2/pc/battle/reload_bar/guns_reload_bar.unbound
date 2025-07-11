@@ -17,6 +17,8 @@
 (def constant RELOAD_BAR_YELLOW_COLOR_TRANSFORM {'color':0xF78913})
 (def constant RELOAD_BAR_NO_COLOR_TRANSFORM {})
 
+(def constant GUN_COUNT_TO_HIDE_GROUP_TIMERS 3)
+
 (def constant ReloadBarSize {
 	SMALL: 46,
 	MEDIUM: 82,
@@ -228,7 +230,8 @@
 			)
 
 			(controller $Instance
-				(bind renderer "gunGroupsCount != 0	?	'GroupedGunsReloadBarsContainer'
+				(bind renderer "gunGroupsCount != 0	?	_weaponType == SC.Ships.SHIP_WEAPON_TYPES.ATBA	? 'CollapsedGroupedGunsReloadBarsContainer'
+																										: 'GroupedGunsReloadBarsContainer'
 													:	'SimpleGunsReloadBarsContainer'")
 				(args "_weaponType")
 			)
@@ -254,10 +257,93 @@
 	)
 )
 
+(def element CollapsedGroupedGunsReloadBarsContainer (_weaponType:number) layout=true
+	(scope
+		(var gunsGroups:gfx = "$datahub.getCollection(CC.groupModifier).child('byWeaponType').child(_weaponType).child('byGroup')")
+
+		(var weaponEntity:gfx = "$datahub.getPrimaryEntity(CC.weapon, _weaponType)")
+		(var gunGroupsCount:number = "weaponEntity.weapon.groupsCount")
+
+		(var weaponController:gfx = "$datahub.getSingleComponent(CC.weaponController)")
+		(var activeWeaponType:number = "weaponController ? weaponController.selectedWeapon : -1" (event "weaponController.evSelectedWeaponChanged") (event "weaponController.evSelectedAmmoTypeChanged"))
+		(var isSelected:bool = "activeWeaponType == _weaponType")
+
+		(var groupBarWidth:number = "RELOAD_BAR_MAX_WIDTH / gunGroupsCount >= ReloadBarSize.LARGE ? ReloadBarSize.LARGE : ReloadBarSize.MEDIUM")
+	)
+
+	(style
+		(align = "center")
+	)
+
+	(hblock
+		(style
+			(maxWidth = "RELOAD_BAR_MAX_WIDTH")
+			(align = "center")
+		)
+
+		(hblock
+			(bind visible "isSelected")
+			(controller $Repeat
+				(bind count "gunGroupsCount")
+				(bind renderer "'GroupedGunsReloadBarRenderer'")
+				(args
+					_groupId = "$index"
+					_totalWidth = "groupBarWidth"
+					_isSingleTimer = "gunsGroups.child($index).items.length > GUN_COUNT_TO_HIDE_GROUP_TIMERS"
+					_weaponType = "_weaponType"
+				)
+			)
+		)
+
+		(hblock
+			(bind visible "!isSelected")
+			(controller $Repeat
+				(bind count "gunGroupsCount")
+				(bind renderer "'SimpleGroupRenderer'")
+				(args
+					_size = "groupBarWidth"
+					_groupId = "$index"
+					_hideTimer = false
+					_weaponType = "_weaponType"
+				)
+			)
+		)
+	)
+)
+
+(def element SimpleGroupRenderer (_size:number, _groupId:number, _hideTimer:bool, _weaponType:number)
+	(scope
+		(var gunsCollection:gfx = "$datahub.getCollection(CC.groupModifier).child('byWeaponType').child(_weaponType).child('byGroup').child(_groupId)")
+		(var groupGuns:array = "gunsCollection.items" (event "gunsCollection.evUpdated"))
+
+		(var gunWithBestState:gfx = "groupGuns[0]")
+
+		(macro BAR_STATE_FROM_GUN_SCOPE "gunWithBestState")
+
+	)
+	(style
+		(marginLeft = "RELOAD_WEAPON_ICON_WIDTH")
+		(marginTop = 10)
+	)
+	(hblock
+		(element ReloadBarId "$index + 1" "gunWithBestState.id")
+
+		(element ReloadBar
+			(scope
+				(bind size "_size")
+				(bind barState "reloadBarState")
+				(bind progress "1")
+				(bind isBarActive "true")
+			)
+			(alpha = 0.5)
+		)
+	)
+)
+
 (def element GroupedGunsReloadBarsContainer (_weaponType:number) layout=true
 	(scope
-		(var forwardGunsGroups:gfx = "$datahub.getCollection(CC.gunsGroup).child('byDirection').child(SC.Common.TORPEDOES_GROUP_TYPE.LOOK_FORWARD)")
-		(var backwardGunsGroups:gfx = "$datahub.getCollection(CC.gunsGroup).child('byDirection').child(SC.Common.TORPEDOES_GROUP_TYPE.LOOK_BACKWARD)")	
+		(var forwardGunsGroups:gfx = "$datahub.getCollection(CC.gunsGroup).child('byWeaponType').child(_weaponType).child('byDirection').child(SC.Common.TORPEDOES_GROUP_TYPE.LOOK_FORWARD)")
+		(var backwardGunsGroups:gfx = "$datahub.getCollection(CC.gunsGroup).child('byWeaponType').child(_weaponType).child('byDirection').child(SC.Common.TORPEDOES_GROUP_TYPE.LOOK_BACKWARD)")	
 	)
 
 	(style
@@ -273,7 +359,10 @@
 
 		(controller $Repeat renderer='GroupedGunsReloadBarRenderer'
 			(bind count "forwardGunsGroups ? forwardGunsGroups.items.length : 0")
-			(args "forwardGunsGroups")
+			(args 
+				_groupId = "forwardGunsGroups.items[$index].gunsGroup.groupID"
+				_weaponType = "_weaponType"
+			)
 		)
 	)
 
@@ -286,38 +375,45 @@
 
 		(controller $Repeat renderer='GroupedGunsReloadBarRenderer'
 			(bind count "backwardGunsGroups ? backwardGunsGroups.items.length : 0")
-			(args "backwardGunsGroups")
+			(args 
+				_groupId = "backwardGunsGroups.items[$index].gunsGroup.groupID"
+				_weaponType = "_weaponType"
+			)
 		)
 	)
 )
 
-(def element GroupedGunsReloadBarRenderer (_groupsCollection:gfx) layout=true
+(def element GroupedGunsReloadBarRenderer (_groupId:number, _weaponType:number, _totalWidth:number = 0, _isSingleTimer:bool = false) layout=true
 	(scope
-		(var gunsGroup:gfx = "_groupsCollection.items[$index].gunsGroup")
-
-		(var gunsCollection:gfx = "$datahub.getCollection(CC.groupModifier).child('byGroup').child(gunsGroup.groupID)")
+		(var gunsCollection:gfx = "$datahub.getCollection(CC.groupModifier).child('byWeaponType').child(_weaponType).child('byGroup').child(_groupId)")
 		(var groupGuns:array = "gunsCollection.items" (event "gunsCollection.evUpdated"))
 
 		(var gunWithBestState:gfx = "groupGuns[0]")
 		(var stateOfGunWithBestState:number = "gunWithBestState ? gunWithBestState.gun.state : 0" (event "gunWithBestState.gun.evStateChanged"))
 		(var isSwitchingAmmo:bool = "stateOfGunWithBestState == SC.Weapons.GUN_STATE.SWITCHING_AMMO")
 
-		(var groupPositionID:number = "gunsGroup.groupID + 1")
+		(var groupPositionID:number = "_groupId + 1")
 		(var reloadBarsCount:number = "isSwitchingAmmo ? 1 : groupGuns.length")
-		(var reloadBarSize:number = "isSwitchingAmmo 	? ReloadBarSize.GROUPED * groupGuns.length
-														: ReloadBarSize.GROUPED")
+		(var reloadBarSize:number = "	_totalWidth != 0	? _totalWidth / groupGuns.length :
+										isSwitchingAmmo 	? ReloadBarSize.GROUPED * groupGuns.length
+															: ReloadBarSize.GROUPED")
 	)
 
-	(bind name "'gun_group_' + gunsGroup.groupID")
+	(bind name "'gun_group_' + _groupId")
 
 	(style
 		(marginLeft = "RELOAD_WEAPON_ICON_WIDTH")
-		(marginTop = "15px")
+		(marginTop = 10)
 	)
 
 	(hblock
 		
 		(element ReloadBarId "groupPositionID" "0")
+
+		(controller $Instance renderer='ReloadBarTimeLeft'
+			(bind enabled "_isSingleTimer")
+			(args "gunWithBestState.id")
+		)
 
 		
 		(hblock
@@ -327,7 +423,7 @@
 					_size = "reloadBarSize"
 					_gunEntityId = "groupGuns[$index].id"
 					_progressEntityId = "groupGuns[$index].id"
-					_hideTimer = false
+					_hideTimer = "_isSingleTimer"
 				)
 			)
 		)
